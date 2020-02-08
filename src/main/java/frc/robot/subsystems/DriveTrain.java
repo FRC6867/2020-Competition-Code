@@ -14,41 +14,39 @@ import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import frc.robot.Constants.ComponentIDConstants;
-import frc.robot.Constants.SpeedConstants;
-import frc.robot.Constants.PIDConstants;
+import frc.robot.Constants.DriveTrainConstants;
 
 
 public class DriveTrain extends SubsystemBase {
   // Drives
-  private final VictorSPX FRONT_LEFT_DRIVE = new VictorSPX(ComponentIDConstants.FRONT_LEFT_DRIVE_CAN);
-  private final VictorSPX BACK_LEFT_DRIVE = new VictorSPX(ComponentIDConstants.BACK_LEFT_DRIVE_CAN);
-  private final VictorSPX FRONT_RIGHT_DRIVE = new VictorSPX(ComponentIDConstants.FRONT_RIGHT_DRIVE_CAN);
-  private final VictorSPX BACK_RIGHT_DRIVE = new VictorSPX(ComponentIDConstants.BACK_RIGHT_DRIVE_CAN);
+  private final CANSparkMax FRONT_LEFT_DRIVE = new CANSparkMax(DriveTrainConstants.BACK_LEFT_MOTOR_CAN, MotorType.kBrushless);
+  private final CANSparkMax BACK_LEFT_DRIVE = new CANSparkMax(DriveTrainConstants.FRONT_LEFT_MOTOR_CAN, MotorType.kBrushless);
+  private final CANSparkMax FRONT_RIGHT_DRIVE = new CANSparkMax(DriveTrainConstants.FRONT_RIGHT_MOTOR_CAN, MotorType.kBrushless);
+  private final CANSparkMax BACK_RIGHT_DRIVE = new CANSparkMax(DriveTrainConstants.BACK_RIGHT_MOTOR_CAN, MotorType.kBrushless);
 
   private final AHRS NAVX = new AHRS(Port.kMXP);
 
   // Encoders
   private final Encoder RIGHT_ENCODER = new Encoder(
-    ComponentIDConstants.RIGHT_DRIVE_ENCODER_PIN_1,
-    ComponentIDConstants.RIGHT_DRIVE_ENCODER_PIN_2,
-    false,
+    DriveTrainConstants.RIGHT_DRIVE_ENCODER_PINS[0],
+    DriveTrainConstants.RIGHT_DRIVE_ENCODER_PINS[1],
+    DriveTrainConstants.RIGHT_ENCODER_INVERTED,
     Encoder.EncodingType.k4X
   );
   private final Encoder LEFT_ENCODER = new Encoder(
-    ComponentIDConstants.LEFT_DRIVE_ENCODER_PIN_1,
-    ComponentIDConstants.LEFT_DRIVE_ENCODER_PIN_2,
-    true, // Left encoder is inverted
+    DriveTrainConstants.LEFT_DRIVE_ENCODER_PINS[0],
+    DriveTrainConstants.LEFT_DRIVE_ENCODER_PINS[1],
+    DriveTrainConstants.LEFT_ENCODER_INVERTED, // Left encoder is inverted
     Encoder.EncodingType.k4X
   );
 
   // Ultrasonic distance sensor
   private final Ultrasonic DISTANCE_SENSOR = new Ultrasonic(
-    ComponentIDConstants.ULTRASONIC_TRIGGER_PIN,
-    ComponentIDConstants.ULTRASONIC_ECHO_PIN
+    DriveTrainConstants.ULTRASONIC_TRIGGER_PIN,
+    DriveTrainConstants.ULTRASONIC_ECHO_PIN
   );
 
 
@@ -56,15 +54,16 @@ public class DriveTrain extends SubsystemBase {
    * Creates a new DriveTrain.
    */
   public DriveTrain() {
-    // Motor directions
+    // Motor directions and following
     FRONT_RIGHT_DRIVE.setInverted(true);
-    BACK_RIGHT_DRIVE.setInverted(true);
+    BACK_RIGHT_DRIVE.follow(FRONT_RIGHT_DRIVE);
     FRONT_LEFT_DRIVE.setInverted(false);
-    BACK_LEFT_DRIVE.setInverted(false);
+    BACK_LEFT_DRIVE.follow(FRONT_LEFT_DRIVE);
 
     // Set encoder distance values
-    RIGHT_ENCODER.setDistancePerPulse(0.01136);
-    LEFT_ENCODER.setDistancePerPulse(0.01134);
+    // TODO: Get encoder distances
+    RIGHT_ENCODER.setDistancePerPulse(1);
+    LEFT_ENCODER.setDistancePerPulse(1);
 
     // Start distance sensor
     DISTANCE_SENSOR.setAutomaticMode(true);
@@ -84,7 +83,7 @@ public class DriveTrain extends SubsystemBase {
   public void driveStraight(double speed) {
     // Calculates error based on gyro heading
     final double error = -getHeading();
-    final double turnMod = error * PIDConstants.TURN_CORRECTION_P;
+    final double turnMod = error * DriveTrainConstants.TURN_CORRECTION_P;
 
     drive(speed - turnMod, speed + turnMod);
   }
@@ -102,16 +101,14 @@ public class DriveTrain extends SubsystemBase {
 
   public void driveRight(double speed) {
     setMotor(FRONT_RIGHT_DRIVE, speed);
-    setMotor(BACK_RIGHT_DRIVE, speed);
   }
 
   public void driveLeft(double speed) {
     setMotor(FRONT_LEFT_DRIVE, speed);
-    setMotor(BACK_LEFT_DRIVE, speed);
   }
 
-  private void setMotor(VictorSPX motor, double rawSpeed) {
-    motor.set(ControlMode.PercentOutput, rawSpeed * SpeedConstants.MASTER_THROTTLE);
+  private void setMotor(CANSparkMax motor, double rawSpeed) {
+    motor.set(rawSpeed * DriveTrainConstants.SPEED_THROTTLE);
   }
 
 

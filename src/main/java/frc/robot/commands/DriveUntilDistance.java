@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.subsystems.DriveTrain;
 
-import frc.robot.Constants.PIDConstants;
+import frc.robot.Constants.DriveTrainConstants;
 
 public class DriveUntilDistance extends PIDCommand {
   /**
@@ -24,7 +24,7 @@ public class DriveUntilDistance extends PIDCommand {
    */
   public DriveUntilDistance(double distance, DriveTrain driveTrain) {
     super(
-        new PIDController(PIDConstants.DRIVE_UNTIL_P, PIDConstants.DRIVE_UNTIL_I, PIDConstants.DRIVE_UNTIL_D),
+        new PIDController(DriveTrainConstants.DRIVE_UNTIL_P, DriveTrainConstants.DRIVE_UNTIL_I, DriveTrainConstants.DRIVE_UNTIL_D),
         driveTrain::getDistanceToObject,
         distance,
         output -> driveTrain.driveStraight(output),

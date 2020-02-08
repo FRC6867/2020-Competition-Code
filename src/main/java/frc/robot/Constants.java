@@ -16,7 +16,35 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final class PIDConstants{
+    public static final class DriveTrainConstants {
+        // User input
+        public static final int LEFT_STICK_Y_AXIS_ID = 1; // Left stick Y
+        public static final int RIGHT_STICK_Y_AXIS_ID = 5; // Right stick Y
+
+        public static final int FINE_CONTROL_BUTTON_ID = 5; // Left bumper
+
+        // Drive motor CANs
+        public static final int FRONT_LEFT_MOTOR_CAN = 10;
+        public static final int BACK_LEFT_MOTOR_CAN = 11;
+        public static final int FRONT_RIGHT_MOTOR_CAN = 20;
+        public static final int BACK_RIGHT_MOTOR_CAN = 21;
+
+        public static final boolean LEFT_MOTOR_INVERTED = false;
+        public static final boolean RIGHT_MOTOR_INVERTED = true;
+
+        // Encoders
+        public static final int[] LEFT_DRIVE_ENCODER_PINS = {1, 2};
+        public static final int[] RIGHT_DRIVE_ENCODER_PINS = {7, 8};
+
+        public static final boolean LEFT_ENCODER_INVERTED = true;
+        public static final boolean RIGHT_ENCODER_INVERTED = false;
+
+        // Ultrasonic sensor pins
+        public static final int ULTRASONIC_TRIGGER_PIN = 0; // Undefined
+        public static final int ULTRASONIC_ECHO_PIN = 0; // Undefined
+
+
+        // PIDs
         public static final double TURN_CORRECTION_P = 0.25;
 
         // For turning a specific amount of degrees
@@ -34,58 +62,52 @@ public final class Constants {
         public static double DRIVE_UNTIL_I = 0.0;
         public static double DRIVE_UNTIL_D = 0.0;
 
-        // To center the Krab
-        public static double KRAB_P = 0.01;
-        public static double KRAB_I = 0.0;
-        public static double KRAB_D = 0.0;
+
+        // Speed constants
+        public static final double SPEED_THROTTLE = 0.5; // Speed multiplier
     }
 
-    public static final class ComponentIDConstants {
-        // Motor CANs
-        public static final int FRONT_LEFT_DRIVE_CAN = 11;
-        public static final int BACK_LEFT_DRIVE_CAN = 10;
-        public static final int FRONT_RIGHT_DRIVE_CAN = 21;
-        public static final int BACK_RIGHT_DRIVE_CAN = 20;
-        
-        public static final int KRAB_SLIDE_MOTOR_CAN = 40;
+    public static final class IntakeConstants {
+        // User input
+        public static final int INTAKE_TOGGLE_BUTTON_ID = 6; // Right bumper
 
-        public static final int CLIMB_MOTOR_CAN = 01; // Motor is disabled
+        // Motor CANs
+        public static final int INTAKE_COLLECTOR_MOTOR_CAN = 30;
+        public static final int INTAKE_MOVER_MOTOR_CAN = 31;
+    }
+
+    public static final class IndexerConstants {
+        // User input
+        public static final int INDEXER_TOGGLE_BUTTON_ID = 4; // Y button
+
+        // Motor CANs
+        public static final int INDEXER_MOTOR_CAN = 40;
+    }
+
+    public static final class ShooterConstants {
+        // User input
+        public static final int SHOOTER_TOGGLE_BUTTON_ID = 1; // A button
+
+        // Motor CANs
+        public static final int FEEDER_MOTOR_CAN = 52;
+        public static final int SHOOTER_MOTOR_1_CAN = 50;
+        public static final int SHOOTER_MOTOR_2_CAN = 51;
 
         // Encoder pins
-        public static final int LEFT_DRIVE_ENCODER_PIN_1 = 1;
-        public static final int LEFT_DRIVE_ENCODER_PIN_2 = 2;
-        public static final int RIGHT_DRIVE_ENCODER_PIN_1 = 7;
-        public static final int RIGHT_DRIVE_ENCODER_PIN_2 = 8;
+        public static final int[] SHOOTER_ENCODER_PINS  = {0, 0}; // Undefined
 
-        // Ultrasonic sensor pins
-        public static final int ULTRASONIC_TRIGGER_PIN = 4;
-        public static final int ULTRASONIC_ECHO_PIN = 5;
+        // Shooter PID
+        public static double SHOOTER_P = 0.1;
+        public static double SHOOTER_I = 0.0;
+        public static double SHOOTER_D = 0.0;
     }
 
-    public static final class ControllerConstants {
-        // Triggers
-        public static final int KRAB_RIGHT_BUTTON = 3; // Right Trigger
-        public static final int KRAB_LEFT_BUTTON = 2; // Left Trigger
-        public static final int CENTER_KRAB_BUTTON = 0; // Currently undefined
+    public static final class ClimbConstants {
+        // User input
+        public static final int CLIMB_UP_BUTTON_ID = 7; // Back button
+        public static final int CLIMB_DOWN_BUTTON_ID = 8; // Start button
 
-        // Left stick axis
-        public static final int LEFT_STICK_Y_AXIS = 1;
-        public static final int LEFT_STICK_X_AXIS = 0;
-
-        // Right stick axis
-        public static final int RIGHT_STICK_Y_AXIS = 5;
-        public static final int RIGHT_STICK_X_AXIS = 4;
-
-        // Climb buttons
-        public static final int CLIMB_UP_BUTTON = 4; // Y button
-        public static final int CLIMB_DOWN_BUTTON = 1; // A button
-    }
-
-    public static final class SpeedConstants {
-        public static final double MASTER_THROTTLE = 0.7;
-
-        public static final double KRAB_SPEED = 0.35;
-        public static final int KRAB_RIGHT_STOP = -5000; // Krab limits
-        public static final int KRAB_LEFT_STOP = 5000;
+        // Motor CANs
+        public static final int CLIMB_MOTOR_CAN = 60;
     }
 }

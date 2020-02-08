@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.subsystems.DriveTrain;
 
-import frc.robot.Constants.PIDConstants;
+import frc.robot.Constants.DriveTrainConstants;;
 
 public class TurnDegrees extends PIDCommand {
   /**
@@ -24,7 +24,7 @@ public class TurnDegrees extends PIDCommand {
    */
   public TurnDegrees(int degrees, DriveTrain driveTrain) {
     super(
-      new PIDController(PIDConstants.TURN_P, PIDConstants.TURN_I, PIDConstants.TURN_D),
+      new PIDController(DriveTrainConstants.TURN_P, DriveTrainConstants.TURN_I, DriveTrainConstants.TURN_D),
       driveTrain::getHeading,
       degrees,
       output -> driveTrain.drive(-output, output),
@@ -46,9 +46,9 @@ public class TurnDegrees extends PIDCommand {
     SmartDashboard.putNumber("Turn D", getController().getD());
     
     getController().setPID(
-      SmartDashboard.getNumber("Turn P", PIDConstants.TURN_P),
-      SmartDashboard.getNumber("Turn I", PIDConstants.TURN_I),
-      SmartDashboard.getNumber("Turn D", PIDConstants.TURN_D)
+      SmartDashboard.getNumber("Turn P", DriveTrainConstants.TURN_P),
+      SmartDashboard.getNumber("Turn I", DriveTrainConstants.TURN_I),
+      SmartDashboard.getNumber("Turn D", DriveTrainConstants.TURN_D)
     );
   }
 

@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.subsystems.DriveTrain;
 
-import frc.robot.Constants.PIDConstants;
+import frc.robot.Constants.DriveTrainConstants;
 
 public class DriveForward extends PIDCommand {
   /**
@@ -24,7 +24,7 @@ public class DriveForward extends PIDCommand {
    */
   public DriveForward(double distance, DriveTrain driveTrain) {
     super(
-      new PIDController(PIDConstants.DRIVE_FOR_P, PIDConstants.DRIVE_FOR_I, PIDConstants.DRIVE_FOR_D),
+      new PIDController(DriveTrainConstants.DRIVE_FOR_P, DriveTrainConstants.DRIVE_FOR_I, DriveTrainConstants.DRIVE_FOR_D),
       driveTrain::getDistanceDriven,
       distance,
       output -> driveTrain.driveStraight(output),
@@ -44,9 +44,9 @@ public class DriveForward extends PIDCommand {
     SmartDashboard.putNumber("Forward D", getController().getD());
     
     getController().setPID(
-      SmartDashboard.getNumber("Forward P", PIDConstants.DRIVE_FOR_P),
-      SmartDashboard.getNumber("Forward I", PIDConstants.DRIVE_FOR_P),
-      SmartDashboard.getNumber("Forward D", PIDConstants.DRIVE_FOR_P)
+      SmartDashboard.getNumber("Forward P", DriveTrainConstants.DRIVE_FOR_P),
+      SmartDashboard.getNumber("Forward I", DriveTrainConstants.DRIVE_FOR_P),
+      SmartDashboard.getNumber("Forward D", DriveTrainConstants.DRIVE_FOR_P)
     );
   }
 
