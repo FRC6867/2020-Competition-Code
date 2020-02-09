@@ -40,6 +40,15 @@ public class TurnDegrees extends PIDCommand {
     addRequirements(driveTrain);
   }
 
+  public static int get180From360(int rawDegrees) {
+    int degrees = rawDegrees % 180;
+    if (rawDegrees > 180) {
+      degrees = -degrees;
+    }
+
+    return degrees;
+  }
+
   private void setPID() {
     getController().setPID(
       SmartDashboard.getNumber("Turn P", getController().getP()),

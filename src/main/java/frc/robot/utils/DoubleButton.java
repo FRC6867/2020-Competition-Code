@@ -24,9 +24,9 @@ public class DoubleButton extends Button {
      * Creates a new {@link DoubleButton}. Is only active when both supplied buttons are pressed.
      * 
      * @param joystick1 The joystick on which the first button is located
-     * @param button1Number The number of the first button located on the first joystick
+     * @param button1Number The number of the first button, located on the first joystick
      * @param joystick2 The joystick on which the second button is located
-     * @param button2Number The number of the second button located on the second joystick
+     * @param button2Number The number of the second button, located on the second joystick
      */
     public DoubleButton(GenericHID joystick1, int button1Number, GenericHID joystick2, int button2Number) {
         m_joystick1 = joystick1;

@@ -22,10 +22,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.robot.Constants.IndexerConstants;
 
 public class Indexer extends SubsystemBase {
-  private final VictorSPX INDEXER_MOTOR = new VictorSPX(IndexerConstants.INDEXER_MOTOR_CAN);
+  private final VictorSPX m_indexerMotor = new VictorSPX(IndexerConstants.INDEXER_MOTOR_CAN);
 
-  private final ColorSensorV3 BALL_SENSOR = new ColorSensorV3(I2C.Port.kOnboard);
-  private final ColorMatch COLOR_MATCHER = new ColorMatch();
+  private final ColorSensorV3 m_ballSensor = new ColorSensorV3(I2C.Port.kOnboard);
+  private final ColorMatch m_colorMatcher = new ColorMatch();
   private final Color BALL_COLOR = ColorMatch.makeColor(
     IndexerConstants.BALL_COLOR_R,
     IndexerConstants.BALL_COLOR_G, 
@@ -37,24 +37,31 @@ public class Indexer extends SubsystemBase {
    */
   public Indexer() {
     // Sets motor
-    INDEXER_MOTOR.setInverted(IndexerConstants.INDEXER_MOTOR_INVERTED);
+    m_indexerMotor.setInverted(IndexerConstants.INDEXER_MOTOR_INVERTED);
 
     // Inits ball sensor
-    COLOR_MATCHER.addColorMatch(BALL_COLOR);
+    m_colorMatcher.addColorMatch(BALL_COLOR);
   }
 
   /**
-   * Turns on the indexer motor at {@link IndexerConstants#INDEXER_MOTOR_SPEED} speed.
+   * Turns on the indexer motor at {@link IndexerConstants#m_indexerMotor_SPEED} speed.
    */
-  public void enableIndexer() {
-    INDEXER_MOTOR.set(ControlMode.PercentOutput, IndexerConstants.INDEXER_MOTOR_SPEED);
+  public void startIndexer() {
+    m_indexerMotor.set(ControlMode.PercentOutput, IndexerConstants.INDEXER_MOTOR_SPEED);
   }
 
   /**
    * Turns off the indexer motor
    */
-  public void disableIndexer() {
-    INDEXER_MOTOR.set(ControlMode.PercentOutput, 0);
+  public void stopIndexer() {
+    m_indexerMotor.set(ControlMode.PercentOutput, 0);
+  }
+
+  /**
+   * Runs the motor in reverse.
+   */
+  public void vomit() {
+    m_indexerMotor.set(ControlMode.PercentOutput, -IndexerConstants.INDEXER_MOTOR_SPEED);
   }
 
   /**
@@ -62,10 +69,10 @@ public class Indexer extends SubsystemBase {
    * @return Whether there is a ball ready to be fed
    */
   public boolean ballReady() {
-    // return BALL_SENSOR.getProximity() >= 1000; // Alternate implementation, needs tuning.
+    // return m_ballSensor.getProximity() >= IndexerConstants.BALL_CLOSE_DISTANCE; // Alternate implementation, needs tuning.
 
-    Color rawColor = BALL_SENSOR.getColor();
-    ColorMatchResult colorMatch = COLOR_MATCHER.matchClosestColor(rawColor);
+    Color rawColor = m_ballSensor.getColor();
+    ColorMatchResult colorMatch = m_colorMatcher.matchClosestColor(rawColor);
 
     SmartDashboard.putNumber("Red", rawColor.red); // Temporary for tuning
     SmartDashboard.putNumber("Green", rawColor.green);
@@ -79,6 +86,6 @@ public class Indexer extends SubsystemBase {
   public void periodic() {
     // Log info
     SmartDashboard.putBoolean("Ball Ready", ballReady());
-    SmartDashboard.putNumber("Ball Proximity", BALL_SENSOR.getProximity());
+    SmartDashboard.putNumber("Ball Proximity", m_ballSensor.getProximity());
   }
 }

@@ -9,17 +9,24 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.DriveTrain;
+
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.utils.DoubleButton;
+import frc.robot.utils.JoystickPOV;
+
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.TurnDegrees;
 import frc.robot.commands.DriveForward;
-import frc.robot.commands.TurnDegrees;
+import frc.robot.commands.Shoot;
+import frc.robot.commands.Vomit;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.utils.DoubleButton;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Indexer;
 
 import frc.robot.Constants.*;
 
@@ -35,6 +42,8 @@ public class RobotContainer {
   private final Joystick m_gamepad2 = new Joystick(1);
 
   private final DriveTrain m_driveTrain = new DriveTrain();
+  private final Shooter m_shooter = new Shooter();
+  private final Indexer m_indexer = new Indexer();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -58,9 +67,40 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    final JoystickButton CLIMB_UP_BUTTON = new JoystickButton(m_gamepad1, ClimbConstants.CLIMB_UP_BUTTON_ID);
-    final JoystickButton CLIMB_DOWN_BUTTON = new JoystickButton(m_gamepad1, ClimbConstants.CLIMB_DOWN_BUTTON_ID);
-    //final JoystickButton CENTER_KRAB_BUTTON = new JoystickButton(m_gamepad, ControllerConstants.CENTER_KRAB_BUTTON);
+    final JoystickButton m_releaseClimbButton = new JoystickButton(m_gamepad2, ClimbConstants.RELEASE_CLIMB_BUTTON_ID);
+    final JoystickButton m_climbUpButton = new JoystickButton(m_gamepad2, ClimbConstants.CLIMB_UP_BUTTON_ID);
+    final JoystickButton m_shootButton = new JoystickButton(m_gamepad2, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID);
+    final JoystickButton m_fineControlButton = new JoystickButton(m_gamepad1, DriveTrainConstants.FINE_CONTROL_BUTTON_ID);
+    final JoystickButton m_indexerButton = new JoystickButton(m_gamepad2, IndexerConstants.INDEXER_BUTTON_ID);
+    final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_gamepad1, DriveTrainConstants.TURN_DEGREES_POV_ID);
+    final DoubleButton m_vomitButton = new DoubleButton(m_gamepad2, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID);
+    
+    // Shooter bindings
+    m_shootButton.toggleWhenActive(new Shoot(m_shooter, m_indexer));
+    //m_shootButton.whenHeld(new Shoot(m_shooter, m_indexer));
+
+    // Precise Turning
+    m_turnDegreesPOV.whenPressed(new TurnDegrees(
+      m_turnDegreesPOV.get180Degrees(), m_driveTrain
+    ));
+
+    // Indexer control inline command
+    m_indexerButton.whenPressed(new InstantCommand(m_indexer::startIndexer))
+    .whenReleased(new InstantCommand(m_indexer::stopIndexer));
+
+    // Fine control inline command
+    m_fineControlButton.whenPressed(
+      new InstantCommand(
+        () -> m_driveTrain.setFineControl(true)
+      )
+    ).whenReleased(
+      new InstantCommand(
+        () -> m_driveTrain.setFineControl(false)
+      )
+    );
+
+    // Vomit function
+    m_vomitButton.whenHeld(new Vomit(m_shooter, m_indexer));
   }
 
   /**

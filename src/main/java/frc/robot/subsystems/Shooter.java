@@ -20,12 +20,12 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends PIDSubsystem {
   // Motors
-  private final VictorSPX SHOOTER_MOTOR_1 = new VictorSPX(ShooterConstants.SHOOTER_MOTOR_1_CAN);
-  private final VictorSPX SHOOTER_MOTOR_2 = new VictorSPX(ShooterConstants.SHOOTER_MOTOR_2_CAN);
-  private final VictorSPX FEEDER_MOTOR = new VictorSPX(ShooterConstants.FEEDER_MOTOR_CAN);
+  private final VictorSPX m_shooterMotor1 = new VictorSPX(ShooterConstants.SHOOTER_MOTOR_1_CAN);
+  private final VictorSPX m_shooterMotor2 = new VictorSPX(ShooterConstants.SHOOTER_MOTOR_2_CAN);
+  private final VictorSPX m_feederMotor = new VictorSPX(ShooterConstants.FEEDER_MOTOR_CAN);
 
   // Encoders
-  private final Encoder SHOOTER_ENCODER = new Encoder(
+  private final Encoder m_shooterEncoder = new Encoder(
     ShooterConstants.SHOOTER_ENCODER_PINS[0],
     ShooterConstants.SHOOTER_ENCODER_PINS[1],
     ShooterConstants.SHOOTER_ENCODER_INVERTED,
@@ -48,15 +48,15 @@ public class Shooter extends PIDSubsystem {
 
     // Encoder config
     // One full rotation will be one unit
-    SHOOTER_ENCODER.setDistancePerPulse(1 / ShooterConstants.SHOOTER_ENCODER_TICKS_PER_ROTATION);
+    m_shooterEncoder.setDistancePerPulse(1 / ShooterConstants.SHOOTER_ENCODER_TICKS_PER_ROTATION);
 
     // Motor config
-    SHOOTER_MOTOR_1.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
-    SHOOTER_MOTOR_2.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
-    FEEDER_MOTOR.setInverted(ShooterConstants.FEEDER_MOTOR_INVERTED);
+    m_shooterMotor1.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
+    m_shooterMotor2.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
+    m_feederMotor.setInverted(ShooterConstants.FEEDER_MOTOR_INVERTED);
 
-    SHOOTER_MOTOR_1.setNeutralMode(NeutralMode.Coast); // Make sure shooter doesn't brake.
-    SHOOTER_MOTOR_2.setNeutralMode(NeutralMode.Coast);
+    m_shooterMotor1.setNeutralMode(NeutralMode.Coast); // Make sure shooter doesn't brake.
+    m_shooterMotor2.setNeutralMode(NeutralMode.Coast);
   }
 
   private void setPID() {
@@ -73,8 +73,8 @@ public class Shooter extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    SHOOTER_MOTOR_1.set(ControlMode.PercentOutput, output);
-    SHOOTER_MOTOR_2.set(ControlMode.PercentOutput, -output); // These two work together
+    m_shooterMotor1.set(ControlMode.PercentOutput, output);
+    m_shooterMotor2.set(ControlMode.PercentOutput, -output); // These two work together
 
     // Log
     SmartDashboard.putNumber("Shooter RPM", getMeasurement());
@@ -82,7 +82,7 @@ public class Shooter extends PIDSubsystem {
 
   @Override
   public double getMeasurement() {
-    return SHOOTER_ENCODER.getRate();
+    return m_shooterEncoder.getRate();
   }
 
   /**
@@ -94,16 +94,23 @@ public class Shooter extends PIDSubsystem {
 
 
   /**
-   * Runs the feeder motor at {@link ShooterConstants#FEEDER_SPEED} speed.
+   * Runs the feeder motor(s) at {@link ShooterConstants#FEEDER_SPEED} speed.
    */
   public void runFeeder() {
-    FEEDER_MOTOR.set(ControlMode.PercentOutput, ShooterConstants.FEEDER_SPEED);
+    m_feederMotor.set(ControlMode.PercentOutput, ShooterConstants.FEEDER_SPEED);
   }
 
   /**
-   * Stops the feeder motor.
+   * Stops the feeder motor(s).
    */
   public void stopFeeder() {
-    FEEDER_MOTOR.set(ControlMode.PercentOutput, 0);
+    m_feederMotor.set(ControlMode.PercentOutput, 0);
+  }
+
+  /**
+   * Runs the feeder motor(s) in reverse. Flywheel cannot reverse.
+   */
+  public void vomit() {
+    m_feederMotor.set(ControlMode.PercentOutput, -ShooterConstants.FEEDER_SPEED);
   }
 }

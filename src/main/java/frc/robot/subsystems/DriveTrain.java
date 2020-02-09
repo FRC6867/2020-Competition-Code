@@ -22,29 +22,31 @@ import frc.robot.Constants.DriveTrainConstants;
 
 public class DriveTrain extends SubsystemBase {
   // Drives
-  private final CANSparkMax FRONT_LEFT_DRIVE = new CANSparkMax(DriveTrainConstants.BACK_LEFT_MOTOR_CAN, MotorType.kBrushless);
-  private final CANSparkMax BACK_LEFT_DRIVE = new CANSparkMax(DriveTrainConstants.FRONT_LEFT_MOTOR_CAN, MotorType.kBrushless);
-  private final CANSparkMax FRONT_RIGHT_DRIVE = new CANSparkMax(DriveTrainConstants.FRONT_RIGHT_MOTOR_CAN, MotorType.kBrushless);
-  private final CANSparkMax BACK_RIGHT_DRIVE = new CANSparkMax(DriveTrainConstants.BACK_RIGHT_MOTOR_CAN, MotorType.kBrushless);
+  private final CANSparkMax m_frontLeftDrive = new CANSparkMax(DriveTrainConstants.BACK_LEFT_MOTOR_CAN, MotorType.kBrushless);
+  private final CANSparkMax m_backLeftDrive = new CANSparkMax(DriveTrainConstants.FRONT_LEFT_MOTOR_CAN, MotorType.kBrushless);
+  private final CANSparkMax m_frontRightDrive = new CANSparkMax(DriveTrainConstants.FRONT_RIGHT_MOTOR_CAN, MotorType.kBrushless);
+  private final CANSparkMax m_backRightDrive = new CANSparkMax(DriveTrainConstants.BACK_RIGHT_MOTOR_CAN, MotorType.kBrushless);
 
-  private final AHRS NAVX = new AHRS(Port.kMXP);
+  private final AHRS m_navX = new AHRS(Port.kMXP);
+
+  private double m_speedThrottle = DriveTrainConstants.SPEED_THROTTLE;
 
   // Encoders
-  private final Encoder RIGHT_ENCODER = new Encoder(
+  private final Encoder m_rightEncoder = new Encoder(
     DriveTrainConstants.RIGHT_DRIVE_ENCODER_PINS[0],
     DriveTrainConstants.RIGHT_DRIVE_ENCODER_PINS[1],
     DriveTrainConstants.RIGHT_ENCODER_INVERTED,
     Encoder.EncodingType.k4X
   );
-  private final Encoder LEFT_ENCODER = new Encoder(
+  private final Encoder m_leftEncoder = new Encoder(
     DriveTrainConstants.LEFT_DRIVE_ENCODER_PINS[0],
     DriveTrainConstants.LEFT_DRIVE_ENCODER_PINS[1],
-    DriveTrainConstants.LEFT_ENCODER_INVERTED, // Left encoder is inverted
+    DriveTrainConstants.LEFT_ENCODER_INVERTED,
     Encoder.EncodingType.k4X
   );
 
   // Ultrasonic distance sensor
-  private final Ultrasonic DISTANCE_SENSOR = new Ultrasonic(
+  private final Ultrasonic m_distanceSensor = new Ultrasonic(
     DriveTrainConstants.ULTRASONIC_TRIGGER_PIN,
     DriveTrainConstants.ULTRASONIC_ECHO_PIN
   );
@@ -55,18 +57,17 @@ public class DriveTrain extends SubsystemBase {
    */
   public DriveTrain() {
     // Motor directions and following
-    FRONT_RIGHT_DRIVE.setInverted(DriveTrainConstants.RIGHT_MOTOR_INVERTED);
-    BACK_RIGHT_DRIVE.follow(FRONT_RIGHT_DRIVE);
-    FRONT_LEFT_DRIVE.setInverted(DriveTrainConstants.LEFT_MOTOR_INVERTED);
-    BACK_LEFT_DRIVE.follow(FRONT_LEFT_DRIVE);
+    m_frontRightDrive.setInverted(DriveTrainConstants.RIGHT_MOTOR_INVERTED);
+    m_backRightDrive.follow(m_frontRightDrive);
+    m_frontLeftDrive.setInverted(DriveTrainConstants.LEFT_MOTOR_INVERTED);
+    m_backLeftDrive.follow(m_frontLeftDrive);
 
     // Set encoder distance values
-    // TODO: Get encoder distances
-    RIGHT_ENCODER.setDistancePerPulse(DriveTrainConstants.RIGHT_ENCODER_TICK_DISTANCE);
-    LEFT_ENCODER.setDistancePerPulse(DriveTrainConstants.LEFT_ENCODER_TICK_DISTANCE);
+    m_rightEncoder.setDistancePerPulse(DriveTrainConstants.RIGHT_ENCODER_TICK_DISTANCE);
+    m_leftEncoder.setDistancePerPulse(DriveTrainConstants.LEFT_ENCODER_TICK_DISTANCE);
 
     // Start distance sensor
-    DISTANCE_SENSOR.setAutomaticMode(true);
+    m_distanceSensor.setAutomaticMode(true);
 
     reset(); // Make sure we start off fresh
   }
@@ -100,61 +101,82 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void driveRight(double speed) {
-    setMotor(FRONT_RIGHT_DRIVE, speed);
+    setMotor(m_frontRightDrive, speed);
   }
 
   public void driveLeft(double speed) {
-    setMotor(FRONT_LEFT_DRIVE, speed);
+    setMotor(m_frontLeftDrive, speed);
   }
 
   private void setMotor(CANSparkMax motor, double rawSpeed) {
     motor.set(rawSpeed * DriveTrainConstants.SPEED_THROTTLE);
   }
 
+  public void setFineControl(boolean fineControl) {
+    if (fineControl) {
+      m_speedThrottle = m_speedThrottle / 2;
+    } else {
+      m_speedThrottle = m_speedThrottle * 2;
+    }
+    updateSpeedThrottle();
+  }
 
   /**
    * Resets the values of the {@link DriveTrain}'s sensors.
    */
   public void reset() {
-    NAVX.reset();
+    m_navX.reset();
 
-    LEFT_ENCODER.reset();
-    RIGHT_ENCODER.reset();
+    m_leftEncoder.reset();
+    m_rightEncoder.reset();
   }
 
   /**
-   * @return Average encoder distance, in inches
+   * @return Average distance driven, in inches
    */
   public double getDistanceDriven() { // Average distance
-    return (LEFT_ENCODER.getDistance() + RIGHT_ENCODER.getDistance()) / 2;
+    return (m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2;
   }
 
+  /**
+   * @return Left encoder distance, in inches
+   */
   public double getLeftEncoder() {
-    return LEFT_ENCODER.getDistance();
+    return m_leftEncoder.getDistance();
   }
 
+  /**
+   * @return Right encoder distance, in inches
+   */
   public double getRightEncoder() {
-    return RIGHT_ENCODER.getDistance();
+    return m_rightEncoder.getDistance();
   }
   
   /**
    * @return Relative gyro heading, in degrees
    */
   public double getHeading() {
-    return NAVX.getAngle();
+    return m_navX.getAngle();
   }
 
   /**
    * @return Distance to nearest object (front), in inches
    */
   public double getDistanceToObject() {
-    // DISTANCE_SENSOR.ping(); // If we would like to turn off automatic mode
-    return DISTANCE_SENSOR.getRangeInches();
+    // m_distanceSensor.ping(); // If we would like to turn off automatic mode
+    return m_distanceSensor.getRangeInches();
   }
 
 
+  private void updateSpeedThrottle() {
+    SmartDashboard.putNumber("DriveTrain Throttle", m_speedThrottle);
+  }
+
   @Override
   public void periodic() {
+    m_speedThrottle = SmartDashboard.getNumber("DriveTrain Throttle", m_speedThrottle);
+    updateSpeedThrottle();
+
     // Log data
     SmartDashboard.putNumber("Distance Driven", getDistanceDriven());
     SmartDashboard.putNumber("Distance From Object",getDistanceToObject());
