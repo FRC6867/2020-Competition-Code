@@ -24,7 +24,7 @@ public class DriveUntilDistance extends PIDCommand {
    */
   public DriveUntilDistance(double distance, DriveTrain driveTrain) {
     super(
-        new PIDController(DriveTrainConstants.DRIVE_UNTIL_P, DriveTrainConstants.DRIVE_UNTIL_I, DriveTrainConstants.DRIVE_UNTIL_D),
+        new PIDController(DriveTrainConstants.DRIVE_P, DriveTrainConstants.DRIVE_I, DriveTrainConstants.DRIVE_D),
         driveTrain::getDistanceToObject,
         distance,
         output -> driveTrain.driveStraight(output),
@@ -32,8 +32,6 @@ public class DriveUntilDistance extends PIDCommand {
     );
 
     driveTrain.reset();
-
-    SmartDashboard.putData("PID Drive Until Controller", getController());
 
     getController().setTolerance(5); // 5 inches for testing
   }

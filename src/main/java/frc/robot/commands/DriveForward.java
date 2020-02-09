@@ -24,7 +24,7 @@ public class DriveForward extends PIDCommand {
    */
   public DriveForward(double distance, DriveTrain driveTrain) {
     super(
-      new PIDController(DriveTrainConstants.DRIVE_FOR_P, DriveTrainConstants.DRIVE_FOR_I, DriveTrainConstants.DRIVE_FOR_D),
+      new PIDController(DriveTrainConstants.DRIVE_P, DriveTrainConstants.DRIVE_I, DriveTrainConstants.DRIVE_D),
       driveTrain::getDistanceDriven,
       distance,
       output -> driveTrain.driveStraight(output),
@@ -33,21 +33,21 @@ public class DriveForward extends PIDCommand {
 
     driveTrain.reset(); // Make sure we are in relative position
     setPID();
-    getController().setTolerance(1); // Should be one unit, inches in this case
+    getController().setTolerance(DriveTrainConstants.DRIVE_TARGET_TOLERANCE); // Should be one unit, inches in this case
 
     addRequirements(driveTrain);
   }
 
   private void setPID() {
-    SmartDashboard.putNumber("Forward P", getController().getP());
-    SmartDashboard.putNumber("Forward I", getController().getI());
-    SmartDashboard.putNumber("Forward D", getController().getD());
-    
     getController().setPID(
-      SmartDashboard.getNumber("Forward P", DriveTrainConstants.DRIVE_FOR_P),
-      SmartDashboard.getNumber("Forward I", DriveTrainConstants.DRIVE_FOR_P),
-      SmartDashboard.getNumber("Forward D", DriveTrainConstants.DRIVE_FOR_P)
+      SmartDashboard.getNumber("Drive P", getController().getP()),
+      SmartDashboard.getNumber("Drive I", getController().getI()),
+      SmartDashboard.getNumber("Drive D", getController().getD())
     );
+
+    SmartDashboard.putNumber("Drive P", getController().getP());
+    SmartDashboard.putNumber("Drive I", getController().getI());
+    SmartDashboard.putNumber("Drive D", getController().getD());
   }
 
   // Returns true when the command should end.

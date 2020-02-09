@@ -55,15 +55,15 @@ public class DriveTrain extends SubsystemBase {
    */
   public DriveTrain() {
     // Motor directions and following
-    FRONT_RIGHT_DRIVE.setInverted(true);
+    FRONT_RIGHT_DRIVE.setInverted(DriveTrainConstants.RIGHT_MOTOR_INVERTED);
     BACK_RIGHT_DRIVE.follow(FRONT_RIGHT_DRIVE);
-    FRONT_LEFT_DRIVE.setInverted(false);
+    FRONT_LEFT_DRIVE.setInverted(DriveTrainConstants.LEFT_MOTOR_INVERTED);
     BACK_LEFT_DRIVE.follow(FRONT_LEFT_DRIVE);
 
     // Set encoder distance values
     // TODO: Get encoder distances
-    RIGHT_ENCODER.setDistancePerPulse(1);
-    LEFT_ENCODER.setDistancePerPulse(1);
+    RIGHT_ENCODER.setDistancePerPulse(DriveTrainConstants.RIGHT_ENCODER_TICK_DISTANCE);
+    LEFT_ENCODER.setDistancePerPulse(DriveTrainConstants.LEFT_ENCODER_TICK_DISTANCE);
 
     // Start distance sensor
     DISTANCE_SENSOR.setAutomaticMode(true);

@@ -35,21 +35,21 @@ public class TurnDegrees extends PIDCommand {
     driveTrain.reset(); // Make sure we are in relative position
     setPID();
     getController().enableContinuousInput(-180, 180);
-    getController().setTolerance(0.5); // 0.5 degrees inaccuracy allowed
+    getController().setTolerance(DriveTrainConstants.TURN_TARGET_TOLERANCE);
 
     addRequirements(driveTrain);
   }
 
   private void setPID() {
+    getController().setPID(
+      SmartDashboard.getNumber("Turn P", getController().getP()),
+      SmartDashboard.getNumber("Turn I", getController().getI()),
+      SmartDashboard.getNumber("Turn D", getController().getD())
+    );
+
     SmartDashboard.putNumber("Turn P", getController().getP());
     SmartDashboard.putNumber("Turn I", getController().getI());
     SmartDashboard.putNumber("Turn D", getController().getD());
-    
-    getController().setPID(
-      SmartDashboard.getNumber("Turn P", DriveTrainConstants.TURN_P),
-      SmartDashboard.getNumber("Turn I", DriveTrainConstants.TURN_I),
-      SmartDashboard.getNumber("Turn D", DriveTrainConstants.TURN_D)
-    );
   }
 
   // Returns true when the command should end.

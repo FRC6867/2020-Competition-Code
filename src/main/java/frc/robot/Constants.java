@@ -36,6 +36,9 @@ public final class Constants {
         public static final int[] LEFT_DRIVE_ENCODER_PINS = {1, 2};
         public static final int[] RIGHT_DRIVE_ENCODER_PINS = {7, 8};
 
+        public static final double LEFT_ENCODER_TICK_DISTANCE = 1; // Undefined
+        public static final double RIGHT_ENCODER_TICK_DISTANCE = 1; // Undefined
+
         public static final boolean LEFT_ENCODER_INVERTED = true;
         public static final boolean RIGHT_ENCODER_INVERTED = false;
 
@@ -48,19 +51,17 @@ public final class Constants {
         public static final double TURN_CORRECTION_P = 0.25;
 
         // For turning a specific amount of degrees
-        public static double TURN_P = 0.05;
+        public static double TURN_P = 0.05; // Sandy's, needs tuning
         public static double TURN_I = 0.0;
         public static double TURN_D = 0.006;
 
         // For moving for a specific distance
-        public static double DRIVE_FOR_P = 0.01;
-        public static double DRIVE_FOR_I = 0.0;
-        public static double DRIVE_FOR_D = 0.0;
+        public static double DRIVE_P = 0.01;
+        public static double DRIVE_I = 0.0;
+        public static double DRIVE_D = 0.0;
 
-        // For moving to a specific distance from an object
-        public static double DRIVE_UNTIL_P = 0.01;
-        public static double DRIVE_UNTIL_I = 0.0;
-        public static double DRIVE_UNTIL_D = 0.0;
+        public static double TURN_TARGET_TOLERANCE = 0.5;
+        public static double DRIVE_TARGET_TOLERANCE = 1;
 
 
         // Speed constants
@@ -74,32 +75,54 @@ public final class Constants {
         // Motor CANs
         public static final int INTAKE_COLLECTOR_MOTOR_CAN = 30;
         public static final int INTAKE_MOVER_MOTOR_CAN = 31;
+
+        public static final boolean INTAKE_COLLECTOR_MOTOR_INVERTED = false;
+        public static final boolean INTAKE_MOVER_MOTOR_INVERTED = false;
     }
 
     public static final class IndexerConstants {
         // User input
-        public static final int INDEXER_TOGGLE_BUTTON_ID = 4; // Y button
+        public static final int INDEXER_TOGGLE_BUTTON_ID = 4; // 'Y' button
 
         // Motor CANs
         public static final int INDEXER_MOTOR_CAN = 40;
+
+        public static final boolean INDEXER_MOTOR_INVERTED = false;
+        public static final double INDEXER_MOTOR_SPEED = 0.3;
+
+        // Ball color
+        public static final double BALL_COLOR_R = 0.361;
+        public static final double BALL_COLOR_B = 0.524;
+        public static final double BALL_COLOR_G = 0.113;
     }
 
     public static final class ShooterConstants {
         // User input
-        public static final int SHOOTER_TOGGLE_BUTTON_ID = 1; // A button
+        public static final int SHOOTER_TOGGLE_BUTTON_ID = 1; // 'A' button
 
         // Motor CANs
         public static final int FEEDER_MOTOR_CAN = 52;
         public static final int SHOOTER_MOTOR_1_CAN = 50;
         public static final int SHOOTER_MOTOR_2_CAN = 51;
 
-        // Encoder pins
+        public static final boolean SHOOTER_MOTORS_INVERTED = false;
+        public static final boolean FEEDER_MOTOR_INVERTED = false;
+
+        // Encoder
         public static final int[] SHOOTER_ENCODER_PINS  = {0, 0}; // Undefined
+        public static final boolean SHOOTER_ENCODER_INVERTED = false;
+        public static final int SHOOTER_ENCODER_TICKS_PER_ROTATION = 8000;
 
         // Shooter PID
         public static double SHOOTER_P = 0.1;
         public static double SHOOTER_I = 0.0;
         public static double SHOOTER_D = 0.0;
+
+        // Speeds
+        public static double SHOOTER_TARGET_RPM = 6000;
+        public static double SHOOTER_TARGET_RPM_TOLERANCE = 500; // 500 for now
+
+        public static double FEEDER_SPEED = 0.3;
     }
 
     public static final class ClimbConstants {
@@ -109,5 +132,7 @@ public final class Constants {
 
         // Motor CANs
         public static final int CLIMB_MOTOR_CAN = 60;
+
+        public static final boolean CLIMB_MOTOR_INVERTED = false;
     }
 }
