@@ -72,9 +72,9 @@ public class RobotContainer {
     final JoystickButton m_shootButton = new JoystickButton(m_gamepad2, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID);
     final JoystickButton m_fineControlButton = new JoystickButton(m_gamepad1, DriveTrainConstants.FINE_CONTROL_BUTTON_ID);
     final JoystickButton m_indexerButton = new JoystickButton(m_gamepad2, IndexerConstants.INDEXER_BUTTON_ID);
-    final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_gamepad1, DriveTrainConstants.TURN_DEGREES_POV_ID);
+    final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_gamepad1);
     final DoubleButton m_vomitButton = new DoubleButton(m_gamepad2, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID);
-    
+    /**
     // Shooter bindings
     m_shootButton.toggleWhenActive(new Shoot(m_shooter, m_indexer));
     //m_shootButton.whenHeld(new Shoot(m_shooter, m_indexer));
@@ -101,6 +101,7 @@ public class RobotContainer {
 
     // Vomit function
     m_vomitButton.whenHeld(new Vomit(m_shooter, m_indexer));
+    */
   }
 
   /**

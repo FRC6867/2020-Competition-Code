@@ -29,8 +29,6 @@ public class DriveTrain extends SubsystemBase {
 
   private final AHRS m_navX = new AHRS(Port.kMXP);
 
-  private double m_speedThrottle = DriveTrainConstants.SPEED_THROTTLE;
-
   // Encoders
   private final Encoder m_rightEncoder = new Encoder(
     DriveTrainConstants.RIGHT_DRIVE_ENCODER_PINS[0],
@@ -50,6 +48,10 @@ public class DriveTrain extends SubsystemBase {
     DriveTrainConstants.ULTRASONIC_TRIGGER_PIN,
     DriveTrainConstants.ULTRASONIC_ECHO_PIN
   );
+
+  // Speed throttles
+  private double m_rawSpeedThrottle = DriveTrainConstants.SPEED_THROTTLE;
+  private double m_currentSpeedThrottle = m_rawSpeedThrottle;
 
 
   /**
@@ -109,14 +111,16 @@ public class DriveTrain extends SubsystemBase {
   }
 
   private void setMotor(CANSparkMax motor, double rawSpeed) {
-    motor.set(rawSpeed * DriveTrainConstants.SPEED_THROTTLE);
+    motor.set(rawSpeed * m_currentSpeedThrottle);
   }
 
   public void setFineControl(boolean fineControl) {
     if (fineControl) {
-      m_speedThrottle = m_speedThrottle / 2;
+      m_currentSpeedThrottle = m_rawSpeedThrottle / 2;
+      SmartDashboard.putBoolean("Fine Drive Control", true);
     } else {
-      m_speedThrottle = m_speedThrottle * 2;
+      m_currentSpeedThrottle = m_rawSpeedThrottle;
+      SmartDashboard.putBoolean("Fine Drive Control", false);
     }
     updateSpeedThrottle();
   }
@@ -169,13 +173,13 @@ public class DriveTrain extends SubsystemBase {
 
 
   private void updateSpeedThrottle() {
-    SmartDashboard.putNumber("DriveTrain Throttle", m_speedThrottle);
+    SmartDashboard.putNumber("DriveTrain Throttle", m_rawSpeedThrottle);
   }
 
   @Override
   public void periodic() {
-    m_speedThrottle = SmartDashboard.getNumber("DriveTrain Throttle", m_speedThrottle);
-    updateSpeedThrottle();
+    m_rawSpeedThrottle = SmartDashboard.getNumber("DriveTrain Throttle", m_rawSpeedThrottle);
+    setFineControl(SmartDashboard.getBoolean("Fine Drive Control", false));
 
     // Log data
     SmartDashboard.putNumber("Distance Driven", getDistanceDriven());
