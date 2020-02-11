@@ -28,15 +28,18 @@ public final class Constants {
         // Drive motor CANs
         public static final int FRONT_LEFT_MOTOR_CAN = 10; // Undefined
         public static final int BACK_LEFT_MOTOR_CAN = 11; // Undefined
-        public static final int FRONT_RIGHT_MOTOR_CAN = 20; // Undefined
-        public static final int BACK_RIGHT_MOTOR_CAN = 21; // Undefined
-
+        public static final int FRONT_RIGHT_MOTOR_CAN = 12; // Undefined
+        public static final int BACK_RIGHT_MOTOR_CAN = 13; // Undefined
+//      Shooter Motor 1 =    
+// 
+// 
+//         
         public static final boolean LEFT_MOTOR_INVERTED = false; // Undefined
         public static final boolean RIGHT_MOTOR_INVERTED = true; // Undefined
 
         // Encoders
         public static final int[] LEFT_DRIVE_ENCODER_PINS = {1, 2}; // Undefined
-        public static final int[] RIGHT_DRIVE_ENCODER_PINS = {7, 8}; // Undefined
+        public static final int[] RIGHT_DRIVE_ENCODER_PINS = {3, 4}; // Undefined
 
         public static final double LEFT_ENCODER_TICK_DISTANCE = 1; // Undefined
         public static final double RIGHT_ENCODER_TICK_DISTANCE = 1; // Undefined
@@ -45,8 +48,8 @@ public final class Constants {
         public static final boolean RIGHT_ENCODER_INVERTED = false; // Undefined
 
         // Ultrasonic sensor pins
-        public static final int ULTRASONIC_TRIGGER_PIN = 0; // Undefined
-        public static final int ULTRASONIC_ECHO_PIN = 0; // Undefined
+        public static final int ULTRASONIC_TRIGGER_PIN = 5; // Undefined
+        public static final int ULTRASONIC_ECHO_PIN = 6; // Undefined
 
 
         // PIDs
@@ -75,8 +78,8 @@ public final class Constants {
         public static final int INTAKE_BUTTON_ID = 6; // Right bumper
 
         // Motor CANs
-        public static final int INTAKE_COLLECTOR_MOTOR_CAN = 30; // Undefined
-        public static final int INTAKE_MOVER_MOTOR_CAN = 31; // Undefined
+        public static final int INTAKE_COLLECTOR_MOTOR_CAN = 20; // Undefined
+        public static final int INTAKE_MOVER_MOTOR_CAN = 21; // Undefined
 
         public static final boolean INTAKE_COLLECTOR_MOTOR_INVERTED = false; // Undefined
         public static final boolean INTAKE_MOVER_MOTOR_INVERTED = false; // Undefined
@@ -87,7 +90,7 @@ public final class Constants {
         public static final int INDEXER_BUTTON_ID = 4; // 'Y' button
 
         // Motor CANs
-        public static final int INDEXER_MOTOR_CAN = 40; // Undefined
+        public static final int INDEXER_MOTOR_CAN = 30; // Undefined
 
         public static final boolean INDEXER_MOTOR_INVERTED = false; // Undefined
         public static final double INDEXER_MOTOR_SPEED = 0.3;
@@ -105,15 +108,15 @@ public final class Constants {
         public static final int SHOOTER_TOGGLE_BUTTON_ID = 1; // 'A' button
 
         // Motor CANs
-        public static final int FEEDER_MOTOR_CAN = 52; // Undefined
-        public static final int SHOOTER_MOTOR_1_CAN = 50; // Undefined
-        public static final int SHOOTER_MOTOR_2_CAN = 51; // Undefined
+        public static final int FEEDER_MOTOR_CAN = 42; // Undefined
+        public static final int SHOOTER_MOTOR_1_CAN = 40; // Undefined
+        public static final int SHOOTER_MOTOR_2_CAN = 41; // Undefined
 
         public static final boolean SHOOTER_MOTORS_INVERTED = false; // Undefined
         public static final boolean FEEDER_MOTOR_INVERTED = false; // Undefined
 
         // Encoder
-        public static final int[] SHOOTER_ENCODER_PINS  = {0, 0}; // Undefined
+        public static final int[] SHOOTER_ENCODER_PINS  = {7, 8}; // Undefined
         public static final boolean SHOOTER_ENCODER_INVERTED = false; // Undefined
         public static final int SHOOTER_ENCODER_TICKS_PER_ROTATION = 8000;
 
@@ -135,13 +138,13 @@ public final class Constants {
         public static final int CLIMB_UP_BUTTON_ID = 8; // Start button
 
         // Motor CANs
-        public static final int CLIMB_MOTOR_CAN = 60; // Undefined
+        public static final int CLIMB_MOTOR_CAN = 50; // Undefined
 
         public static final boolean CLIMB_MOTOR_INVERTED = false; // Undefined
         public static final double CLIMB_MOTOR_SPEED = 0.5;
     }
 
     // Vomit buttons
-    public static final int VOMIT_BUTTON_1_ID = 0; // Undefined
-    public static final int VOMIT_BUTTON_2_ID = 0; // Undefined
+    public static final int VOMIT_BUTTON_1_ID = 1; // Undefined
+    public static final int VOMIT_BUTTON_2_ID = 1; // Undefined
 }

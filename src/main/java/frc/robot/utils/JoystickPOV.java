@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.Button;
  */
 public class JoystickPOV extends Button {
     private GenericHID m_joystick;
+    private int loop = 1;
 
     /**
      * Creates a new {@link JoystickPOV} that activates when it is moved.
@@ -30,7 +31,11 @@ public class JoystickPOV extends Button {
      * @return Current POV state. This is -1 if not pressed, or 0-360 if pressed.
      */
     public int getRawPOV() {
-        System.out.println(m_joystick.getPOV());
+        if (loop >= 10) {
+            System.out.println(m_joystick.getPOV());
+            loop = 0;
+        }
+        loop++;
         return m_joystick.getPOV();
     }
 
