@@ -50,8 +50,8 @@ public class DriveTrain extends SubsystemBase {
   );
 
   // Speed throttles
-  private double m_rawSpeedThrottle = DriveTrainConstants.SPEED_THROTTLE;
-  private double m_currentSpeedThrottle = m_rawSpeedThrottle;
+  private double m_speedThrottle = DriveTrainConstants.SPEED_THROTTLE;
+  private boolean m_fineControl = false;
 
 
   /**
@@ -72,8 +72,11 @@ public class DriveTrain extends SubsystemBase {
     m_distanceSensor.setAutomaticMode(true);
 
     reset(); // Make sure we start off fresh
-  }
 
+    SmartDashboard.putData("Heading", m_navX);
+    SmartDashboard.putData("Left Drive Encoder", m_leftEncoder);
+    SmartDashboard.putData("Right Drive Encoder", m_rightEncoder);
+  }
 
 
   /**
@@ -111,18 +114,16 @@ public class DriveTrain extends SubsystemBase {
   }
 
   private void setMotor(CANSparkMax motor, double rawSpeed) {
-    motor.set(rawSpeed * m_currentSpeedThrottle);
+    if (m_fineControl) {
+      motor.set(rawSpeed * m_speedThrottle);
+    } else {
+      motor.set(rawSpeed * m_speedThrottle / 2);
+    }
   }
 
   public void setFineControl(boolean fineControl) {
-    if (fineControl) {
-      m_currentSpeedThrottle = m_rawSpeedThrottle / 2;
-      SmartDashboard.putBoolean("Fine Drive Control", true);
-    } else {
-      m_currentSpeedThrottle = m_rawSpeedThrottle;
-      SmartDashboard.putBoolean("Fine Drive Control", false);
-    }
-    updateSpeedThrottle();
+    m_fineControl = fineControl;
+    SmartDashboard.putBoolean("Fine Drive Control", fineControl);
   }
 
   /**
@@ -172,14 +173,10 @@ public class DriveTrain extends SubsystemBase {
   }
 
 
-  private void updateSpeedThrottle() {
-    SmartDashboard.putNumber("DriveTrain Throttle", m_rawSpeedThrottle);
-  }
-
   @Override
   public void periodic() {
-    m_rawSpeedThrottle = SmartDashboard.getNumber("DriveTrain Throttle", m_rawSpeedThrottle);
-    setFineControl(SmartDashboard.getBoolean("Fine Drive Control", false));
+    m_speedThrottle = SmartDashboard.getNumber("DriveTrain Throttle", m_speedThrottle);
+    m_fineControl = SmartDashboard.getBoolean("Fine Drive Control", false);
 
     // Log data
     SmartDashboard.putNumber("Distance Driven", getDistanceDriven());

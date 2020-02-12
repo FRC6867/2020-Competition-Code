@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Indexer;
 
+/**
+ * A fairly simple command. I decided to write this in it's
+ * own class rather than inline because ¯\_(ツ)_/¯ I'm lazy
+ */
 public class Shoot extends CommandBase {
   private final Shooter m_shooter;
   private final Indexer m_indexer;

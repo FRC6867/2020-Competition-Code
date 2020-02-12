@@ -77,12 +77,14 @@ public class Shooter extends PIDSubsystem {
     m_shooterMotor2.set(ControlMode.PercentOutput, -output); // These two work together
 
     // Log
-    SmartDashboard.putNumber("Shooter RPM", getMeasurement());
+    double speed = getMeasurement();
+    SmartDashboard.putNumber("Shooter RPM", speed);
+    SmartDashboard.putNumber("Shooter RPM Graph", speed);
   }
 
   @Override
   public double getMeasurement() {
-    return m_shooterEncoder.getRate();
+    return m_shooterEncoder.getRate() * 60;
   }
 
   /**

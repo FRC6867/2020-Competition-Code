@@ -67,40 +67,29 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    final JoystickButton m_releaseClimbButton = new JoystickButton(m_gamepad2, ClimbConstants.RELEASE_CLIMB_BUTTON_ID);
-    final JoystickButton m_climbUpButton = new JoystickButton(m_gamepad2, ClimbConstants.CLIMB_UP_BUTTON_ID);
-    final JoystickButton m_shootButton = new JoystickButton(m_gamepad2, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID);
-    final JoystickButton m_fineControlButton = new JoystickButton(m_gamepad1, DriveTrainConstants.FINE_CONTROL_BUTTON_ID);
-    final JoystickButton m_indexerButton = new JoystickButton(m_gamepad2, IndexerConstants.INDEXER_BUTTON_ID);
     final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_gamepad1);
-    final DoubleButton m_vomitButton = new DoubleButton(m_gamepad2, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID);
     
     // Shooter bindings
-    m_shootButton.toggleWhenActive(new Shoot(m_shooter, m_indexer));
-    //m_shootButton.whenHeld(new Shoot(m_shooter, m_indexer));
+    new JoystickButton(m_gamepad2, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
+      .toggleWhenActive(new Shoot(m_shooter, m_indexer)); // Possibly use .whenHeld()
 
     // Precise Turning
-    m_turnDegreesPOV.whenPressed(new TurnDegrees(
-      m_turnDegreesPOV.get180Degrees(), m_driveTrain
-    ));
+    m_turnDegreesPOV
+      .whenPressed(new TurnDegrees(m_turnDegreesPOV.get180Degrees(), m_driveTrain));
 
     // Indexer control inline command
-    m_indexerButton.whenPressed(new InstantCommand(m_indexer::startIndexer))
-    .whenReleased(new InstantCommand(m_indexer::stopIndexer));
+    new JoystickButton(m_gamepad2, IndexerConstants.INDEXER_BUTTON_ID)
+      .whenPressed(new InstantCommand(m_indexer::startIndexer))
+      .whenReleased(new InstantCommand(m_indexer::stopIndexer));
 
     // Fine control inline command
-    m_fineControlButton.whenPressed(
-      new InstantCommand(
-        () -> m_driveTrain.setFineControl(true)
-      )
-    ).whenReleased(
-      new InstantCommand(
-        () -> m_driveTrain.setFineControl(false)
-      )
-    );
+    new JoystickButton(m_gamepad1, DriveTrainConstants.FINE_CONTROL_BUTTON_ID)
+      .whenPressed(() -> m_driveTrain.setFineControl(true))
+      .whenReleased(() -> m_driveTrain.setFineControl(false));
 
     // Vomit function
-    m_vomitButton.whenHeld(new Vomit(m_shooter, m_indexer));
+    new DoubleButton(m_gamepad2, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID)
+      .whenHeld(new Vomit(m_shooter, m_indexer));
     
   }
 

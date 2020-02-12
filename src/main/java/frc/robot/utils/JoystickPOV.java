@@ -31,11 +31,6 @@ public class JoystickPOV extends Button {
      * @return Current POV state. This is -1 if not pressed, or 0-360 if pressed.
      */
     public int getRawPOV() {
-        if (loop >= 10) {
-            System.out.println(m_joystick.getPOV());
-            loop = 0;
-        }
-        loop++;
         return m_joystick.getPOV();
     }
 
