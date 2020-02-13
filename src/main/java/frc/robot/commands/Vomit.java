@@ -46,7 +46,7 @@ public class Vomit extends CommandBase {
     m_shooter.stopFeeder();
   }
 
-  // Returns true when the command should end.
+  // Don't end until interrupted.
   @Override
   public boolean isFinished() {
     return false;

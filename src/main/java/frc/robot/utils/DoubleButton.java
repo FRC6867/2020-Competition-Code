@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
 /**
- * A special {@link Button} that only runs when two JoystickButtons are pressed.
+ * A special {@link Button} that only runs when the two supplied Buttons are pressed.
  */
 public class DoubleButton extends Button {
     private final GenericHID m_joystick1;
@@ -28,11 +28,11 @@ public class DoubleButton extends Button {
      * @param joystick2 The joystick on which the second button is located
      * @param button2Number The number of the second button, located on the second joystick
      */
-    public DoubleButton(GenericHID joystick1, int button1Number, GenericHID joystick2, int button2Number) {
+    public DoubleButton(GenericHID joystick1, int button1Num, GenericHID joystick2, int button2Num) {
         m_joystick1 = joystick1;
         m_joystick2 = joystick2;
-        m_button1Number = button1Number;
-        m_button2Number = button2Number;
+        m_button1Number = button1Num;
+        m_button2Number = button2Num;
     }
 
     /**
@@ -42,11 +42,11 @@ public class DoubleButton extends Button {
      * @param button1Number The number of first button
      * @param button2Number The number of the second button
      */
-    public DoubleButton(GenericHID joystick, int button1Number, int button2Number) {
+    public DoubleButton(GenericHID joystick, int button1Num, int button2Num) {
         m_joystick1 = joystick;
         m_joystick2 = joystick;
-        m_button1Number = button1Number;
-        m_button2Number = button2Number;
+        m_button1Number = button1Num;
+        m_button2Number = button2Num;
     }
 
 

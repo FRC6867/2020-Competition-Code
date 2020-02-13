@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.button.Button;
  */
 public class JoystickPOV extends Button {
     private GenericHID m_joystick;
-    private int loop = 1;
 
     /**
      * Creates a new {@link JoystickPOV} that activates when it is moved.
@@ -28,14 +27,15 @@ public class JoystickPOV extends Button {
     }
 
     /**
-     * @return Current POV state. This is -1 if not pressed, or 0-360 if pressed.
+     * @return Current raw POV state. This is -1 if not pressed, or 0-315 if pressed.
      */
     public int getRawPOV() {
         return m_joystick.getPOV();
     }
 
     /**
-     * @return A refined number between -180 and 180. Returns 0 if not active.
+     * @return A refined number between -180 and 180, describing the current POV state.
+     * Returns 0 if not active.
      */
     public int get180Degrees() {
         int rawDegrees = getRawPOV();
@@ -49,7 +49,15 @@ public class JoystickPOV extends Button {
         return degrees;
     }
 
+    // In our use case, we do not want to activate if POV is pressed forward.
+    public boolean get() {
+        return get180Degrees() != 0;
+    }
+    
+    /**
+    // See above. This might be faster though.
     public boolean get() {
         return getRawPOV() != -1;
     }
+    */
 }

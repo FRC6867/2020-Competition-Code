@@ -9,12 +9,17 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.subsystems.DriveTrain;
 
 import frc.robot.Constants.DriveTrainConstants;
 
+
+/**
+ * Unfinished, I don't know if we plan to add this at all...
+ */
 public class DriveUntilDistance extends PIDCommand {
   /**
    * Creates a new DriveUntilDistance command.
@@ -33,7 +38,7 @@ public class DriveUntilDistance extends PIDCommand {
 
     driveTrain.reset();
 
-    getController().setTolerance(5); // 5 inches for testing
+    getController().setTolerance(DriveTrainConstants.DRIVE_TARGET_TOLERANCE);
   }
 
   // Returns true when the command should end.

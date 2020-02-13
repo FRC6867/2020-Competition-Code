@@ -36,10 +36,11 @@ public class Indexer extends SubsystemBase {
    * Creates a new Indexer subsystem.
    */
   public Indexer() {
-    // Sets motor
+    // Motor config
+    m_indexerMotor.configFactoryDefault();
     m_indexerMotor.setInverted(IndexerConstants.INDEXER_MOTOR_INVERTED);
 
-    // Inits ball sensor
+    // Init ball sensor
     m_colorMatcher.addColorMatch(BALL_COLOR);
   }
 

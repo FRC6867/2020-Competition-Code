@@ -54,15 +54,21 @@ public class DriveTrain extends SubsystemBase {
   );
 
   // Speed throttles
-  private double m_speedThrottle = DriveTrainConstants.SPEED_THROTTLE;
+  private double m_speedThrottle = DriveTrainConstants.DEFAULT_SPEED_THROTTLE;
   private boolean m_fineControl = false;
+  private boolean m_drivingStraight = false; // Experimental
 
 
   /**
-   * Creates a new DriveTrain.
+   * Creates a new DriveTrain subsystem.
    */
   public DriveTrain() {
-    // Motor directions and following
+    // Motor config
+    m_frontRightDrive.restoreFactoryDefaults();
+    m_backRightDrive.restoreFactoryDefaults();
+    m_frontLeftDrive.restoreFactoryDefaults();
+    m_backLeftDrive.restoreFactoryDefaults();
+
     m_frontRightDrive.setInverted(DriveTrainConstants.RIGHT_MOTOR_INVERTED);
     m_backRightDrive.follow(m_frontRightDrive);
     m_frontLeftDrive.setInverted(DriveTrainConstants.LEFT_MOTOR_INVERTED);
@@ -77,12 +83,15 @@ public class DriveTrain extends SubsystemBase {
 
     reset(); // Make sure we start off fresh
 
-    SmartDashboard.putData("Gyro", m_navX);
+    SmartDashboard.putData("Heading", m_navX);
     SmartDashboard.putData("Left Drive Encoder", m_leftEncoder);
     SmartDashboard.putData("Right Drive Encoder", m_rightEncoder);
-    SmartDashboard.putData("Distance to object", m_distanceSensor);
+    SmartDashboard.putData("Distance to Object", m_distanceSensor);
   }
 
+  /**
+   * Unfinished, and probably won't be used for this season.
+   */
   private void setupShuffleboard() {
      
   }
@@ -135,6 +144,7 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putBoolean("Fine Drive Control", fineControl);
   }
 
+
   /**
    * Resets the values of the {@link DriveTrain}'s sensors.
    */
@@ -184,12 +194,10 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    m_speedThrottle = SmartDashboard.getNumber("DriveTrain Throttle", m_speedThrottle);
+    m_speedThrottle = SmartDashboard.getNumber("Drive Train Throttle", m_speedThrottle);
     m_fineControl = SmartDashboard.getBoolean("Fine Drive Control", false);
 
     // Log data
     SmartDashboard.putNumber("Average Encoder Distance", getDistanceDriven());
-    //SmartDashboard.putNumber("Distance From Object",getDistanceToObject());
-    //SmartDashboard.putNumber("Heading", getHeading());
   }
 }

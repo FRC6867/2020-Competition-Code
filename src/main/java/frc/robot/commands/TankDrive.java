@@ -12,6 +12,8 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
+import frc.robot.Constants.DriveTrainConstants;
+
 /**
  * Rawr I have a tank
  */
@@ -27,7 +29,7 @@ public class TankDrive extends CommandBase {
    * 
    * @param rightStick Right Y-axis DoubleSupplier
    * @param leftStick Left Y-axis DoubleSupplier
-   * @param driveTrain {@link DriveTrain sub}system
+   * @param driveTrain {@link DriveTrain} subsystem
    */
   public TankDrive(DoubleSupplier rightStick, DoubleSupplier leftStick, DriveTrain driveTrain) {
     m_driveTrain = driveTrain;
@@ -49,9 +51,9 @@ public class TankDrive extends CommandBase {
   }
 
   private double getSpeedWithMin(double speed) {
-    if (Math.abs(speed) > 0.1) {
+    if (Math.abs(speed) > DriveTrainConstants.MIN_SPEED_THRESHOLD) {
       return speed;
-    } else { // Don't do anything with less than 10% power
+    } else { // Don't do anything with less than MIN_SPEED_THRESHOLD% power
       return 0;
     }
   }

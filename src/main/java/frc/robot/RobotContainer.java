@@ -7,16 +7,15 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.utils.DoubleButton;
 import frc.robot.utils.JoystickPOV;
-
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.TurnDegrees;
@@ -38,8 +37,8 @@ import frc.robot.Constants.*;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private final Joystick m_gamepad1 = new Joystick(0);
-  private final Joystick m_gamepad2 = new Joystick(1);
+  private final Joystick m_driverGamepad = new Joystick(0);
+  private final Joystick m_operatorGamepad = new Joystick(1);
 
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final Shooter m_shooter = new Shooter();
@@ -49,10 +48,11 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    m_driveTrain.setDefaultCommand( // Driving needs continuous input from sticks
+    // Driving default command
+    m_driveTrain.setDefaultCommand(
       new TankDrive(
-        () -> -m_gamepad1.getRawAxis(DriveTrainConstants.RIGHT_STICK_Y_AXIS_ID),
-        () -> -m_gamepad1.getRawAxis(DriveTrainConstants.LEFT_STICK_Y_AXIS_ID),
+        () -> -m_driverGamepad.getRawAxis(DriveTrainConstants.RIGHT_STICK_Y_AXIS_ID), // Sticks are inverted
+        () -> -m_driverGamepad.getRawAxis(DriveTrainConstants.LEFT_STICK_Y_AXIS_ID),
         m_driveTrain
       )
     );
@@ -67,30 +67,28 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_gamepad1);
-    
-    // Shooter bindings
-    new JoystickButton(m_gamepad2, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
-      .toggleWhenActive(new Shoot(m_shooter, m_indexer)); // Possibly use .whenHeld()
-
-    // Precise Turning
-    m_turnDegreesPOV
-      .whenPressed(new TurnDegrees(m_turnDegreesPOV.get180Degrees(), m_driveTrain));
-
-    // Indexer control inline command
-    new JoystickButton(m_gamepad2, IndexerConstants.INDEXER_BUTTON_ID)
-      .whenPressed(new InstantCommand(m_indexer::startIndexer))
-      .whenReleased(new InstantCommand(m_indexer::stopIndexer));
-
-    // Fine control inline command
-    new JoystickButton(m_gamepad1, DriveTrainConstants.FINE_CONTROL_BUTTON_ID)
+    // Fine control
+    new JoystickButton(m_driverGamepad, DriveTrainConstants.FINE_CONTROL_BUTTON_ID)
       .whenPressed(() -> m_driveTrain.setFineControl(true))
       .whenReleased(() -> m_driveTrain.setFineControl(false));
 
-    // Vomit function
-    new DoubleButton(m_gamepad2, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID)
-      .whenHeld(new Vomit(m_shooter, m_indexer));
+    // Precise turning
+    final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_driverGamepad);
+    m_turnDegreesPOV
+      .whenPressed(new TurnDegrees(m_turnDegreesPOV.get180Degrees(), m_driveTrain));
     
+    // Indexer control
+    new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_BUTTON_ID)
+      .whenPressed(new InstantCommand(m_indexer::startIndexer))
+      .whenReleased(new InstantCommand(m_indexer::stopIndexer));
+
+    // Shooter
+    new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
+      .toggleWhenActive(new Shoot(m_shooter, m_indexer)); // Possibly use .whenHeld()
+
+    // Vomit
+    new DoubleButton(m_operatorGamepad, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID)
+      .whenHeld(new Vomit(m_shooter, m_indexer));
   }
 
   /**

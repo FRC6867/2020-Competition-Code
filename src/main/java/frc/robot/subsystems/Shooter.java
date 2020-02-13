@@ -9,9 +9,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Encoder;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -20,8 +22,8 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends PIDSubsystem {
   // Motors
-  private final VictorSPX m_shooterMotor1 = new VictorSPX(ShooterConstants.SHOOTER_MOTOR_1_CAN);
-  private final VictorSPX m_shooterMotor2 = new VictorSPX(ShooterConstants.SHOOTER_MOTOR_2_CAN);
+  private final TalonSRX m_shooterMotor1 = new TalonSRX(ShooterConstants.SHOOTER_MOTOR_1_CAN);
+  private final TalonSRX m_shooterMotor2 = new TalonSRX(ShooterConstants.SHOOTER_MOTOR_2_CAN);
   private final VictorSPX m_feederMotor = new VictorSPX(ShooterConstants.FEEDER_MOTOR_CAN);
 
   // Encoders
@@ -51,6 +53,10 @@ public class Shooter extends PIDSubsystem {
     m_shooterEncoder.setDistancePerPulse(1 / ShooterConstants.SHOOTER_ENCODER_TICKS_PER_ROTATION);
 
     // Motor config
+    m_shooterMotor1.configFactoryDefault();
+    m_shooterMotor2.configFactoryDefault();
+    m_feederMotor.configFactoryDefault();
+
     m_shooterMotor1.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
     m_shooterMotor2.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
     m_feederMotor.setInverted(ShooterConstants.FEEDER_MOTOR_INVERTED);
@@ -73,18 +79,18 @@ public class Shooter extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    m_shooterMotor1.set(ControlMode.PercentOutput, output);
-    m_shooterMotor2.set(ControlMode.PercentOutput, -output); // These two work together
+    m_shooterMotor1.set(ControlMode.PercentOutput, output); // These two share a gearbox so
+    m_shooterMotor2.set(ControlMode.PercentOutput, -output); // they go in opposite directions
 
     // Log
-    double speed = getMeasurement();
+    final double speed = getMeasurement();
     SmartDashboard.putNumber("Shooter RPM", speed);
-    SmartDashboard.putNumber("Shooter RPM Graph", speed);
+    //SmartDashboard.putNumber("Shooter RPM History", speed);
   }
 
   @Override
   public double getMeasurement() {
-    return m_shooterEncoder.getRate() * 60;
+    return m_shooterEncoder.getRate() * 60; // .getRate() returns units per sec, we need per min.
   }
 
   /**
