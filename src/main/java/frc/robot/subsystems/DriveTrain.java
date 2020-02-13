@@ -11,7 +11,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.SPI.Port;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
@@ -73,9 +77,14 @@ public class DriveTrain extends SubsystemBase {
 
     reset(); // Make sure we start off fresh
 
-    SmartDashboard.putData("Heading", m_navX);
+    SmartDashboard.putData("Gyro", m_navX);
     SmartDashboard.putData("Left Drive Encoder", m_leftEncoder);
     SmartDashboard.putData("Right Drive Encoder", m_rightEncoder);
+    SmartDashboard.putData("Distance to object", m_distanceSensor);
+  }
+
+  private void setupShuffleboard() {
+     
   }
 
 
@@ -179,8 +188,8 @@ public class DriveTrain extends SubsystemBase {
     m_fineControl = SmartDashboard.getBoolean("Fine Drive Control", false);
 
     // Log data
-    SmartDashboard.putNumber("Distance Driven", getDistanceDriven());
-    SmartDashboard.putNumber("Distance From Object",getDistanceToObject());
-    SmartDashboard.putNumber("Heading", getHeading());
+    SmartDashboard.putNumber("Average Encoder Distance", getDistanceDriven());
+    //SmartDashboard.putNumber("Distance From Object",getDistanceToObject());
+    //SmartDashboard.putNumber("Heading", getHeading());
   }
 }
