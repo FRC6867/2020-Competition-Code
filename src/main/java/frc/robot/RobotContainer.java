@@ -26,6 +26,7 @@ import frc.robot.commands.Vomit;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Camera;
 
 import frc.robot.Constants.*;
 
@@ -39,6 +40,7 @@ import frc.robot.Constants.*;
 public class RobotContainer {
   private final Joystick m_driverGamepad = new Joystick(0);
   private final Joystick m_operatorGamepad = new Joystick(1);
+  private final Camera m_camera = new Camera();
 
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final Shooter m_shooter = new Shooter();
