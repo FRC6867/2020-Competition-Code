@@ -49,15 +49,7 @@ public class JoystickPOV extends Button {
         return degrees;
     }
 
-    // In our use case, we do not want to activate if POV is pressed forward.
     public boolean get() {
-        return get180Degrees() != 0;
+        return getRawPOV() > 0; // We also want to ignore POV being pressed forwards
     }
-    
-    /**
-    // See above. This might be faster though.
-    public boolean get() {
-        return getRawPOV() != -1;
-    }
-    */
 }
