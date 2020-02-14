@@ -77,7 +77,7 @@ public class RobotContainer {
     // Precise turning
     final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_driverGamepad);
     m_turnDegreesPOV
-      .whenPressed(new TurnDegrees(m_turnDegreesPOV.get180Degrees(), m_driveTrain));
+      .whenPressed(new TurnDegrees(m_turnDegreesPOV.getPOV180(), m_driveTrain));
     
     // Indexer control
     new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_BUTTON_ID)
