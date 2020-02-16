@@ -40,6 +40,7 @@ public class Shoot extends CommandBase {
   @Override
   public void initialize() {
     m_shooter.enable();
+    System.out.println("RAWR ECKSDEE LMFAO YES");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

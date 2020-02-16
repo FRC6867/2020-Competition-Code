@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
 /**
- * Wrapper for the {@link GenericHID#getPOV()} function, allowing it to be used with
+ * Wrapper for the {@link GenericHID#getPOV(int)} functions, allowing it to be used with
  * {@link Button} methods.
  */
 public class JoystickPOV extends Button {
@@ -27,27 +27,37 @@ public class JoystickPOV extends Button {
     }
 
     /**
-     * @return A number between 0 and 315, describing the current raw POV state.
-     * Returns -1 if not active.
+     * @return Current raw POV state. This is -1 if not pressed, or 0-315 if pressed.
      */
-    public int getPOVRaw() {
+    public int getRawPOV() {
         return m_joystick.getPOV();
     }
 
     /**
-     * @return A refined number between -135 and 180, describing the current POV state.
+     * @return A refined number between -180 and 180, describing the current POV state.
      * Returns 0 if not active.
      */
-    public int getPOV180() {
-        final int degrees = getPOVRaw();
-        if (degrees > 180) {
-            return degrees - 360;
-        } else {
-            return degrees;
+    public int get180Degrees() {
+        int rawDegrees = getRawPOV();
+        int degrees = rawDegrees % 180;
+        if (rawDegrees > 180) {
+            degrees = -degrees;
+        } else if (rawDegrees < 0) {
+            degrees = 0;
         }
+
+        return degrees;
     }
 
+    // In our use case, we do not want to activate if POV is pressed forward.
     public boolean get() {
-        return getPOVRaw() > 0; // We also want to ignore POV being pressed forwards.
+        return get180Degrees() != 0;
     }
+    
+    /**
+    // See above. This might be faster though.
+    public boolean get() {
+        return getRawPOV() != -1;
+    }
+    */
 }

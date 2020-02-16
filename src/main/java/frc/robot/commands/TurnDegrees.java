@@ -43,12 +43,13 @@ public class TurnDegrees extends PIDCommand {
   /**
    * @return A value from -180 to 180, based on a 0 to 360 value.
    */
-  public static int get180From360(int degrees) {
-    if (degrees > 180) {
-      return degrees - 360;
-    } else {
-      return degrees;
+  public static int get180From360(int rawDegrees) {
+    int degrees = rawDegrees % 180;
+    if (rawDegrees > 180) {
+      degrees = -degrees;
     }
+
+    return degrees;
   }
 
   private void setPID() {

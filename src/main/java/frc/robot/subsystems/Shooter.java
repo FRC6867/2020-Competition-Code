@@ -7,17 +7,15 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Encoder;
-
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends PIDSubsystem {
@@ -79,10 +77,13 @@ public class Shooter extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
+    System.out.printf("o=%f,s=%f\n", output, setpoint);
     m_shooterMotor1.set(ControlMode.PercentOutput, output); // These two share a gearbox so
-    m_shooterMotor2.set(ControlMode.PercentOutput, -output); // they go in opposite directions
-
+    m_shooterMotor2.set(ControlMode.PercentOutput, output); // they go in opposite directions
+    //m_shooterMotor1.set(ControlMode.PercentOutput, 0.75); // These two share a gearbox so
+    //m_shooterMotor2.set(ControlMode.PercentOutput, 0.75);
     // Log
+
     final double speed = getMeasurement();
     SmartDashboard.putNumber("Shooter RPM", speed);
     //SmartDashboard.putNumber("Shooter RPM History", speed);
