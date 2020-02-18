@@ -36,10 +36,14 @@ public class Shoot extends CommandBase {
     addRequirements(shooter);
   }
 
-  // Called when the command is initially scheduled.
+//   public Shoot(Object disable) {
+// } hj
+
+// Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_shooter.enable();
+    System.out.println("RAWR ECKSDEE LMFAO YES");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

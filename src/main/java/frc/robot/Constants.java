@@ -7,7 +7,8 @@
 
 package frc.robot;
 
-/**
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+/*
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
  * declared globally (i.e. public static).  Do not put anything functional in this class.
@@ -24,13 +25,13 @@ public final class Constants {
         public static final int FINE_CONTROL_BUTTON_ID = 5; // Left bumper
 
         // Motors
-        public static final int FRONT_LEFT_MOTOR_CAN = 10; // These all need to be verified
-        public static final int BACK_LEFT_MOTOR_CAN = 11; // once they are placed on the robot
-        public static final int FRONT_RIGHT_MOTOR_CAN = 12;
-        public static final int BACK_RIGHT_MOTOR_CAN = 13;
+        public static final int FRONT_LEFT_MOTOR_CAN = 13; // These all need to be verified
+        public static final int BACK_LEFT_MOTOR_CAN = 12; // once they are placed on the robot
+        public static final int FRONT_RIGHT_MOTOR_CAN = 10;
+        public static final int BACK_RIGHT_MOTOR_CAN = 11;
 
-        public static final boolean LEFT_MOTOR_INVERTED = false; // Undefined
-        public static final boolean RIGHT_MOTOR_INVERTED = true; // Undefined
+        public static final boolean LEFT_MOTOR_INVERTED = true; // Undefined
+        public static final boolean RIGHT_MOTOR_INVERTED = false; // Undefined
 
         // Encoders
         public static final int[] LEFT_DRIVE_ENCODER_PINS = {1, 2}; // Undefined
@@ -47,7 +48,7 @@ public final class Constants {
         public static final int ULTRASONIC_ECHO_PIN = 6; // Undefined
 
         // Speed constants
-        public static final double DEFAULT_SPEED_THROTTLE = 0.5; // Default speed multiplier
+        public static final double DEFAULT_SPEED_THROTTLE = 0.3; // Default speed multiplier
         public static final double MIN_SPEED_THRESHOLD = 0.1; // Inputs under will be ignored
 
 
@@ -101,6 +102,7 @@ public final class Constants {
     public static final class ShooterConstants {
         // User input
         public static final int SHOOTER_TOGGLE_BUTTON_ID = 1; // 'A' button
+        
 
         // Motor CANs
         public static final int FEEDER_MOTOR_CAN = 42; // Undefined
