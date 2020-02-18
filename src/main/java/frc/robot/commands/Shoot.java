@@ -36,10 +36,7 @@ public class Shoot extends CommandBase {
     addRequirements(shooter);
   }
 
-//   public Shoot(Object disable) {
-// } hj
-
-// Called when the command is initially scheduled.
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_shooter.enable();

@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -87,22 +85,21 @@ public class RobotContainer {
     final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_driverGamepad);
     m_turnDegreesPOV
       .whenPressed(new TurnDegrees(m_turnDegreesPOV.get180Degrees(), m_driveTrain));
-
+    
     // Indexer control
     new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_BUTTON_ID)
       .whenPressed(new InstantCommand(m_indexer::startIndexer))
       .whenReleased(new InstantCommand(m_indexer::stopIndexer));
 
     // Shooter
-      new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
-      .whileHeld(new InstantCommand(m_shooter::enable)); // Possibly use .whenHeld()
-      
+    new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
+      .whileHeld(new Shoot(m_shooter, m_indexer)); // Possibly use .whenHeld()
 
     // Vomit
     new DoubleButton(m_operatorGamepad, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID)
       .whenHeld(new Vomit(m_shooter, m_indexer));
   }
-  
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

@@ -22,7 +22,6 @@ public class Shooter extends PIDSubsystem {
   // Motors
   private final TalonSRX m_shooterMotor1 = new TalonSRX(ShooterConstants.SHOOTER_MOTOR_1_CAN);
   private final TalonSRX m_shooterMotor2 = new TalonSRX(ShooterConstants.SHOOTER_MOTOR_2_CAN);
-  private final TalonSRX poopoo = new TalonSRX(30);
   private final VictorSPX m_feederMotor = new VictorSPX(ShooterConstants.FEEDER_MOTOR_CAN);
 
   // Encoders
@@ -54,17 +53,14 @@ public class Shooter extends PIDSubsystem {
     // Motor config
     m_shooterMotor1.configFactoryDefault();
     m_shooterMotor2.configFactoryDefault();
-    poopoo.configFactoryDefault();
     m_feederMotor.configFactoryDefault();
 
     m_shooterMotor1.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
     m_shooterMotor2.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
-    poopoo.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
     m_feederMotor.setInverted(ShooterConstants.FEEDER_MOTOR_INVERTED);
 
     m_shooterMotor1.setNeutralMode(NeutralMode.Coast); // Make sure shooter doesn't brake.
     m_shooterMotor2.setNeutralMode(NeutralMode.Coast);
-    poopoo.setNeutralMode(NeutralMode.Coast);
   }
 
   private void setPID() {
@@ -84,7 +80,6 @@ public class Shooter extends PIDSubsystem {
     System.out.printf("o=%f,s=%f\n", output, setpoint);
     m_shooterMotor1.set(ControlMode.PercentOutput, output); // These two share a gearbox so
     m_shooterMotor2.set(ControlMode.PercentOutput, output); // they go in opposite directions
-    poopoo.set(ControlMode.PercentOutput, output);
     //m_shooterMotor1.set(ControlMode.PercentOutput, 0.75); // These two share a gearbox so
     //m_shooterMotor2.set(ControlMode.PercentOutput, 0.75);
     // Log
