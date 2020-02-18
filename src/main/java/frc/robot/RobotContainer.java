@@ -10,25 +10,29 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.utils.DoubleButton;
+import frc.robot.utils.JoystickPOV;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.DriveTrainConstants;
-import frc.robot.Constants.IndexerConstants;
-import frc.robot.Constants.ShooterConstants;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.commands.DriveForward;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.TurnDegrees;
 import frc.robot.commands.Vomit;
+
 import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
-import frc.robot.utils.DoubleButton;
-import frc.robot.utils.JoystickPOV;
+
+import frc.robot.Constants.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -84,7 +88,7 @@ public class RobotContainer {
     // Precise turning
     final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_driverGamepad);
     m_turnDegreesPOV
-      .whenPressed(new TurnDegrees(m_turnDegreesPOV.get180Degrees(), m_driveTrain));
+      .whenPressed(new TurnDegrees(m_turnDegreesPOV.getPOV180(), m_driveTrain));
     
     // Indexer control
     new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_BUTTON_ID)
@@ -93,7 +97,8 @@ public class RobotContainer {
 
     // Shooter
     new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
-      .whileHeld(new Shoot(m_shooter, m_indexer)); // Possibly use .whenHeld()
+      .toggleWhenActive(new RunCommand(m_shooter::enable).andThen(m_shooter::disable));
+     //   .whenFinished(m_shooter::disable)); // Possibly use .whenHeld()
 
     // Vomit
     new DoubleButton(m_operatorGamepad, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID)
