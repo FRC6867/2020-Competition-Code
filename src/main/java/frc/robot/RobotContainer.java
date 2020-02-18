@@ -44,14 +44,13 @@ import frc.robot.Constants.*;
 public class RobotContainer {
   private final Joystick m_driverGamepad = new Joystick(0);
   private final Joystick m_operatorGamepad = new Joystick(1);
-  private final Camera m_camera = new Camera();
 
+  private final Camera m_camera = new Camera();
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final Shooter m_shooter = new Shooter();
   private final Indexer m_indexer = new Indexer();
 
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
-  public final JoystickButton ShooterToggleButton = new JoystickButton(m_operatorGamepad, 1);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -97,7 +96,7 @@ public class RobotContainer {
 
     // Shooter
     new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
-      .toggleWhenActive(new RunCommand(m_shooter::enable).andThen(m_shooter::disable));
+      .toggleWhenActive(new RunCommand(m_shooter::enable).andThen(new InstantCommand(m_shooter::disable)));
      //   .whenFinished(m_shooter::disable)); // Possibly use .whenHeld()
 
     // Vomit
