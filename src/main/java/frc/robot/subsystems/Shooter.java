@@ -92,7 +92,7 @@ public class Shooter extends PIDSubsystem {
 
   @Override
   public double getMeasurement() {
-    return m_shooterEncoder.getRate() / ShooterConstants.SHOOTER_ENCODER_TICKS_PER_ROTATION * 60; // .getRate() returns units per sec, we need per min.
+    return (m_shooterEncoder.getRate() / ShooterConstants.SHOOTER_ENCODER_TICKS_PER_ROTATION) * 60; // .getRate() returns units per sec, we need per min.
   }
 
   /**
