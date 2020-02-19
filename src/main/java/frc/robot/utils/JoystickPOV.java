@@ -27,14 +27,15 @@ public class JoystickPOV extends Button {
     }
 
     /**
-     * @return Current raw POV state. This is -1 if not pressed, or 0-315 if pressed.
+     * @return A number betwenen 0 and 315, describing the current raw POV state.
+     * Returns -1 if not active.
      */
     public int getPOVRaw() {
         return m_joystick.getPOV();
     }
 
     /**
-     * @return A refined number between -180 and 180, describing the current POV state.
+     * @return A refined number between -135 and 180, describing the current POV state.
      * Returns 0 if not active.
      */
     public int getPOV180() {
@@ -46,7 +47,7 @@ public class JoystickPOV extends Button {
         }
     }
 
-    // In our use case, we do not want to activate if POV is pressed forward.
+    // In our use case, we do not want to activate even if POV is pressed forward.
     public boolean get() {
         return getPOVRaw() > 0;
     }
