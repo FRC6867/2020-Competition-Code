@@ -9,32 +9,33 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Shooter;
 
 public class Vomit extends CommandBase {
-  private final Shooter m_shooter;
+  private final Intake m_intake;
   private final Indexer m_indexer;
+  private final Shooter m_shooter;
 
   /**
    * Creates a new Vomit command. This command runs all the motors in
    * reverse to empty balls and clear up jams. Will not end on it's own
    * - must be interrupted.
-   * 
-   * @param shooter The {@link Shooter} subsystem
-   * @param indexer The {@link Indexer} subsystem
    */
-  public Vomit(Shooter shooter, Indexer indexer) {
-    // TODO: Add vomit functionality to other subsystems
-    m_shooter = shooter;
+  public Vomit(Intake intake, Indexer indexer, Shooter shooter) {
+    m_intake = intake;
     m_indexer = indexer;
+    m_shooter = shooter;
 
-    addRequirements(m_shooter, m_indexer);
+    addRequirements(m_intake, m_indexer, m_shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_intake.armUp();
+    m_intake.vomit();
     m_indexer.vomit();
     m_shooter.vomit();
   }
@@ -42,6 +43,7 @@ public class Vomit extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_intake.stopCollection();
     m_indexer.stopIndexer();
     m_shooter.stopFeeder();
   }

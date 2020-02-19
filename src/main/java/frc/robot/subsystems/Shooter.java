@@ -7,15 +7,17 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.controller.PIDController;
+
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends PIDSubsystem {
@@ -48,7 +50,9 @@ public class Shooter extends PIDSubsystem {
 
     // Encoder config
     // One full rotation will be one unit
-    m_shooterEncoder.setDistancePerPulse(1 / ShooterConstants.SHOOTER_ENCODER_TICKS_PER_ROTATION);
+    //m_shooterEncoder.reset();
+    m_shooterEncoder.setDistancePerPulse(1);// / ShooterConstants.SHOOTER_ENCODER_TICKS_PER_ROTATION);
+    SmartDashboard.putData("Shooter enc", m_shooterEncoder);
 
     // Motor config
     m_shooterMotor1.configFactoryDefault();
@@ -56,7 +60,7 @@ public class Shooter extends PIDSubsystem {
     m_feederMotor.configFactoryDefault();
 
     m_shooterMotor1.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
-    m_shooterMotor2.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
+    m_shooterMotor2.follow(m_shooterMotor1); // Second motor should mirror first one
     m_feederMotor.setInverted(ShooterConstants.FEEDER_MOTOR_INVERTED);
 
     m_shooterMotor1.setNeutralMode(NeutralMode.Coast); // Make sure shooter doesn't brake.
@@ -78,10 +82,7 @@ public class Shooter extends PIDSubsystem {
   @Override
   public void useOutput(double output, double setpoint) {
     System.out.printf("o=%f,s=%f\n", output, setpoint);
-    m_shooterMotor1.set(ControlMode.PercentOutput, output); // These two share a gearbox so
-    m_shooterMotor2.set(ControlMode.PercentOutput, output); // they go in opposite directions
-    //m_shooterMotor1.set(ControlMode.PercentOutput, 0.75); // These two share a gearbox so
-    //m_shooterMotor2.set(ControlMode.PercentOutput, 0.75);
+    m_shooterMotor1.set(ControlMode.PercentOutput, output); // Other motor will follow
     // Log
 
     final double speed = getMeasurement();
@@ -91,7 +92,7 @@ public class Shooter extends PIDSubsystem {
 
   @Override
   public double getMeasurement() {
-    return m_shooterEncoder.getRate() * 60; // .getRate() returns units per sec, we need per min.
+    return m_shooterEncoder.getRate() / ShooterConstants.SHOOTER_ENCODER_TICKS_PER_ROTATION * 60; // .getRate() returns units per sec, we need per min.
   }
 
   /**
@@ -106,6 +107,7 @@ public class Shooter extends PIDSubsystem {
    * Runs the feeder motor(s) at {@link ShooterConstants#FEEDER_SPEED} speed.
    */
   public void runFeeder() {
+    //System.out.println("feed");
     m_feederMotor.set(ControlMode.PercentOutput, ShooterConstants.FEEDER_SPEED);
   }
 
@@ -113,6 +115,7 @@ public class Shooter extends PIDSubsystem {
    * Stops the feeder motor(s).
    */
   public void stopFeeder() {
+    //System.out.println("no feed");
     m_feederMotor.set(ControlMode.PercentOutput, 0);
   }
 
@@ -120,6 +123,7 @@ public class Shooter extends PIDSubsystem {
    * Runs the feeder motor(s) in reverse. Flywheel cannot reverse.
    */
   public void vomit() {
+    //System.out.println("shooter vomit");
     m_feederMotor.set(ControlMode.PercentOutput, -ShooterConstants.FEEDER_SPEED);
   }
 }

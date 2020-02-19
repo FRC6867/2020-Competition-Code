@@ -24,8 +24,8 @@ public final class Constants {
         public static final int FINE_CONTROL_BUTTON_ID = 5; // Left bumper
 
         // Motors
-        public static final int FRONT_LEFT_MOTOR_CAN = 13; // These all need to be verified
-        public static final int BACK_LEFT_MOTOR_CAN = 12; // once they are placed on the robot
+        public static final int FRONT_LEFT_MOTOR_CAN = 13;
+        public static final int BACK_LEFT_MOTOR_CAN = 12;
         public static final int FRONT_RIGHT_MOTOR_CAN = 10;
         public static final int BACK_RIGHT_MOTOR_CAN = 11;
 
@@ -33,18 +33,18 @@ public final class Constants {
         public static final boolean RIGHT_MOTOR_INVERTED = false; // Undefined
 
         // Encoders
-        public static final int[] LEFT_DRIVE_ENCODER_PINS = {1, 2}; // Undefined
-        public static final int[] RIGHT_DRIVE_ENCODER_PINS = {3, 4}; // Undefined
+        public static final int[] LEFT_DRIVE_ENCODER_PINS = {0, 1};
+        public static final int[] RIGHT_DRIVE_ENCODER_PINS = {2, 3};
 
         public static final double LEFT_ENCODER_TICK_DISTANCE = 1; // Undefined
         public static final double RIGHT_ENCODER_TICK_DISTANCE = 1; // Undefined
 
-        public static final boolean LEFT_ENCODER_INVERTED = true; // Undefined
-        public static final boolean RIGHT_ENCODER_INVERTED = false; // Undefined
+        public static final boolean LEFT_ENCODER_INVERTED = false;
+        public static final boolean RIGHT_ENCODER_INVERTED = true;
 
         // Ultrasonic sensor pins
-        public static final int ULTRASONIC_TRIGGER_PIN = 5; // Undefined
-        public static final int ULTRASONIC_ECHO_PIN = 6; // Undefined
+        public static final int ULTRASONIC_TRIGGER_PIN = 8; // Undefined
+        public static final int ULTRASONIC_ECHO_PIN = 9; // Undefined
 
         // Speed constants
         public static final double DEFAULT_SPEED_THROTTLE = 0.3; // Default speed multiplier
@@ -73,11 +73,26 @@ public final class Constants {
         public static final int INTAKE_BUTTON_ID = 6; // Right bumper
 
         // Motors
-        public static final int INTAKE_COLLECTOR_MOTOR_CAN = 20; // Undefined
-        public static final int INTAKE_MOVER_MOTOR_CAN = 21; // Undefined
+        public static final int INTAKE_COLLECTOR_MOTOR_CAN = 20;
+        public static final int INTAKE_MOVER_MOTOR_CAN = 21;
 
-        public static final boolean INTAKE_COLLECTOR_MOTOR_INVERTED = false; // Undefined
+        public static final boolean INTAKE_COLLECTOR_MOTOR_INVERTED = true; // Undefined
         public static final boolean INTAKE_MOVER_MOTOR_INVERTED = false; // Undefined
+
+        public static final int INTAKE_ENCODER_PIN = 4;
+        public static final boolean INTAKE_ENCODER_INVERTED = false; // Undefined
+
+        // PID
+        public static final double INTAKE_ARM_P = 0.0; // Undefined
+        public static final double INTAKE_ARM_I = 0.0; // Undefined
+        public static final double INTAKE_ARM_D = 0.0; // Undefined
+
+        public static final int INTAKE_ARM_UP_DEGREE_POS = 100; // It's 62 but we need less for tuning
+        public static final int INTAKE_ARM_DOWN_DEGREE_POS = 265; // eh ok
+        public static final int INTAKE_ARM_TARGET_TOLERANCE = 5; // Allowed innacuracy
+
+        // Speeds
+        public static final double INTAKE_COLLECTOR_MOTOR_SPEED = 0.5; // For now
     }
 
     public static final class IndexerConstants {
@@ -85,26 +100,24 @@ public final class Constants {
         public static final int INDEXER_BUTTON_ID = 4; // 'Y' button
 
         // Motors
-        public static final int INDEXER_MOTOR_CAN = 30; // Undefined
+        public static final int INDEXER_MOTOR_1_CAN = 30;
+        public static final int INDEXER_MOTOR_2_CAN = 31;
 
-        public static final boolean INDEXER_MOTOR_INVERTED = false; // Undefined
-        public static final double INDEXER_MOTOR_SPEED = 0.3;
+        public static final boolean INDEXER_MOTOR_1_INVERTED = true; // Undefined
+        public static final boolean INDEXER_MOTOR_2_INVERTED = false; // Undefined
+        public static final double INDEXER_MOTOR_SPEED = 0.75; // For now
 
-        // Ball color
-        public static final double BALL_COLOR_R = 0.361; // Undefined
-        public static final double BALL_COLOR_B = 0.524; // Undefined
-        public static final double BALL_COLOR_G = 0.113; // Undefined
-
+        // Ball detection
         public static final int BALL_CLOSE_DISTANCE = 100; // Undefined
     }
 
     public static final class ShooterConstants {
         // User input
         public static final int SHOOTER_TOGGLE_BUTTON_ID = 1; // 'A' button
-        public static final int FEEDER_BUTTON_ID = 2; // 'X' or 'B' button
+        public static final int FEEDER_BUTTON_ID = 3; // 'X' button
 
         // Motor CANs
-        public static final int FEEDER_MOTOR_CAN = 42; // Undefined
+        public static final int FEEDER_MOTOR_CAN = 42;
         public static final int SHOOTER_MOTOR_1_CAN = 40;
         public static final int SHOOTER_MOTOR_2_CAN = 41;
 
@@ -112,9 +125,9 @@ public final class Constants {
         public static final boolean FEEDER_MOTOR_INVERTED = false; // Undefined
 
         // Encoder
-        public static final int[] SHOOTER_ENCODER_PINS  = {7, 8}; // Undefined
-        public static final boolean SHOOTER_ENCODER_INVERTED = false; // Undefined
-        public static final int SHOOTER_ENCODER_TICKS_PER_ROTATION = 8000;
+        public static final int[] SHOOTER_ENCODER_PINS = {5, 6};
+        public static final boolean SHOOTER_ENCODER_INVERTED = true; // Undefined
+        public static final int SHOOTER_ENCODER_TICKS_PER_ROTATION = 8192;
 
         // Shooter PID
         public static double SHOOTER_P = 0.1; // Undefined
@@ -125,7 +138,7 @@ public final class Constants {
         public static double SHOOTER_TARGET_RPM = 6000; // Undefined
         public static double SHOOTER_TARGET_RPM_TOLERANCE = 500; // 500 for now
 
-        public static double FEEDER_SPEED = 0.3; // Slow for now
+        public static double FEEDER_SPEED = 0.75; // Slow for now
     }
 
     public static final class ClimbConstants {
@@ -134,13 +147,13 @@ public final class Constants {
         public static final int CLIMB_UP_BUTTON_ID = 8; // Start button
 
         // Motor CANs
-        public static final int CLIMB_MOTOR_CAN = 50; // Undefined
+        public static final int CLIMB_MOTOR_CAN = 50;
 
         public static final boolean CLIMB_MOTOR_INVERTED = false; // Undefined
         public static final double CLIMB_MOTOR_SPEED = 0.5; // Slow for now
     }
 
     // Vomit buttons
-    public static final int VOMIT_BUTTON_1_ID = 1; // Undefined
-    public static final int VOMIT_BUTTON_2_ID = 1; // Undefined
+    public static final int VOMIT_BUTTON_1_ID = 9; // Left joystick button
+    public static final int VOMIT_BUTTON_2_ID = 10; // Right joystick button
 }

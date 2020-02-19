@@ -16,11 +16,12 @@ import frc.robot.utils.JoystickPOV;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import frc.robot.commands.CollectFromIntake;
 import frc.robot.commands.DriveForward;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.TankDrive;
@@ -30,6 +31,7 @@ import frc.robot.commands.Vomit;
 import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
 import frc.robot.Constants.*;
@@ -45,10 +47,11 @@ public class RobotContainer {
   private final Joystick m_driverGamepad = new Joystick(0);
   private final Joystick m_operatorGamepad = new Joystick(1);
 
-  private final Camera m_camera = new Camera();
   private final DriveTrain m_driveTrain = new DriveTrain();
-  private final Shooter m_shooter = new Shooter();
+  private final Intake m_intake = new Intake();
   private final Indexer m_indexer = new Indexer();
+  private final Shooter m_shooter = new Shooter();
+  private final Camera m_camera = new Camera();
 
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
   /**
@@ -89,19 +92,27 @@ public class RobotContainer {
     m_turnDegreesPOV
       .whenPressed(new TurnDegrees(m_turnDegreesPOV.getPOV180(), m_driveTrain));
     
+    // Intake
+    new JoystickButton(m_operatorGamepad, IntakeConstants.INTAKE_BUTTON_ID)
+      .whenHeld(new CollectFromIntake(m_intake));
+    
     // Indexer control
     new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_BUTTON_ID)
       .whenPressed(new InstantCommand(m_indexer::startIndexer))
       .whenReleased(new InstantCommand(m_indexer::stopIndexer));
 
-    // Shooter
+    // Shooter spin-up
     new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
-      .toggleWhenActive(new RunCommand(m_shooter::enable).andThen(new InstantCommand(m_shooter::disable)));
+      .toggleWhenActive(new StartEndCommand(m_shooter::enable, m_shooter::disable));
      //   .whenFinished(m_shooter::disable)); // Possibly use .whenHeld()
+
+    // Shooter shoot (feeder)
+    new JoystickButton(m_operatorGamepad, ShooterConstants.FEEDER_BUTTON_ID)
+      .whenHeld(new Shoot(m_shooter, m_indexer));
 
     // Vomit
     new DoubleButton(m_operatorGamepad, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID)
-      .whenHeld(new Vomit(m_shooter, m_indexer));
+      .whenHeld(new Vomit(m_intake, m_indexer, m_shooter));
   }
 
   /**
@@ -111,7 +122,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     
-    return new DriveForward(-360, m_driveTrain)/*.andThen(new TurnDegrees(90, m_driveTrain))*/;
+    return new DriveForward(-100, m_driveTrain)/*.andThen(new TurnDegrees(90, m_driveTrain))*/;
     // return new TurnDegrees(90, m_driveTrain);
     // return m_autoChooser.getSelected();
   }

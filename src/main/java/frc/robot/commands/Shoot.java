@@ -36,27 +36,20 @@ public class Shoot extends CommandBase {
     addRequirements(shooter);
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    m_shooter.enable();
-    System.out.println("RAWR ECKSDEE LMFAO YES");
-  }
-
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_shooter.shooterReady() && m_indexer.ballReady()) {
-      m_shooter.runFeeder();
-    } else {
-      m_shooter.stopFeeder();
-    }
+    // if (m_shooter.shooterReady() && m_indexer.ballReady()) {
+    //   m_shooter.runFeeder();
+    // } else {
+    //   m_shooter.stopFeeder();
+    // }
+    m_shooter.runFeeder();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooter.disable();
     m_shooter.stopFeeder();
   }
 
