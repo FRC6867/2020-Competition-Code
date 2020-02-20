@@ -41,11 +41,11 @@ public class Shooter extends PIDSubsystem {
       // The PIDController used by the subsystem
       new PIDController(ShooterConstants.SHOOTER_P, ShooterConstants.SHOOTER_I, ShooterConstants.SHOOTER_D)
     );
+    SmartDashboard.putNumber("Shooter set", ShooterConstants.SHOOTER_TARGET_RPM);
 
     // Controller config
     getController().setTolerance(ShooterConstants.SHOOTER_TARGET_RPM_TOLERANCE);
     setSetpoint(ShooterConstants.SHOOTER_TARGET_RPM);
-    setPID();
 
     // Encoder config
     m_shooterEncoder.reset();
@@ -71,6 +71,7 @@ public class Shooter extends PIDSubsystem {
       SmartDashboard.getNumber("Shooter I", getController().getI()),
       SmartDashboard.getNumber("Shooter D", getController().getD())
     );
+    setSetpoint(SmartDashboard.getNumber("Shooter set", ShooterConstants.SHOOTER_TARGET_RPM));
 
     SmartDashboard.putNumber("Shooter P", getController().getP());
     SmartDashboard.putNumber("Shooter I", getController().getI());
@@ -80,6 +81,8 @@ public class Shooter extends PIDSubsystem {
   @Override
   public void useOutput(double output, double setpoint) {
     m_shooterMotor1.set(ControlMode.PercentOutput, output); // Other motor will follow
+
+    SmartDashboard.putNumber("Shooter Output", output);
   }
 
   @Override
@@ -131,6 +134,7 @@ public class Shooter extends PIDSubsystem {
   // Call parent periodic + log data
   @Override
   public void periodic() {
+    setPID();
     super.periodic();
     updateData(getMeasurement());
   }

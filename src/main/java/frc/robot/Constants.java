@@ -129,13 +129,13 @@ public final class Constants {
         public static final int SHOOTER_ENCODER_CYCLES_PER_ROTATION = 2048;
 
         // Shooter PID
-        public static double SHOOTER_P = 0.1; // Undefined
-        public static double SHOOTER_I = 0.0; // Undefined
+        public static double SHOOTER_P = 0.00125; // Undefined
+        public static double SHOOTER_I = 0.002; // Undefined
         public static double SHOOTER_D = 0.0; // Undefined
 
         // Speeds
         public static double SHOOTER_TARGET_RPM = 5000; // Supposed to be 4000 but 5000 for tuning
-        public static double SHOOTER_TARGET_RPM_TOLERANCE = 10; // For now
+        public static double SHOOTER_TARGET_RPM_TOLERANCE = 25; // For now
 
         public static double FEEDER_SPEED = 0.75; // Or 1
     }
