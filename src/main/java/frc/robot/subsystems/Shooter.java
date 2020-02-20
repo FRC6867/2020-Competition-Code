@@ -94,7 +94,11 @@ public class Shooter extends PIDSubsystem {
    * @return Whether the shooter is up-to-speed and ready
    */
   public boolean shooterReady() {
-    return getController().atSetpoint();
+    final boolean atSetpoint = getController().atSetpoint();
+
+    SmartDashboard.putBoolean("Shooter Ready", atSetpoint);
+
+    return atSetpoint;
   }
 
   /**
