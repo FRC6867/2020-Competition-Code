@@ -30,8 +30,7 @@ public class Shooter extends PIDSubsystem {
   private final Encoder m_shooterEncoder = new Encoder(
     ShooterConstants.SHOOTER_ENCODER_PINS[0],
     ShooterConstants.SHOOTER_ENCODER_PINS[1],
-    ShooterConstants.SHOOTER_ENCODER_INVERTED,
-    Encoder.EncodingType.k4X
+    ShooterConstants.SHOOTER_ENCODER_INVERTED
   );
 
   /**
@@ -49,10 +48,9 @@ public class Shooter extends PIDSubsystem {
     setPID();
 
     // Encoder config
-    // One full rotation will be one unit
-    //m_shooterEncoder.reset();
-    m_shooterEncoder.setDistancePerPulse(1);// / ShooterConstants.SHOOTER_ENCODER_TICKS_PER_ROTATION);
-    SmartDashboard.putData("Shooter enc", m_shooterEncoder);
+    m_shooterEncoder.reset();
+    m_shooterEncoder.setDistancePerPulse(1.0 / (double) ShooterConstants.SHOOTER_ENCODER_CYCLES_PER_ROTATION);
+    //SmartDashboard.putData("Shooter enc", m_shooterEncoder); // For debug
 
     // Motor config
     m_shooterMotor1.configFactoryDefault();
@@ -81,18 +79,12 @@ public class Shooter extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    System.out.printf("o=%f,s=%f\n", output, setpoint);
     m_shooterMotor1.set(ControlMode.PercentOutput, output); // Other motor will follow
-    // Log
-
-    final double speed = getMeasurement();
-    SmartDashboard.putNumber("Shooter RPM", speed);
-    //SmartDashboard.putNumber("Shooter RPM History", speed);
   }
 
   @Override
   public double getMeasurement() {
-    return (m_shooterEncoder.getRate() / ShooterConstants.SHOOTER_ENCODER_TICKS_PER_ROTATION) * 60; // .getRate() returns units per sec, we need per min.
+    return m_shooterEncoder.getRate() * 60; // .getRate() returns units per sec, we need per min.
   }
 
   /**
@@ -102,9 +94,18 @@ public class Shooter extends PIDSubsystem {
     return getController().atSetpoint();
   }
 
+  /**
+   * Log speed
+   * @param speed Current speed
+   */
+  private void updateData(double speed) {
+    SmartDashboard.putNumber("Shooter RPM", speed);
+    SmartDashboard.putNumber("Shooter RPM History", speed);
+  }
+
 
   /**
-   * Runs the feeder motor(s) at {@link ShooterConstants#FEEDER_SPEED} speed.
+   * Runs the feeder motor at {@link ShooterConstants#FEEDER_SPEED} speed.
    */
   public void runFeeder() {
     //System.out.println("feed");
@@ -112,7 +113,7 @@ public class Shooter extends PIDSubsystem {
   }
 
   /**
-   * Stops the feeder motor(s).
+   * Stops the feeder motor.
    */
   public void stopFeeder() {
     //System.out.println("no feed");
@@ -120,10 +121,17 @@ public class Shooter extends PIDSubsystem {
   }
 
   /**
-   * Runs the feeder motor(s) in reverse. Flywheel cannot reverse.
+   * Runs the feeder motor in reverse. Flywheel cannot reverse.
    */
   public void vomit() {
     //System.out.println("shooter vomit");
     m_feederMotor.set(ControlMode.PercentOutput, -ShooterConstants.FEEDER_SPEED);
+  }
+
+  // Call parent periodic + log data
+  @Override
+  public void periodic() {
+    super.periodic();
+    updateData(getMeasurement());
   }
 }

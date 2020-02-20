@@ -28,11 +28,11 @@ import frc.robot.commands.TankDrive;
 import frc.robot.commands.TurnDegrees;
 import frc.robot.commands.Vomit;
 
-import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Vision;
 
 import frc.robot.Constants.*;
 
@@ -51,7 +51,7 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
   private final Indexer m_indexer = new Indexer();
   private final Shooter m_shooter = new Shooter();
-  private final Camera m_camera = new Camera();
+  private final Vision m_vision = new Vision();
 
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
   /**
@@ -69,10 +69,13 @@ public class RobotContainer {
 
     configureButtonBindings();
 
-    m_autoChooser.setDefaultOption("forty 2", null);
-    m_autoChooser.addOption("another option", new InstantCommand());
+    // Auto command chooser
+    m_autoChooser.setDefaultOption("Turn 90 degrees", new TurnDegrees(90, m_driveTrain));
+    m_autoChooser.addOption("Drive Forwards 100 inches", new DriveForward(100, m_driveTrain));
+    m_autoChooser.addOption("Do nothing", null);
 
     SmartDashboard.putData("Auto Mode", m_autoChooser);
+    SmartDashboard.setPersistent("Auto Mode");
   }
 
   /**
@@ -93,7 +96,7 @@ public class RobotContainer {
       .whenPressed(new TurnDegrees(m_turnDegreesPOV.getPOV180(), m_driveTrain));
     
     // Intake
-    new JoystickButton(m_operatorGamepad, IntakeConstants.INTAKE_BUTTON_ID)
+    new JoystickButton(m_driverGamepad, IntakeConstants.INTAKE_BUTTON_ID)
       .whenHeld(new CollectFromIntake(m_intake));
     
     // Indexer control
@@ -121,10 +124,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    
-    return new DriveForward(-100, m_driveTrain)/*.andThen(new TurnDegrees(90, m_driveTrain))*/;
-    // return new TurnDegrees(90, m_driveTrain);
-    // return m_autoChooser.getSelected();
+    return m_autoChooser.getSelected();
   }
 }
  

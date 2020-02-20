@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import frc.robot.Constants.IntakeConstants;
 
@@ -40,11 +41,35 @@ public class Intake extends PIDSubsystem {
       )
     );
 
+    // Motor config
+    m_moverMotor.configFactoryDefault();
+    m_collectorMotor.configFactoryDefault();
+
+    m_moverMotor.setInverted(IntakeConstants.INTAKE_MOVER_MOTOR_INVERTED);
+    m_collectorMotor.setInverted(IntakeConstants.INTAKE_COLLECTOR_MOTOR_INVERTED);
+
+    m_moverMotor.setNeutralMode(NeutralMode.Brake); // Doesn't let arm fall
+    m_collectorMotor.setNeutralMode(NeutralMode.Coast); // So collector keeps spinning
+    
+    // Encoder setup
+    m_armEncoder.setDistancePerRotation(360); // We need degrees
+
+    // PID setup
     getController().setTolerance(IntakeConstants.INTAKE_ARM_TARGET_TOLERANCE);
     armUp();
     enable();
+  }
 
-    m_armEncoder.setDistancePerRotation(360);
+  private void setPID() {
+    getController().setPID(
+      SmartDashboard.getNumber("Intake Arm P", getController().getP()),
+      SmartDashboard.getNumber("Intake Arm I", getController().getI()),
+      SmartDashboard.getNumber("Intake Arm D", getController().getD())
+    );
+
+    SmartDashboard.putNumber("Intake Arm P", getController().getP());
+    SmartDashboard.putNumber("Intake Arm I", getController().getI());
+    SmartDashboard.putNumber("Intake Arm D", getController().getD());
   }
 
   @Override
@@ -97,5 +122,12 @@ public class Intake extends PIDSubsystem {
   public void vomit() {
     armUp();
     m_collectorMotor.set(ControlMode.PercentOutput, -IntakeConstants.INTAKE_COLLECTOR_MOTOR_SPEED);
+  }
+
+  // Update PID all the time for tuning
+  @Override
+  public void periodic() {
+    setPID();
+    super.periodic();
   }
 }
