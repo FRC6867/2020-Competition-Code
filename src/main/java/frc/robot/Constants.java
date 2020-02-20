@@ -135,7 +135,7 @@ public final class Constants {
 
         // Speeds
         public static double SHOOTER_TARGET_RPM = 5000; // Supposed to be 4000 but 5000 for tuning
-        public static double SHOOTER_TARGET_RPM_TOLERANCE = 25; // For now
+        public static double SHOOTER_TARGET_RPM_TOLERANCE = 75; // For now
 
         public static double FEEDER_SPEED = 0.75; // Or 1
     }
