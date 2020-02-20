@@ -76,6 +76,10 @@ public class RobotContainer {
 
     SmartDashboard.putData("Auto Mode", m_autoChooser);
     SmartDashboard.setPersistent("Auto Mode");
+
+    SmartDashboard.putData("Vomit Intake", new Vomit(m_intake));
+    SmartDashboard.putData("Vomit Indexer", new Vomit(m_indexer));
+    SmartDashboard.putData("Vomit Shooter", new Vomit(m_shooter));
   }
 
   /**

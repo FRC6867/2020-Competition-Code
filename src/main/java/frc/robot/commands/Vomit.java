@@ -31,21 +31,45 @@ public class Vomit extends CommandBase {
     addRequirements(m_intake, m_indexer, m_shooter);
   }
 
+  public Vomit(Intake intake) {
+    this(intake, null, null);
+  }
+
+  public Vomit(Indexer indexer) {
+    this(null, indexer, null);
+  }
+
+  public Vomit(Shooter shooter) {
+    this(null, null, shooter);
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intake.armUp();
-    m_intake.vomit();
-    m_indexer.vomit();
-    m_shooter.vomit();
+    if (m_intake != null) {
+      m_intake.armUp();
+      m_intake.vomit();
+    }
+    if (m_indexer != null) {
+      m_indexer.vomit();
+    }
+    if (m_shooter != null) {
+      m_shooter.vomit();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_intake.stopCollection();
-    m_indexer.stopIndexer();
-    m_shooter.stopFeeder();
+    if (m_intake != null) {
+      m_intake.stopCollection();
+    }
+    if (m_indexer != null) {
+      m_indexer.stopIndexer();
+    }
+    if (m_shooter != null) {
+      m_shooter.stopFeeder();
+    }
   }
 
   // Don't end until interrupted.

@@ -79,15 +79,16 @@ public final class Constants {
         public static final boolean INTAKE_COLLECTOR_MOTOR_INVERTED = true;
         public static final boolean INTAKE_MOVER_MOTOR_INVERTED = false; // Undefined
 
-        public static final int INTAKE_ENCODER_PIN = 4;
+        public static final int[] INTAKE_ENCODER_PINS = {4, 5};
+        public static final boolean INTAKE_ENCODER_INVERTED  = false;
 
         // PID
         public static final double INTAKE_ARM_P = 0.0; // Undefined
         public static final double INTAKE_ARM_I = 0.0; // Undefined
         public static final double INTAKE_ARM_D = 0.0; // Undefined
 
-        public static final int INTAKE_ARM_UP_DEGREE_POS = -230; // It's 100 but we need different for tuning
-        public static final int INTAKE_ARM_DOWN_DEGREE_POS = -100; //265 normally
+        public static final int INTAKE_ARM_UP_DEGREE_POS = 2000;
+        public static final int INTAKE_ARM_DOWN_DEGREE_POS = 2000;
         public static final int INTAKE_ARM_TARGET_TOLERANCE = 5; // Allowed innacuracy
 
         // Speeds
@@ -124,7 +125,7 @@ public final class Constants {
         public static final boolean FEEDER_MOTOR_INVERTED = false;
 
         // Encoder
-        public static final int[] SHOOTER_ENCODER_PINS = {5, 6};
+        public static final int[] SHOOTER_ENCODER_PINS = {6, 7};
         public static final boolean SHOOTER_ENCODER_INVERTED = true;
         public static final int SHOOTER_ENCODER_CYCLES_PER_ROTATION = 2048;
 

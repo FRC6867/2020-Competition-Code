@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -24,8 +25,13 @@ public class Intake extends PIDSubsystem {
   private final TalonSRX m_moverMotor = new TalonSRX(IntakeConstants.INTAKE_MOVER_MOTOR_CAN);
   private final VictorSPX m_collectorMotor = new VictorSPX(IntakeConstants.INTAKE_COLLECTOR_MOTOR_CAN);
 
-  private final DutyCycleEncoder m_armEncoder = new DutyCycleEncoder(
-    IntakeConstants.INTAKE_ENCODER_PIN
+  // private final DutyCycleEncoder m_armEncoder = new DutyCycleEncoder(
+  //   IntakeConstants.INTAKE_ENCODER_PIN
+  // );
+  private final Encoder m_armEncoder = new Encoder(
+    IntakeConstants.INTAKE_ENCODER_PINS[0],
+    IntakeConstants.INTAKE_ENCODER_PINS[1],
+    IntakeConstants.INTAKE_ENCODER_INVERTED
   );
 
   /**
@@ -52,7 +58,8 @@ public class Intake extends PIDSubsystem {
     m_collectorMotor.setNeutralMode(NeutralMode.Coast); // So collector keeps spinning
     
     // Encoder setup
-    m_armEncoder.setDistancePerRotation(360); // We need degrees
+    m_armEncoder.reset();
+    //m_armEncoder.setDistancePerRotation(360); // We need degrees
 
     // PID setup
     getController().setTolerance(IntakeConstants.INTAKE_ARM_TARGET_TOLERANCE);
