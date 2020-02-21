@@ -43,10 +43,7 @@ public class DoubleButton extends Button {
      * @param button2Number The number of the second button
      */
     public DoubleButton(GenericHID joystick, int button1Num, int button2Num) {
-        m_joystick1 = joystick;
-        m_joystick2 = joystick;
-        m_button1Number = button1Num;
-        m_button2Number = button2Num;
+        this(joystick, button1Num, joystick, button2Num);
     }
 
 
