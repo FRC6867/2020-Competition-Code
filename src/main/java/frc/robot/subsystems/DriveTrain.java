@@ -133,9 +133,9 @@ public class DriveTrain extends SubsystemBase {
 
   private void setMotor(CANSparkMax motor, double rawSpeed) {
     if (m_fineControl) {
-      motor.set(rawSpeed * m_speedThrottle);
-    } else {
       motor.set(rawSpeed * m_speedThrottle / 2);
+    } else {
+      motor.set(rawSpeed * m_speedThrottle);
     }
   }
 

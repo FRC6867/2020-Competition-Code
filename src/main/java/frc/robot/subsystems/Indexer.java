@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.I2C;
@@ -33,28 +34,32 @@ public class Indexer extends SubsystemBase {
 
     m_indexerMotor1.setInverted(IndexerConstants.INDEXER_MOTOR_1_INVERTED);
     m_indexerMotor2.setInverted(IndexerConstants.INDEXER_MOTOR_2_INVERTED);
-    m_indexerMotor2.follow(m_indexerMotor1);
   }
 
   /**
    * Turns on the indexer motor at {@link IndexerConstants#m_indexerMotor_SPEED} speed.
    */
   public void startIndexer() {
-    m_indexerMotor1.set(ControlMode.PercentOutput, IndexerConstants.INDEXER_MOTOR_SPEED);
+    setIndexerMotors(1);
   }
 
   /**
    * Turns off the indexer motor
    */
   public void stopIndexer() {
-    m_indexerMotor1.set(ControlMode.PercentOutput, 0);
+    setIndexerMotors(0);
   }
 
   /**
    * Runs the motor in reverse.
    */
   public void vomit() {
-    m_indexerMotor1.set(ControlMode.PercentOutput, -IndexerConstants.INDEXER_MOTOR_SPEED);
+    setIndexerMotors(-1);
+  }
+
+  private void setIndexerMotors(double speedMult) {
+    m_indexerMotor1.set(ControlMode.PercentOutput, speedMult * IndexerConstants.INDEXER_MOTOR_1_SPEED);
+    m_indexerMotor2.set(ControlMode.PercentOutput, speedMult * IndexerConstants.INDEXER_MOTOR_2_SPEED);
   }
 
   /**

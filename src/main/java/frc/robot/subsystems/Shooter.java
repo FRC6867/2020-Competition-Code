@@ -80,7 +80,7 @@ public class Shooter extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    m_shooterMotor1.set(ControlMode.PercentOutput, output); // Other motor will follow
+    m_shooterMotor1.set(ControlMode.PercentOutput, 0.85);//output); // Other motor will follow
 
     SmartDashboard.putNumber("Shooter Output", output);
   }

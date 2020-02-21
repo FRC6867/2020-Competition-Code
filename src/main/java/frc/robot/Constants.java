@@ -29,8 +29,8 @@ public final class Constants {
         public static final int FRONT_RIGHT_MOTOR_CAN = 10;
         public static final int BACK_RIGHT_MOTOR_CAN = 11;
 
-        public static final boolean LEFT_MOTOR_INVERTED = true; // Undefined
-        public static final boolean RIGHT_MOTOR_INVERTED = false; // Undefined
+        public static final boolean LEFT_MOTOR_INVERTED = false; // Undefined
+        public static final boolean RIGHT_MOTOR_INVERTED = true; // Undefined
 
         // Encoders
         public static final int[] LEFT_DRIVE_ENCODER_PINS = {0, 1};
@@ -47,7 +47,7 @@ public final class Constants {
         public static final int ULTRASONIC_ECHO_PIN = 9; // Undefined
 
         // Speed constants
-        public static final double DEFAULT_SPEED_THROTTLE = 0.3; // Default speed multiplier
+        public static final double DEFAULT_SPEED_THROTTLE = 0.6; // Default speed multiplier
         public static final double MIN_SPEED_THRESHOLD = 0.1; // Inputs under will be ignored
 
 
@@ -105,7 +105,11 @@ public final class Constants {
 
         public static final boolean INDEXER_MOTOR_1_INVERTED = true;
         public static final boolean INDEXER_MOTOR_2_INVERTED = false; // Undefined
-        public static final double INDEXER_MOTOR_SPEED = 0.75; // or 1
+
+        // Speeds
+        public static final double INDEXER_MOTOR_1_SPEED = 0.75;
+        
+        public static final double INDEXER_MOTOR_2_SPEED = 0.3;
 
         // Ball detection
         public static final int BALL_CLOSE_DISTANCE = 100; // Undefined

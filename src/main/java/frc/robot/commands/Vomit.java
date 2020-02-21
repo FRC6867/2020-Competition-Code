@@ -28,7 +28,15 @@ public class Vomit extends CommandBase {
     m_indexer = indexer;
     m_shooter = shooter;
 
-    addRequirements(m_intake, m_indexer, m_shooter);
+    if (m_intake != null) {
+      addRequirements(m_intake);
+    }
+    if (m_indexer != null) {
+      addRequirements(m_indexer);
+    }
+    if (m_shooter != null) {
+      addRequirements(m_shooter);
+    }
   }
 
   public Vomit(Intake intake) {
