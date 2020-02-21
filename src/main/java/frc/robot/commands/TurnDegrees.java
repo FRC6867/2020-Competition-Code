@@ -57,4 +57,10 @@ public class TurnDegrees extends PIDCommand {
   public boolean isFinished() {
     return getController().atSetpoint();
   }
+
+  @Override
+  public void end(boolean interrupted) {
+    super.end(interrupted);
+    getController().close(); // Delete the controller when we are finished
+  }
 }

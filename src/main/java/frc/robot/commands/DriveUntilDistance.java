@@ -47,4 +47,10 @@ public class DriveUntilDistance extends PIDCommand {
     // return getController().atSetpoint()
     return false;
   }
+
+  @Override
+  public void end(boolean interrupted) {
+    super.end(interrupted);
+    getController().close(); // Delete the controller when we are finished
+  }
 }

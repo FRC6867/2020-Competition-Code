@@ -56,4 +56,10 @@ public class DriveForward extends PIDCommand {
     // return getController().atSetpoint(); // Disabled for tuning
     return false;
   }
+
+  @Override
+  public void end(boolean interrupted) {
+    super.end(interrupted);
+    getController().close(); // Delete the controller when we are finished
+  }
 }
