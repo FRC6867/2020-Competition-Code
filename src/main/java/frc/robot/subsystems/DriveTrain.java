@@ -105,6 +105,13 @@ public class DriveTrain extends SubsystemBase {
    * @param speed - Goes straighter the faster it is.
    */  
   public void driveStraight(double speed) {
+    if (!m_drivingStraight) { // First time this is called
+      m_drivingStraight = true;
+      reset();
+    } else if (speed == 0) { // We were driving straight and we stopped
+      m_drivingStraight = false;
+    }
+
     // Calculates error based on gyro heading
     final double error = -getHeading();
     final double turnMod = error * DriveTrainConstants.TURN_CORRECTION_P;
