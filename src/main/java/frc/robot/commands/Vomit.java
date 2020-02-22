@@ -21,7 +21,7 @@ public class Vomit extends CommandBase {
   /**
    * Creates a new Vomit command. This command runs all the motors in
    * reverse to empty balls and clear up jams. Will not end on it's own
-   * - must be interrupted.
+   * - must be interrupted. This vomits all the subsystems at once.
    */
   public Vomit(Intake intake, Indexer indexer, Shooter shooter) {
     m_intake = intake;
@@ -39,14 +39,29 @@ public class Vomit extends CommandBase {
     }
   }
 
+  /**
+   * Creates a new Vomit command. This command runs all the motors in
+   * reverse to empty balls and clear up jams. Will not end on it's own
+   * - must be interrupted. This vomits only the intake.
+   */
   public Vomit(Intake intake) {
     this(intake, null, null);
   }
 
+  /**
+   * Creates a new Vomit command. This command runs all the motors in
+   * reverse to empty balls and clear up jams. Will not end on it's own
+   * - must be interrupted. This vomits only the indedxer.
+   */
   public Vomit(Indexer indexer) {
     this(null, indexer, null);
   }
 
+  /**
+   * Creates a new Vomit command. This command runs all the motors in
+   * reverse to empty balls and clear up jams. Will not end on it's own
+   * - must be interrupted. This vomits only the shooter.
+   */
   public Vomit(Shooter shooter) {
     this(null, null, shooter);
   }

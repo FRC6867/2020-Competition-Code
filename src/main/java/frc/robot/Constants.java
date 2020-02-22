@@ -47,7 +47,7 @@ public final class Constants {
         public static final int ULTRASONIC_ECHO_PIN = 9; // Undefined
 
         // Speed constants
-        public static final double DEFAULT_SPEED_THROTTLE = 0.6; // Default speed multiplier
+        public static final double DEFAULT_SPEED_THROTTLE = 0.9; // Default speed multiplier
         public static final double MIN_SPEED_THRESHOLD = 0.1; // Inputs under will be ignored
 
 
@@ -92,7 +92,7 @@ public final class Constants {
         public static final int INTAKE_ARM_TARGET_TOLERANCE = 5; // Allowed innacuracy
 
         // Speeds
-        public static final double INTAKE_COLLECTOR_MOTOR_SPEED = 0.5; // or 1
+        public static final double INTAKE_COLLECTOR_MOTOR_SPEED = 0.5; // Or 0.75
     }
 
     public static final class IndexerConstants {
@@ -104,11 +104,10 @@ public final class Constants {
         public static final int INDEXER_MOTOR_2_CAN = 31;
 
         public static final boolean INDEXER_MOTOR_1_INVERTED = true;
-        public static final boolean INDEXER_MOTOR_2_INVERTED = false; // Undefined
+        public static final boolean INDEXER_MOTOR_2_INVERTED = false;
 
         // Speeds
         public static final double INDEXER_MOTOR_1_SPEED = 0.75;
-        
         public static final double INDEXER_MOTOR_2_SPEED = 0.3;
 
         // Ball detection
@@ -140,9 +139,9 @@ public final class Constants {
 
         // Speeds
         public static double SHOOTER_TARGET_RPM = 3750; // Adjustable during run
-        public static double SHOOTER_TARGET_RPM_TOLERANCE = 100;
+        public static double SHOOTER_TARGET_RPM_TOLERANCE = 125;
 
-        public static double FEEDER_SPEED = 0.75; // Or 1
+        public static double FEEDER_SPEED = 0.75;
     }
 
     public static final class ClimbConstants {
@@ -154,7 +153,7 @@ public final class Constants {
         public static final int CLIMB_MOTOR_CAN = 50;
 
         public static final boolean CLIMB_MOTOR_INVERTED = false; // Undefined
-        public static final double CLIMB_MOTOR_SPEED = 0.5; // Slow for now
+        public static final double CLIMB_MOTOR_SPEED = 0.3; // Slow for now
     }
 
     public static final class VisionConstants {

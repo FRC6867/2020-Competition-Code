@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.I2C;
@@ -57,9 +56,10 @@ public class Indexer extends SubsystemBase {
     setIndexerMotors(-1);
   }
 
-  private void setIndexerMotors(double speedMult) {
-    m_indexerMotor1.set(ControlMode.PercentOutput, speedMult * IndexerConstants.INDEXER_MOTOR_1_SPEED);
-    m_indexerMotor2.set(ControlMode.PercentOutput, speedMult * IndexerConstants.INDEXER_MOTOR_2_SPEED);
+  // Runs both motors at their respective speeds
+  private void setIndexerMotors(double speedMultiplier) {
+    m_indexerMotor1.set(ControlMode.PercentOutput, speedMultiplier * IndexerConstants.INDEXER_MOTOR_1_SPEED);
+    m_indexerMotor2.set(ControlMode.PercentOutput, speedMultiplier * IndexerConstants.INDEXER_MOTOR_2_SPEED);
   }
 
   /**

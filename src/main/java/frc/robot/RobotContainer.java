@@ -21,19 +21,8 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.commands.CollectFromIntake;
-import frc.robot.commands.DriveForward;
-import frc.robot.commands.Shoot;
-import frc.robot.commands.TankDrive;
-import frc.robot.commands.TurnDegrees;
-import frc.robot.commands.Vomit;
-
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Vision;
-
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 import frc.robot.Constants.*;
 
 /**
@@ -54,6 +43,7 @@ public class RobotContainer {
   private final Vision m_vision = new Vision();
 
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -77,6 +67,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Mode", m_autoChooser);
     SmartDashboard.setPersistent("Auto Mode");
 
+    // Manual Vomit Commands
     SmartDashboard.putData("Vomit Intake", new Vomit(m_intake));
     SmartDashboard.putData("Vomit Indexer", new Vomit(m_indexer));
     SmartDashboard.putData("Vomit Shooter", new Vomit(m_shooter));
@@ -111,7 +102,6 @@ public class RobotContainer {
     // Shooter spin-up
     new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
       .toggleWhenActive(new StartEndCommand(m_shooter::enable, m_shooter::disable));
-     //   .whenFinished(m_shooter::disable)); // Possibly use .whenHeld()
 
     // Shooter shoot (feeder)
     new JoystickButton(m_operatorGamepad, ShooterConstants.FEEDER_BUTTON_ID)

@@ -56,7 +56,8 @@ public class DriveTrain extends SubsystemBase {
   // Speed throttles
   private double m_speedThrottle = DriveTrainConstants.DEFAULT_SPEED_THROTTLE;
   private boolean m_fineControl = false;
-  private boolean m_drivingStraight = false; // Experimental
+  private boolean m_drivingStraight = false;
+  private double m_drivingStraightHeading = 0;
 
 
   /**
@@ -87,6 +88,7 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putData("Left Drive Encoder", m_leftEncoder);
     SmartDashboard.putData("Right Drive Encoder", m_rightEncoder);
     SmartDashboard.putData("Distance to Object", m_distanceSensor);
+    SmartDashboard.putNumber("Drive Train Throttle", m_speedThrottle);
   }
 
   /**
@@ -100,20 +102,20 @@ public class DriveTrain extends SubsystemBase {
   /**
    * Attempts to go straight, correcting itself using gyro.
    * 
-   * @Warning !! Remember to call DriveTrain.reset() before using !!
-   * 
+   * <p><b>Experimental, hasn't been tested yet.</b>
+ 
    * @param speed - Goes straighter the faster it is.
    */  
   public void driveStraight(double speed) {
-    if (!m_drivingStraight) { // First time this is called
+    if (!m_drivingStraight) { // We weren't driving straight and we just started
       m_drivingStraight = true;
-      reset();
-    } else if (speed == 0) { // We were driving straight and we stopped
+      m_drivingStraightHeading = getHeading();
+    } else if (speed == 0) { // We were driving straight and we just stopped
       m_drivingStraight = false;
     }
 
     // Calculates error based on gyro heading
-    final double error = -getHeading();
+    final double error = m_drivingStraightHeading - getHeading();
     final double turnMod = error * DriveTrainConstants.TURN_CORRECTION_P;
 
     drive(speed - turnMod, speed + turnMod);
@@ -136,7 +138,7 @@ public class DriveTrain extends SubsystemBase {
 
   public void driveLeft(double speed) {
     setMotor(m_frontLeftDrive, speed);
-  }
+}
 
   private void setMotor(CANSparkMax motor, double rawSpeed) {
     if (m_fineControl) {
