@@ -60,7 +60,9 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Auto command chooser
-    m_autoChooser.setDefaultOption("Turn 90 degrees", new TurnDegrees(90, m_driveTrain));
+    m_autoChooser.setDefaultOption("Sequence Number 1",
+      new AutoCommandSequence1(m_driveTrain, m_intake, m_indexer, m_shooter));
+    m_autoChooser.addOption("Turn 90 degrees", new TurnDegrees(90, m_driveTrain));
     m_autoChooser.addOption("Drive Forwards 100 inches", new DriveForward(100, m_driveTrain));
     m_autoChooser.addOption("Do nothing", null);
 

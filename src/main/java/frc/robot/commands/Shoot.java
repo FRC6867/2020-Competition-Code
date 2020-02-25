@@ -39,11 +39,11 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if (m_shooter.shooterReady() && m_indexer.ballReady()) {
-    //   m_shooter.runFeeder();
-    // } else {
-    //   m_shooter.stopFeeder();
-    // }
+    if (m_shooter.shooterReady()) {// && m_indexer.ballReady()) {
+      m_shooter.runFeeder();
+    } else {
+      m_shooter.stopFeeder();
+    }
     m_shooter.runFeeder();
   }
 

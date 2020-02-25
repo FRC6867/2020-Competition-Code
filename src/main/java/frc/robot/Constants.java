@@ -172,4 +172,34 @@ public final class Constants {
     // Vomit buttons
     public static final int VOMIT_BUTTON_1_ID = 9; // Left joystick button
     public static final int VOMIT_BUTTON_2_ID = 10; // Right joystick button
+
+    public static final class AutoConstants {
+        public static final class Auto1Constants {
+            public static final double INTAKE_START_DISTANCE = 100;
+            public static final double INTAKE_DURATION = 2;
+            public static final double INTAKE_TARGET_DISTANCE = 130.36;
+
+            public static final double TURN_1_DEGREES = -124.25;
+            public static final double DRIVE_1_DISTANCE = 231.6;
+            public static final double TURN_2_DEGREES = 55.75;
+            public static final double DRIVE_TO_WALL_DISTANCE = 120;
+            public static final double MAX_DRIVE_TIME = 2;
+
+            public static final double SHOOT_TIME = 2;
+        }
+
+        public static final class Auto2Constants {
+            public static final double INTAKE_START_DISTANCE = 150;
+            public static final double INTAKE_DURATION = 3;
+            public static final double INTAKE_TARGET_DISTANCE = 158.63;
+
+            public static final double TURN_1_DEGREES = -157.13;
+            public static final double DRIVE_1_DISTANCE = 173.1;
+            public static final double TURN_2_DEGREES = 22.87;
+            public static final double DRIVE_TO_WALL_DISTANCE = 120;
+            public static final double MAX_DRIVE_TIME = 2;
+
+            public static final double SHOOT_TIME = 2;
+        }
+    }
 }

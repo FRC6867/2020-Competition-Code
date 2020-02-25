@@ -22,7 +22,7 @@ public class TurnDegrees extends PIDCommand {
    * @param degrees The amount of degrees to turn. Positive - right, negative - left
    * @param driveTrain The {@link DriveTrain} subsystem
    */
-  public TurnDegrees(int degrees, DriveTrain driveTrain) {
+  public TurnDegrees(double degrees, DriveTrain driveTrain) {
     super(
       new PIDController(DriveTrainConstants.TURN_P, DriveTrainConstants.TURN_I, DriveTrainConstants.TURN_D),
       driveTrain::getHeading,
