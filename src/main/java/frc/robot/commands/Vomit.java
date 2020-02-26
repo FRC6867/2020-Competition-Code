@@ -70,7 +70,6 @@ public class Vomit extends CommandBase {
   @Override
   public void initialize() {
     if (m_intake != null) {
-      m_intake.armUp();
       m_intake.vomit();
     }
     if (m_indexer != null) {

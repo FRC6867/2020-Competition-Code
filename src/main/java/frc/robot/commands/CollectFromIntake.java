@@ -29,14 +29,14 @@ public class CollectFromIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intake.armDown();
+    m_intake.disable();
     m_intake.startCollection();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_intake.armUp();
+    m_intake.enable();
     m_intake.stopCollection();
   }
 

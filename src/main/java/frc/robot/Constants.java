@@ -47,7 +47,7 @@ public final class Constants {
         public static final int ULTRASONIC_ECHO_PIN = 9; // Undefined
 
         // Speed constants
-        public static final double DEFAULT_SPEED_THROTTLE = 0.9; // Default speed multiplier
+        public static final double DEFAULT_SPEED_THROTTLE = 0.7; // Default speed multiplier
         public static final double MIN_SPEED_THRESHOLD = 0.1; // Inputs under will be ignored
 
 
@@ -87,12 +87,11 @@ public final class Constants {
         public static final double INTAKE_ARM_I = 0.0; // Undefined
         public static final double INTAKE_ARM_D = 0.0; // Undefined
 
-        public static final int INTAKE_ARM_UP_DEGREE_POS = 400;
-        public static final int INTAKE_ARM_DOWN_DEGREE_POS = 700;
-        public static final int INTAKE_ARM_TARGET_TOLERANCE = 5; // Allowed innacuracy
+        public static final int INTAKE_ARM_TARGET_POS = 500;
+        public static final int INTAKE_ARM_TARGET_TOLERANCE = 10; // Allowed innacuracy
 
         // Speeds
-        public static final double INTAKE_COLLECTOR_MOTOR_SPEED = 0.5; // Or 0.75
+        public static final double INTAKE_COLLECTOR_MOTOR_SPEED = 0.95; // Or 0.75
     }
 
     public static final class IndexerConstants {
@@ -104,7 +103,7 @@ public final class Constants {
         public static final int INDEXER_MOTOR_2_CAN = 31;
 
         public static final boolean INDEXER_MOTOR_1_INVERTED = true;
-        public static final boolean INDEXER_MOTOR_2_INVERTED = false;
+        public static final boolean INDEXER_MOTOR_2_INVERTED = true;
 
         // Speeds
         public static final double INDEXER_MOTOR_1_SPEED = 0.75;

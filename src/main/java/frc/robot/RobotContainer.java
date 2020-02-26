@@ -93,7 +93,7 @@ public class RobotContainer {
       .whenPressed(new TurnDegrees(m_turnDegreesPOV.getPOV180(), m_driveTrain));
     
     // Intake
-    new JoystickButton(m_driverGamepad, IntakeConstants.INTAKE_BUTTON_ID)
+    new JoystickButton(m_operatorGamepad, IntakeConstants.INTAKE_BUTTON_ID)
       .whenHeld(new CollectFromIntake(m_intake));
     
     // Indexer control
@@ -102,11 +102,11 @@ public class RobotContainer {
       .whenReleased(new InstantCommand(m_indexer::stopIndexer));
 
     // Shooter spin-up
-    new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
+    new JoystickButton(m_driverGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
       .toggleWhenActive(new StartEndCommand(m_shooter::enable, m_shooter::disable));
 
     // Shooter shoot (feeder)
-    new JoystickButton(m_operatorGamepad, ShooterConstants.FEEDER_BUTTON_ID)
+    new JoystickButton(m_driverGamepad, ShooterConstants.FEEDER_BUTTON_ID)
       .whenHeld(new Shoot(m_shooter, m_indexer));
 
     // Vomit

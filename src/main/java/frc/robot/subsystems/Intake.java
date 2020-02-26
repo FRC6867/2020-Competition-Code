@@ -54,7 +54,7 @@ public class Intake extends PIDSubsystem {
     m_moverMotor.setInverted(IntakeConstants.INTAKE_MOVER_MOTOR_INVERTED);
     m_collectorMotor.setInverted(IntakeConstants.INTAKE_COLLECTOR_MOTOR_INVERTED);
 
-    m_moverMotor.setNeutralMode(NeutralMode.Brake); // Doesn't let arm fall
+    //m_moverMotor.setNeutralMode(NeutralMode.Brake); // Doesn't let arm fall
     m_collectorMotor.setNeutralMode(NeutralMode.Coast); // So collector keeps spinning
     
     // Encoder setup
@@ -63,7 +63,7 @@ public class Intake extends PIDSubsystem {
 
     // PID setup
     getController().setTolerance(IntakeConstants.INTAKE_ARM_TARGET_TOLERANCE);
-    armUp();
+    setSetpoint(IntakeConstants.INTAKE_ARM_TARGET_POS);
     enable();
   }
 
@@ -81,6 +81,7 @@ public class Intake extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
+    SmartDashboard.putNumber("Arm Output", output);
     m_moverMotor.set(ControlMode.PercentOutput, output);
   }
 
@@ -97,17 +98,7 @@ public class Intake extends PIDSubsystem {
    * Sets the setpoint that tells the subsystem to move the intake arm
    * into the "up" position.
    */
-  public void armUp() {
-    setSetpoint(IntakeConstants.INTAKE_ARM_UP_DEGREE_POS);
-  }
 
-  /**
-   * Sets the setpoint that tells the subsystem to move the intake arm
-   * into the "down" position.
-   */
-  public void armDown() {
-    setSetpoint(IntakeConstants.INTAKE_ARM_DOWN_DEGREE_POS);
-  }
 
   /**
    * Turns on the collector motor.
@@ -127,7 +118,7 @@ public class Intake extends PIDSubsystem {
    * Lifts collector arm and runs collector in reverse.
    */
   public void vomit() {
-    armUp();
+    enable();
     m_collectorMotor.set(ControlMode.PercentOutput, -IntakeConstants.INTAKE_COLLECTOR_MOTOR_SPEED);
   }
 
