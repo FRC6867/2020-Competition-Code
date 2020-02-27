@@ -41,11 +41,11 @@ public class Shooter extends PIDSubsystem {
       // The PIDController used by the subsystem
       new PIDController(ShooterConstants.SHOOTER_P, ShooterConstants.SHOOTER_I, ShooterConstants.SHOOTER_D)
     );
-    SmartDashboard.putNumber("Shooter Target RPM", ShooterConstants.SHOOTER_TARGET_RPM);
+    SmartDashboard.putNumber("Shooter Target RPM", ShooterConstants.SHOOTER_TARGET_1_RPM);
 
     // Controller config
     getController().setTolerance(ShooterConstants.SHOOTER_TARGET_RPM_TOLERANCE);
-    setSetpoint(ShooterConstants.SHOOTER_TARGET_RPM);
+    setSetpoint(ShooterConstants.SHOOTER_TARGET_1_RPM);
 
     // Encoder config
     m_shooterEncoder.reset();
@@ -71,7 +71,7 @@ public class Shooter extends PIDSubsystem {
       SmartDashboard.getNumber("Shooter I", getController().getI()),
       SmartDashboard.getNumber("Shooter D", getController().getD())
     );
-    setSetpoint(SmartDashboard.getNumber("Shooter Target RPM", ShooterConstants.SHOOTER_TARGET_RPM));
+    setSetpoint(SmartDashboard.getNumber("Shooter Target RPM", ShooterConstants.SHOOTER_TARGET_1_RPM));
 
     SmartDashboard.putNumber("Shooter P", getController().getP());
     SmartDashboard.putNumber("Shooter I", getController().getI());
@@ -99,6 +99,11 @@ public class Shooter extends PIDSubsystem {
     SmartDashboard.putBoolean("Shooter Ready", atSetpoint);
 
     return atSetpoint;
+  }
+
+  public void setTargetRPM(double targetRPM) {
+    setSetpoint(targetRPM);
+    SmartDashboard.putNumber("Shooter Target RPM", targetRPM);
   }
 
   /**

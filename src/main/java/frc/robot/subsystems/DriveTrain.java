@@ -19,6 +19,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Constants.DriveTrainConstants;
@@ -74,6 +75,11 @@ public class DriveTrain extends SubsystemBase {
     m_backRightDrive.follow(m_frontRightDrive);
     m_frontLeftDrive.setInverted(DriveTrainConstants.LEFT_MOTOR_INVERTED);
     m_backLeftDrive.follow(m_frontLeftDrive);
+
+    // m_frontRightDrive.setIdleMode(IdleMode.kCoast);
+    // m_backRightDrive.setIdleMode(IdleMode.kCoast);
+    // m_frontLeftDrive.setIdleMode(IdleMode.kCoast);
+    // m_backLeftDrive.setIdleMode(IdleMode.kCoast);
 
     // Set encoder distance values
     m_rightEncoder.setDistancePerPulse(DriveTrainConstants.RIGHT_ENCODER_TICK_DISTANCE);

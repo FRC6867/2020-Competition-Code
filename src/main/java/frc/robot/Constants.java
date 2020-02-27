@@ -55,17 +55,19 @@ public final class Constants {
         public static final double TURN_CORRECTION_P = 0.25; // Undefined
 
         // For turning a specific amount of degrees
-        public static double TURN_P = 0.05;  // Undefined
-        public static double TURN_I = 0.0; // Undefined
-        public static double TURN_D = 0.006; // Undefined
+        public static final double TURN_P = 0.05;  // Undefined
+        public static final double TURN_I = 0.0; // Undefined
+        public static final double TURN_D = 0.006; // Undefined
 
         // For moving for a specific distance
-        public static double DRIVE_P = 0.01; // Undefined
-        public static double DRIVE_I = 0.0; // Undefined
-        public static double DRIVE_D = 0.0; // Undefined
+        public static final double DRIVE_P = 0.01; // Undefined
+        public static final double DRIVE_I = 0.0; // Undefined
+        public static final double DRIVE_D = 0.0; // Undefined
 
-        public static double TURN_TARGET_TOLERANCE = 0.5;
-        public static double DRIVE_TARGET_TOLERANCE = 1;
+        public static final double ARTIFICIAL_COAST_NUM = 2;
+
+        public static final double TURN_TARGET_TOLERANCE = 0.5;
+        public static final double DRIVE_TARGET_TOLERANCE = 1;
     }
 
     public static final class IntakeConstants {
@@ -116,6 +118,7 @@ public final class Constants {
     public static final class ShooterConstants {
         // User input
         public static final int SHOOTER_TOGGLE_BUTTON_ID = 1; // 'A' button
+        public static final int SHOOTER_SPEED_BUTTON_ID = 3; // 'X' button
         public static final int FEEDER_BUTTON_ID = 2; // 'B' button
 
         // Motor CANs
@@ -132,15 +135,16 @@ public final class Constants {
         public static final int SHOOTER_ENCODER_CYCLES_PER_ROTATION = 2048;
 
         // Shooter PID
-        public static double SHOOTER_P = 0.00125; // Undefined
-        public static double SHOOTER_I = 0.002; // Undefined
+        public static double SHOOTER_P = 0.0001; // Undefined
+        public static double SHOOTER_I = 0.001; // Undefined
         public static double SHOOTER_D = 0.0; // Undefined
 
         // Speeds
-        public static double SHOOTER_TARGET_RPM = 3750; // Adjustable during run
+        public static double SHOOTER_TARGET_1_RPM = 3750; // Adjustable during run
+        public static double SHOOTER_TARGET_2_RPM = 2750; // Adjustable during run
         public static double SHOOTER_TARGET_RPM_TOLERANCE = 125;
 
-        public static double FEEDER_SPEED = 0.75;
+        public static double FEEDER_SPEED = 0.35;
     }
 
     public static final class ClimbConstants {

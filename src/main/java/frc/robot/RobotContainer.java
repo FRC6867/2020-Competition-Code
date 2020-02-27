@@ -103,11 +103,18 @@ public class RobotContainer {
 
     // Shooter spin-up
     new JoystickButton(m_driverGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
-      .toggleWhenActive(new StartEndCommand(m_shooter::enable, m_shooter::disable));
+      .toggleWhenPressed(new StartEndCommand(m_shooter::enable, m_shooter::disable));
 
     // Shooter shoot (feeder)
     new JoystickButton(m_driverGamepad, ShooterConstants.FEEDER_BUTTON_ID)
       .whenHeld(new Shoot(m_shooter, m_indexer));
+
+    // Shooter speed
+    new JoystickButton(m_driverGamepad, ShooterConstants.SHOOTER_SPEED_BUTTON_ID)
+      .toggleWhenPressed(new StartEndCommand(
+        () -> m_shooter.setTargetRPM(ShooterConstants.SHOOTER_TARGET_2_RPM),
+        () -> m_shooter.setTargetRPM(ShooterConstants.SHOOTER_TARGET_1_RPM)
+      ));
 
     // Vomit
     new DoubleButton(m_operatorGamepad, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID)
