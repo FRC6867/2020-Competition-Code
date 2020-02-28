@@ -8,6 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.Vomittable;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.I2C;
 
@@ -17,7 +19,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import frc.robot.Constants.IndexerConstants;
 
-public class Indexer extends SubsystemBase {
+public class Indexer extends SubsystemBase implements Vomittable {
   private final VictorSPX m_indexerMotor1= new VictorSPX(IndexerConstants.INDEXER_MOTOR_1_CAN);
   private final VictorSPX m_indexerMotor2= new VictorSPX(IndexerConstants.INDEXER_MOTOR_2_CAN);
 
@@ -54,6 +56,13 @@ public class Indexer extends SubsystemBase {
    */
   public void vomit() {
     setIndexerMotors(-1);
+  }
+
+  /**
+   * Stops vomitting.
+   */
+  public void stopVomit() {
+    stopIndexer();
   }
 
   // Runs both motors at their respective speeds

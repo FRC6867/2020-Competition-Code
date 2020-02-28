@@ -60,8 +60,12 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Auto command chooser
-    m_autoChooser.setDefaultOption("Sequence Number 1",
+    m_autoChooser.setDefaultOption("Sequence Number 3",
+      new AutoCommandSequence3(m_driveTrain, m_indexer, m_shooter));
+    m_autoChooser.addOption("Sequence Number 1",
       new AutoCommandSequence1(m_driveTrain, m_intake, m_indexer, m_shooter));
+    m_autoChooser.addOption("Sequence Number 2",
+      new AutoCommandSequence2(m_driveTrain, m_intake, m_indexer, m_shooter));
     m_autoChooser.addOption("Turn 90 degrees", new TurnDegrees(90, m_driveTrain));
     m_autoChooser.addOption("Drive Forwards 100 inches", new DriveForward(100, m_driveTrain));
     m_autoChooser.addOption("Do nothing", null);
@@ -84,8 +88,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Fine control
     new JoystickButton(m_driverGamepad, DriveTrainConstants.FINE_CONTROL_BUTTON_ID)
-      .whenPressed(() -> m_driveTrain.setFineControl(true))
-      .whenReleased(() -> m_driveTrain.setFineControl(false));
+      .toggleWhenPressed(new StartEndCommand(
+        () -> m_driveTrain.setFineControl(true),
+        () -> m_driveTrain.setFineControl(false)
+      ));
 
     // Precise turning
     final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_driverGamepad);
@@ -102,7 +108,7 @@ public class RobotContainer {
       .whenReleased(new InstantCommand(m_indexer::stopIndexer));
 
     // Shooter spin-up
-    new JoystickButton(m_driverGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
+    new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
       .toggleWhenPressed(new StartEndCommand(m_shooter::enable, m_shooter::disable));
 
     // Shooter shoot (feeder)

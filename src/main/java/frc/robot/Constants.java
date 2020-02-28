@@ -49,6 +49,9 @@ public final class Constants {
         // Speed constants
         public static final double DEFAULT_SPEED_THROTTLE = 0.7; // Default speed multiplier
         public static final double MIN_SPEED_THRESHOLD = 0.1; // Inputs under will be ignored
+        public static final double FINE_CONTROL_SENSITIVITY = 2.5;
+        public static final double ARTIFICIAL_COAST_NUM = 2;
+        public static final double JOYSTICK_SENSITIVITY_MOD = 1/2;
 
 
         // PIDs
@@ -63,8 +66,6 @@ public final class Constants {
         public static final double DRIVE_P = 0.01; // Undefined
         public static final double DRIVE_I = 0.0; // Undefined
         public static final double DRIVE_D = 0.0; // Undefined
-
-        public static final double ARTIFICIAL_COAST_NUM = 2;
 
         public static final double TURN_TARGET_TOLERANCE = 0.5;
         public static final double DRIVE_TARGET_TOLERANCE = 1;
@@ -108,8 +109,8 @@ public final class Constants {
         public static final boolean INDEXER_MOTOR_2_INVERTED = true;
 
         // Speeds
-        public static final double INDEXER_MOTOR_1_SPEED = 0.75;
-        public static final double INDEXER_MOTOR_2_SPEED = 0.3;
+        public static final double INDEXER_MOTOR_1_SPEED = 0.5;
+        public static final double INDEXER_MOTOR_2_SPEED = 0.6;
 
         // Ball detection
         public static final int BALL_CLOSE_DISTANCE = 100; // Undefined
@@ -140,7 +141,7 @@ public final class Constants {
         public static double SHOOTER_D = 0.0; // Undefined
 
         // Speeds
-        public static double SHOOTER_TARGET_1_RPM = 3750; // Adjustable during run
+        public static double SHOOTER_TARGET_1_RPM = 3200; // Adjustable during run
         public static double SHOOTER_TARGET_2_RPM = 2750; // Adjustable during run
         public static double SHOOTER_TARGET_RPM_TOLERANCE = 125;
 
@@ -203,6 +204,12 @@ public final class Constants {
             public static final double MAX_DRIVE_TIME = 2;
 
             public static final double SHOOT_TIME = 2;
+        }
+
+        public static final class Auto3Constants {
+            public static final double SPIN_UP_TIME = 3;
+            public static final double SHOOT_TIME = 3;
+            public static final double DRIVE_TIME = 1;
         }
     }
 }

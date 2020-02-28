@@ -1,0 +1,586 @@
+{
+  "tabPane": [
+    {
+      "title": "SmartDashboard",
+      "autoPopulate": true,
+      "autoPopulatePrefix": "SmartDashboard/",
+      "widgetPane": {
+        "gridSize": 50.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "4,5": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Ball Ready",
+              "_title": "Ball Ready",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "6,7": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/Auto Mode",
+              "_title": "Auto Mode"
+            }
+          },
+          "0,0": {
+            "size": [
+              4,
+              8
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Drive Train",
+              "Layout/Label position": "TOP",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Average Encoder Distance",
+                  "_title": "Average Encoder Distance"
+                },
+                {
+                  "_type": "Gyro",
+                  "_source0": "network_table:///SmartDashboard/Heading",
+                  "_title": "Heading",
+                  "Visuals/Major tick spacing": 45.0,
+                  "Visuals/Starting angle": 180.0,
+                  "Visuals/Show tick mark ring": true,
+                  "Visuals/Counter clockwise": false
+                },
+                {
+                  "_type": "Toggle Switch",
+                  "_source0": "network_table:///SmartDashboard/Fine Drive Control",
+                  "_title": "Fine Drive Control"
+                },
+                {
+                  "_type": "Number Slider",
+                  "_source0": "network_table:///SmartDashboard/Drive Train Throttle",
+                  "_title": "Drive Train Throttle",
+                  "Slider Settings/Min": -0.0,
+                  "Slider Settings/Max": 1.0,
+                  "Slider Settings/Block increment": 0.0625
+                },
+                {
+                  "_type": "Encoder",
+                  "_source0": "network_table:///SmartDashboard/Left Drive Encoder",
+                  "_title": "Left Drive Encoder"
+                },
+                {
+                  "_type": "Encoder",
+                  "_source0": "network_table:///SmartDashboard/Right Drive Encoder",
+                  "_title": "Right Drive Encoder"
+                },
+                {
+                  "_type": "Ultrasonic",
+                  "_source0": "network_table:///SmartDashboard/Distance to Object",
+                  "_title": "Distance to Object",
+                  "Unit/Unit": "INCH"
+                }
+              ]
+            }
+          },
+          "16,4": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Ball Proximity",
+              "_title": "Ball Proximity"
+            }
+          },
+          "12,0": {
+            "size": [
+              5,
+              4
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Shooter",
+              "Layout/Label position": "TOP",
+              "_children": [
+                {
+                  "_type": "Simple Dial",
+                  "_source0": "network_table:///SmartDashboard/Shooter RPM",
+                  "_title": "Shooter RPM",
+                  "Range/Min": 0.0,
+                  "Range/Max": 4500.0,
+                  "Visuals/Show value": true
+                },
+                {
+                  "_type": "Graph",
+                  "_source0": "network_table:///SmartDashboard/Shooter RPM History",
+                  "_title": "Shooter RPM History",
+                  "Graph/Visible time": 30.0,
+                  "Y-axis/Automatic bounds": false,
+                  "Y-axis/Upper bound": 4500.0,
+                  "Y-axis/Lower bound": 2000.0,
+                  "Visible data/SmartDashboard/Shooter RPM History": true
+                },
+                {
+                  "_type": "Number Slider",
+                  "_source0": "network_table:///SmartDashboard/Shooter Target RPM",
+                  "_title": "Shooter Target RPM",
+                  "Slider Settings/Min": 2000.0,
+                  "Slider Settings/Max": 4000.0,
+                  "Slider Settings/Block increment": 100.0
+                }
+              ]
+            }
+          },
+          "18,4": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Shooter Output",
+              "_title": "Shooter Output"
+            }
+          },
+          "16,5": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Forward PID",
+              "Layout/Label position": "TOP",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Drive P",
+                  "_title": "Drive P"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Drive I",
+                  "_title": "Drive I"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Drive D",
+                  "_title": "Drive D"
+                }
+              ]
+            }
+          },
+          "18,5": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Turn PID",
+              "Layout/Label position": "TOP",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Turn P",
+                  "_title": "Turn P"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Turn I",
+                  "_title": "Turn I"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Turn D",
+                  "_title": "Turn D"
+                }
+              ]
+            }
+          },
+          "16,7": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Intake Arm PID",
+              "Layout/Label position": "TOP",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Intake Arm P",
+                  "_title": "Intake Arm P"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Intake Arm I",
+                  "_title": "Intake Arm I"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Intake Arm D",
+                  "_title": "Intake Arm D"
+                }
+              ]
+            }
+          },
+          "18,7": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Shooter PID",
+              "Layout/Label position": "TOP",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Shooter P",
+                  "_title": "Shooter P"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Shooter I",
+                  "_title": "Shooter I"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Shooter D",
+                  "_title": "Shooter D"
+                }
+              ]
+            }
+          },
+          "17,0": {
+            "size": [
+              3,
+              4
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Manual Vomit",
+              "Layout/Label position": "TOP",
+              "_children": [
+                {
+                  "_type": "Command",
+                  "_source0": "network_table:///SmartDashboard/Vomit Intake",
+                  "_title": "Vomit Intake"
+                },
+                {
+                  "_type": "Command",
+                  "_source0": "network_table:///SmartDashboard/Vomit Indexer",
+                  "_title": "Vomit Indexer"
+                },
+                {
+                  "_type": "Command",
+                  "_source0": "network_table:///SmartDashboard/Vomit Shooter",
+                  "_title": "Vomit Shooter"
+                }
+              ]
+            }
+          },
+          "7,5": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Shooter Ready",
+              "_title": "Shooter Ready",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "11,7": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Intake Target",
+              "_title": "Intake Target"
+            }
+          },
+          "4,0": {
+            "size": [
+              7,
+              5
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://Main Camera",
+              "_title": "Main Camera",
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": 40,
+              "imageWidth": 200,
+              "imageHeight": 100
+            }
+          },
+          "11,4": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Intake Arm Degrees",
+              "_title": "Intake Arm Degrees"
+            }
+          },
+          "13,4": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Arm Output",
+              "_title": "Arm Output"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "LiveWindow",
+      "autoPopulate": true,
+      "autoPopulatePrefix": "LiveWindow/",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              4,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/Ungrouped",
+              "_title": "Ungrouped",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Encoder",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Encoder[2]",
+                  "_title": "Encoder[2]"
+                },
+                {
+                  "_type": "Encoder",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Encoder[0]",
+                  "_title": "Encoder[0]"
+                },
+                {
+                  "_type": "Gyro",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/navX-Sensor",
+                  "_title": "navX-Sensor",
+                  "Visuals/Major tick spacing": 45.0,
+                  "Visuals/Starting angle": 180.0,
+                  "Visuals/Show tick mark ring": true,
+                  "Visuals/Counter clockwise": false
+                },
+                {
+                  "_type": "Encoder",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Encoder[1]",
+                  "_title": "Encoder[1]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[1]",
+                  "_title": "PIDController[1]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[2]",
+                  "_title": "PIDController[2]"
+                },
+                {
+                  "_type": "Ultrasonic",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Ultrasonic[6]",
+                  "_title": "Ultrasonic[6]",
+                  "Unit/Unit": "INCH"
+                },
+                {
+                  "_type": "Ultrasonic",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Ultrasonic[5]",
+                  "_title": "LiveWindow/Ungrouped/Ultrasonic[5]",
+                  "Unit/Unit": "INCH"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[3]",
+                  "_title": "LiveWindow/Ungrouped/PIDController[3]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[4]",
+                  "_title": "LiveWindow/Ungrouped/PIDController[4]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[5]",
+                  "_title": "LiveWindow/Ungrouped/PIDController[5]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[6]",
+                  "_title": "LiveWindow/Ungrouped/PIDController[6]"
+                },
+                {
+                  "_type": "Ultrasonic",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Ultrasonic[9]",
+                  "_title": "Ultrasonic[9]",
+                  "Unit/Unit": "INCH"
+                },
+                {
+                  "_type": "Encoder",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Encoder[3]",
+                  "_title": "LiveWindow/Ungrouped/Encoder[3]"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Duty Cycle[0]/Frequency",
+                  "_title": "LiveWindow/Ungrouped/Duty Cycle[0]/Frequency"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Duty Cycle[0]/Output",
+                  "_title": "LiveWindow/Ungrouped/Duty Cycle[0]/Output"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DigitalInput[4]/Value",
+                  "_title": "LiveWindow/Ungrouped/DigitalInput[4]/Value",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Counter[1]/Value",
+                  "_title": "LiveWindow/Ungrouped/Counter[1]/Value"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DutyCycle Encoder[4]/Distance",
+                  "_title": "LiveWindow/Ungrouped/DutyCycle Encoder[4]/Distance"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DutyCycle Encoder[4]/Is Connected",
+                  "_title": "LiveWindow/Ungrouped/DutyCycle Encoder[4]/Is Connected",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[9]",
+                  "_title": "LiveWindow/Ungrouped/PIDController[9]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[8]",
+                  "_title": "LiveWindow/Ungrouped/PIDController[8]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[7]",
+                  "_title": "LiveWindow/Ungrouped/PIDController[7]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[10]",
+                  "_title": "LiveWindow/Ungrouped/PIDController[10]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[15]",
+                  "_title": "PIDController[15]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[11]",
+                  "_title": "PIDController[11]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[13]",
+                  "_title": "PIDController[13]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[12]",
+                  "_title": "PIDController[12]"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[14]",
+                  "_title": "PIDController[14]"
+                }
+              ]
+            }
+          },
+          "4,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/Indexer",
+              "_title": "Indexer",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Subsystem Layout",
+                  "_source0": "network_table:///LiveWindow/Shooter",
+                  "_title": "Shooter",
+                  "Layout/Label position": "BOTTOM",
+                  "_children": []
+                }
+              ]
+            }
+          },
+          "6,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/DriveTrain",
+              "_title": "DriveTrain",
+              "Layout/Label position": "BOTTOM",
+              "_children": []
+            }
+          }
+        }
+      }
+    }
+  ],
+  "windowGeometry": {
+    "x": -8.0,
+    "y": -8.0,
+    "width": 1382.0,
+    "height": 744.0
+  }
+}

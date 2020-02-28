@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import frc.robot.subsystems.Vomittable;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,7 +21,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import frc.robot.Constants.ShooterConstants;
 
-public class Shooter extends PIDSubsystem {
+public class Shooter extends PIDSubsystem implements Vomittable {
   // Motors
   private final TalonSRX m_shooterMotor1 = new TalonSRX(ShooterConstants.SHOOTER_MOTOR_1_CAN);
   private final TalonSRX m_shooterMotor2 = new TalonSRX(ShooterConstants.SHOOTER_MOTOR_2_CAN);
@@ -138,6 +139,13 @@ public class Shooter extends PIDSubsystem {
   public void vomit() {
     //System.out.println("shooter vomit");
     m_feederMotor.set(ControlMode.PercentOutput, -ShooterConstants.FEEDER_SPEED);
+  }
+
+  /**
+   * Stops vomitting.
+   */
+  public void stopVomit() {
+    stopFeeder();
   }
 
   // Call parent periodic + log data

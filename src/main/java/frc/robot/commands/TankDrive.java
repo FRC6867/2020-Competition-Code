@@ -47,8 +47,8 @@ public class TankDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    final double rightSpeed = getSpeedWithMin(m_rightStick.getAsDouble(), m_lastRightSpeed);
-    final double leftSpeed = getSpeedWithMin(m_leftStick.getAsDouble(), m_lastLeftSpeed);
+    final double rightSpeed = getRefinedSpeed(m_rightStick.getAsDouble(), m_lastRightSpeed);
+    final double leftSpeed = getRefinedSpeed(m_leftStick.getAsDouble(), m_lastLeftSpeed);
 
     m_driveTrain.drive(
       rightSpeed,
@@ -59,16 +59,24 @@ public class TankDrive extends CommandBase {
     m_lastLeftSpeed = leftSpeed;
   }
 
-  private double getSpeedWithMin(double speed, double lastSpeed) {
+  private double getRefinedSpeed(double speed, double lastSpeed) {
     if (Math.abs(speed) > DriveTrainConstants.MIN_SPEED_THRESHOLD) {
-      return speed;
+      return getModifiedSpeed(speed);
     } else { // Going to 0 power
       return getArtificialCoast(lastSpeed);
     }
   }
 
+  private double getModifiedSpeed(double rawSpeed) {
+    return rawSpeed;//Math.signum(rawSpeed) * Math.pow(Math.abs(rawSpeed), DriveTrainConstants.JOYSTICK_SENSITIVITY_MOD);
+  }
+
   private double getArtificialCoast(double lastSpeed) {
     final double artificialCoastSpeed = lastSpeed / DriveTrainConstants.ARTIFICIAL_COAST_NUM;
+
+    if (Math.signum(m_lastLeftSpeed) != Math.signum(m_lastRightSpeed)) { // No coast with turns
+      return 0;
+    }
 
     if (Math.abs(artificialCoastSpeed) > DriveTrainConstants.MIN_SPEED_THRESHOLD) {
       return artificialCoastSpeed;

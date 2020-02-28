@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import frc.robot.subsystems.Vomittable;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder; // In case we go back to absolute
 import edu.wpi.first.wpilibj.Encoder;
@@ -21,7 +22,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import frc.robot.Constants.IntakeConstants;
 
-public class Intake extends PIDSubsystem {
+public class Intake extends PIDSubsystem implements Vomittable {
   private final TalonSRX m_moverMotor = new TalonSRX(IntakeConstants.INTAKE_MOVER_MOTOR_CAN);
   private final VictorSPX m_collectorMotor = new VictorSPX(IntakeConstants.INTAKE_COLLECTOR_MOTOR_CAN);
 
@@ -120,6 +121,13 @@ public class Intake extends PIDSubsystem {
   public void vomit() {
     enable();
     m_collectorMotor.set(ControlMode.PercentOutput, -IntakeConstants.INTAKE_COLLECTOR_MOTOR_SPEED);
+  }
+
+  /**
+   * Stops vomitting
+   */
+  public void stopVomit() {
+    stopCollection();
   }
 
   // Update PID all the time for tuning
