@@ -10,10 +10,10 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "tiles": {
-          "4,5": {
+          "4,6": {
             "size": [
-              3,
-              2
+              2,
+              1
             ],
             "content": {
               "_type": "Boolean Box",
@@ -23,7 +23,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "6,7": {
+          "4,7": {
             "size": [
               3,
               2
@@ -101,10 +101,10 @@
               "_title": "Ball Proximity"
             }
           },
-          "12,0": {
+          "11,6": {
             "size": [
-              5,
-              4
+              4,
+              3
             ],
             "content": {
               "_type": "List Layout",
@@ -291,10 +291,10 @@
               ]
             }
           },
-          "7,5": {
+          "9,7": {
             "size": [
-              3,
-              2
+              2,
+              1
             ],
             "content": {
               "_type": "Boolean Box",
@@ -304,7 +304,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "11,7": {
+          "7,8": {
             "size": [
               2,
               1
@@ -315,26 +315,7 @@
               "_title": "Intake Target"
             }
           },
-          "4,0": {
-            "size": [
-              7,
-              5
-            ],
-            "content": {
-              "_type": "Camera Stream",
-              "_source0": "camera_server://Main Camera",
-              "_title": "Main Camera",
-              "Crosshair/Show crosshair": true,
-              "Crosshair/Crosshair color": "#FFFFFFFF",
-              "Controls/Show controls": true,
-              "Controls/Rotation": "NONE",
-              "compression": -1.0,
-              "fps": 40,
-              "imageWidth": 200,
-              "imageHeight": 100
-            }
-          },
-          "11,4": {
+          "9,8": {
             "size": [
               2,
               1
@@ -345,7 +326,7 @@
               "_title": "Intake Arm Degrees"
             }
           },
-          "13,4": {
+          "7,7": {
             "size": [
               2,
               1
@@ -354,6 +335,25 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Arm Output",
               "_title": "Arm Output"
+            }
+          },
+          "6,0": {
+            "size": [
+              9,
+              6
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://Main Camera",
+              "_title": "Main Camera",
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": 50,
+              "imageWidth": 80,
+              "imageHeight": 50
             }
           }
         }
