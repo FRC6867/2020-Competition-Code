@@ -9,7 +9,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -24,7 +23,7 @@ import frc.robot.Constants.VisionConstants;
  */
 public class Vision extends SubsystemBase {
   private VideoCamera m_mainCamera;
-  private VideoCamera m_climbCamera;
+  //private VideoCamera m_climbCamera; // Climb camera is disabled for now
 
   /**
    * Creates a new Camera vision thing.
@@ -35,25 +34,30 @@ public class Vision extends SubsystemBase {
       VisionConstants.MAIN_CAMERA_NAME,
       VisionConstants.MAIN_CAMERA_PORT_NUM
     );
+
+    m_mainCamera.setResolution(VisionConstants.MAIN_CAMERA_WIDTH, VisionConstants.MAIN_CAMERA_HEIGTH);
+    m_mainCamera.setFPS(VisionConstants.MAIN_CAMERA_FPS);
   }
 
-  // Turns on climb cam
-  private void turnOnClimbCam() {
-    m_climbCamera = CameraServer.getInstance().startAutomaticCapture(
-      VisionConstants.CLIMB_CAMERA_NAME,
-      VisionConstants.CLIMB_CAMERA_PORT_NUM
-    );
-  }
+  // Not nessesary for now
+  // // Turns on climb cam
+  // private void turnOnClimbCam() {
+  //   m_climbCamera = CameraServer.getInstance().startAutomaticCapture(
+  //     VisionConstants.CLIMB_CAMERA_NAME,
+  //     VisionConstants.CLIMB_CAMERA_PORT_NUM
+  //   );
+  // }
 
-  public boolean isClimbTime() {
-    // We want this to return true when we are in TeleOp and there's only x seconds remaining.
-    return DriverStation.getInstance().isOperatorControl() && Timer.getMatchTime() < VisionConstants.CAMERA_TURN_ON_TIME;
-  }
+  // public boolean isClimbTime() {
+  //   // We want this to return true when we are in TeleOp and there's only x seconds remaining.
+  //   final DriverStation m_ds = DriverStation.getInstance();
+  //   return m_ds.isOperatorControl() && m_ds.getMatchTime() < VisionConstants.CAMERA_TURN_ON_TIME;
+  // }
 
-  @Override
-  public void periodic() {
-    if (m_climbCamera == null && isClimbTime()) { // If should turn on and not turned on already
-      turnOnClimbCam();
-    }
-  }
+  // @Override
+  // public void periodic() {
+  //   if (m_climbCamera == null && isClimbTime()) { // If should turn on and not turned on already
+  //     turnOnClimbCam();
+  //   }
+  // }
 }
