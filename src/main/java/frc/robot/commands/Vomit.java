@@ -8,69 +8,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Vomittable;
 
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Vomittable;
 
 public class Vomit extends CommandBase {
   private final Vomittable[] m_subsystems;
-  // private final Intake m_intake;
-  // private final Indexer m_indexer;
-  // private final Shooter m_shooter;
 
+  /**
+   * Creates a new Vomit commands that runs the {@link Vomittable#vomit()} method of the supplied subsystems.
+   * Calls the {@link Vomittable#stopVomit()} when it ends.
+   * Does not end on it's own.
+   * 
+   * @param subsystems A list of subsystems that implement the {@link Vomittable} interface
+   */
   public Vomit(Vomittable... subsystems) {
     m_subsystems = subsystems;
+
+    addRequirements(m_subsystems);
   }
-
-  // /**
-  //  * Creates a new Vomit command. This command runs all the motors in
-  //  * reverse to empty balls and clear up jams. Will not end on it's own
-  //  * - must be interrupted. This vomits all the subsystems at once.
-  //  */
-  // public Vomit(Intake intake, Indexer indexer, Shooter shooter) {
-  //   m_intake = intake;
-  //   m_indexer = indexer;
-  //   m_shooter = shooter;
-
-  //   if (m_intake != null) {
-  //     addRequirements(m_intake);
-  //   }
-  //   if (m_indexer != null) {
-  //     addRequirements(m_indexer);
-  //   }
-  //   if (m_shooter != null) {
-  //     addRequirements(m_shooter);
-  //   }
-  // }
-
-  // /**
-  //  * Creates a new Vomit command. This command runs all the motors in
-  //  * reverse to empty balls and clear up jams. Will not end on it's own
-  //  * - must be interrupted. This vomits only the intake.
-  //  */
-  // public Vomit(Intake intake) {
-  //   this(intake, null, null);
-  // }
-
-  // /**
-  //  * Creates a new Vomit command. This command runs all the motors in
-  //  * reverse to empty balls and clear up jams. Will not end on it's own
-  //  * - must be interrupted. This vomits only the indedxer.
-  //  */
-  // public Vomit(Indexer indexer) {
-  //   this(null, indexer, null);
-  // }
-
-  // /**
-  //  * Creates a new Vomit command. This command runs all the motors in
-  //  * reverse to empty balls and clear up jams. Will not end on it's own
-  //  * - must be interrupted. This vomits only the shooter.
-  //  */
-  // public Vomit(Shooter shooter) {
-  //   this(null, null, shooter);
-  // }
 
   // Called when the command is initially scheduled.
   @Override

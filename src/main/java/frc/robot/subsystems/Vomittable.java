@@ -7,10 +7,13 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.Subsystem;
+
 /**
- * A subsystem that can vomit - reverse its motors.
+ * A {@link Subsystem} that can vomit - reverse its motors.
+ * Useful for clearing out jams and such.
  */
-public interface Vomittable {
+public interface Vomittable extends Subsystem {
     public abstract void vomit();
     public abstract void stopVomit();
 }
