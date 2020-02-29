@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 
 import frc.robot.commands.CollectFromIntake;
+import frc.robot.commands.DriveForward;
+import frc.robot.commands.TurnDegrees;
 import frc.robot.commands.Shoot;
 
 import frc.robot.subsystems.DriveTrain;
@@ -26,7 +28,7 @@ import frc.robot.Constants.AutoConstants.Auto2Constants;
 
 public class AutoCommandSequence2 extends SequentialCommandGroup {
   /**
-   * Creates a new AutoCommandSequence1.
+   * Creates a new AutoCommandSequence2.
    */
   public AutoCommandSequence2(DriveTrain driveTrain, Intake intake, Indexer indexer, Shooter shooter) {
     super(
