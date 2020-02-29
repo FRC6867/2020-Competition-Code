@@ -10,6 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,6 +24,8 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  private PowerDistributionPanel m_pdp = new PowerDistributionPanel();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -44,9 +49,11 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // and running subsystem periodic() methods. This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    SmartDashboard.putNumber("Approx. Battery Level", getApproxBatteryFromVoltage(m_pdp.getVoltage()));
   }
 
   /**
@@ -109,5 +116,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  /** 
+   * @return a number describing the approximate battery level based on static battery
+   * voltage. Returns 100% with a battery voltage of 13V and 0% with a battery voltage
+   * of 10V.
+   */
+  private double getApproxBatteryFromVoltage(double voltage) {
+    // We want to show 0% at 10V and 100% at 13V.
+    return (voltage - 10) / 3 * 100;
   }
 }
