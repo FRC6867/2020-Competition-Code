@@ -225,9 +225,8 @@ public final class Constants {
 
         public static final class Auto4Constants {
             public static final double DRIVE_1_DISTANCE = 20;
-            public static final double TURN_1_DEGREES = 90;
+            public static final double TURN_DEGREES = 90;
             public static final double DRIVE_2_DISTANCE = 50;
-            public static final double TURN_2_DEGREES = -90;
             public static final double WALL_DRIVE_TIME = 2;
         }
     }

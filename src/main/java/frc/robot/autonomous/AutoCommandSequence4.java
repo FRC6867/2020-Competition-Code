@@ -31,9 +31,9 @@ public class AutoCommandSequence4 extends SequentialCommandGroup {
   public AutoCommandSequence4(DriveTrain driveTrain, Indexer indexer, Shooter shooter) {
     super(
       new DriveForwardBasic(Auto4Constants.DRIVE_1_DISTANCE, driveTrain),
-      new TurnDegreesBasic(Auto4Constants.TURN_1_DEGREES, driveTrain),
+      new TurnDegreesBasic(Auto4Constants.TURN_DEGREES, driveTrain),
       new DriveForwardBasic(Auto4Constants.DRIVE_2_DISTANCE, driveTrain),
-      new TurnDegreesBasic(Auto4Constants.TURN_2_DEGREES, driveTrain),
+      new TurnDegreesBasic(-Auto4Constants.TURN_DEGREES, driveTrain),
 
       new AutoCommandSequence3(driveTrain, indexer, shooter)
     );
