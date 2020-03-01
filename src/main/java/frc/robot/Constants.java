@@ -78,7 +78,7 @@ public final class Constants {
         public static final int INTAKE_MANUAL_DOWN_BUTTON_ID = 2; // Left trigger
 
         // Motors
-        public static final int INTAKE_COLLECTOR_MOTOR_CAN = 50;// 20; TODO: Re-CAN this motor
+        public static final int INTAKE_COLLECTOR_MOTOR_CAN = 20;
         public static final int INTAKE_MOVER_MOTOR_CAN = 21;
 
         public static final boolean INTAKE_COLLECTOR_MOTOR_INVERTED = true;
@@ -92,9 +92,12 @@ public final class Constants {
         public static final double INTAKE_ARM_I = 0.0; // Undefined
         public static final double INTAKE_ARM_D = 0.0; // Undefined
 
-        public static final int INTAKE_ARM_0_DEGREE_POS = 100;
-        public static final int INTAKE_ARM_DEGREE_DOWN_POS = 70;
-        public static final int INTAKE_ARM_TARGET_TOLERANCE = 10; // Allowed innacuracy
+        public static final int INTAKE_ARM_0_DEGREE_POS = 100; // Undefined
+        public static final int INTAKE_ARM_FINAL_POS = 2000; // Undefined
+        public static final int INTAKE_ARM_FINAL_POS_DEGREES = 90;
+        public static final int INTAKE_ARM_DEGREE_UP_POS = 20; // Supposed to be 0, when tuned
+        public static final int INTAKE_ARM_DEGREE_DOWN_POS = 70; // Supposed to be 90, when tuned
+        public static final int INTAKE_ARM_TARGET_TOLERANCE = 3; // Allowed innacuracy
 
         // Speeds
         public static final double INTAKE_COLLECTOR_MOTOR_SPEED = 0.95; // Or 0.75
@@ -216,6 +219,7 @@ public final class Constants {
 
         public static final class Auto3Constants {
             public static final double DRIVE_TIME = 3.5;
+            public static final double DRIVE_SPEED = 0.5;
             public static final double SHOOT_TIME = 10;
         }
 

@@ -16,12 +16,12 @@ import frc.robot.subsystems.Indexer;
  * A fairly simple command. I decided to write this in it's
  * own class rather than inline because ¯\_(ツ)_/¯ I'm lazy
  */
-public class Shoot extends CommandBase {
+public class FeedShooter extends CommandBase {
   private final Shooter m_shooter;
   private final Indexer m_indexer;
 
   /**
-   * Creates a new Shoot command. Spins up the shooter on
+   * Creates a new FeedShooter command. Spins up the shooter on
    * start, runs feeder when shooter and indexer are ready.
    * Never ends, must be interrupted, at which point it stops
    * the shooter.
@@ -29,7 +29,7 @@ public class Shoot extends CommandBase {
    * @param shooter The {@link Shooter} subsystem
    * @param indexer the {@link Indexer} subsystem
    */
-  public Shoot(Shooter shooter, Indexer indexer) {
+  public FeedShooter(Shooter shooter, Indexer indexer) {
     m_shooter = shooter;
     m_indexer = indexer;
 

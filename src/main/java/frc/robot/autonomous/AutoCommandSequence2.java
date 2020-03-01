@@ -18,7 +18,7 @@ import frc.robot.commands.TurnDegrees;
 import frc.robot.commands.DriveForward;
 import frc.robot.commands.FloorIntake;
 import frc.robot.commands.FloorIntake;
-import frc.robot.commands.Shoot;
+import frc.robot.commands.FeedShooter;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -54,7 +54,7 @@ public class AutoCommandSequence2 extends SequentialCommandGroup {
         .withTimeout(Auto2Constants.MAX_DRIVE_TIME), // In case we are off and never reach
 
       new InstantCommand(indexer::startIndexer),
-      new Shoot(shooter, indexer)
+      new FeedShooter(shooter, indexer)
         .withTimeout(Auto2Constants.SHOOT_TIME), // Shoot for x seconds
       new InstantCommand(shooter::disable),
       new InstantCommand(indexer::stopIndexer)

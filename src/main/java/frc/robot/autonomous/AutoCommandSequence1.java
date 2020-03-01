@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.TurnDegrees;
 import frc.robot.commands.DriveForward;
 import frc.robot.commands.FloorIntake;
-import frc.robot.commands.Shoot;
+import frc.robot.commands.FeedShooter;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -53,7 +53,7 @@ public class AutoCommandSequence1 extends SequentialCommandGroup {
         .withTimeout(Auto1Constants.MAX_DRIVE_TIME), // In case we are off and never reach
 
       new InstantCommand(indexer::startIndexer),
-      new Shoot(shooter, indexer)
+      new FeedShooter(shooter, indexer)
         .withTimeout(Auto1Constants.SHOOT_TIME), // Shoot for x seconds
       new InstantCommand(shooter::disable),
       new InstantCommand(indexer::stopIndexer)

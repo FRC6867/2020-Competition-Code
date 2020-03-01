@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.RepeatCommand;
 import frc.robot.commands.TimedDrive;
-import frc.robot.commands.Shoot;
+import frc.robot.commands.FeedShooter;
 import frc.robot.commands.IndexerNoJam;
 
 import frc.robot.subsystems.DriveTrain;
@@ -28,16 +28,17 @@ public class AutoCommandSequence3 extends SequentialCommandGroup {
   public AutoCommandSequence3(DriveTrain driveTrain, Indexer indexer, Shooter shooter) {
     super(
       new InstantCommand(shooter::enable, shooter),
-      new TimedDrive(Auto3Constants.DRIVE_TIME, 0.5, driveTrain),
+      new TimedDrive(Auto3Constants.DRIVE_TIME, Auto3Constants.DRIVE_SPEED, driveTrain),
 
       parallel( // Run feeder and indexer
-        new Shoot(shooter, indexer)
+        new FeedShooter(shooter, indexer)
           .withTimeout(Auto3Constants.SHOOT_TIME),
         
         new StartEndCommand(indexer::startIndexer, indexer::stopIndexer, indexer)
           .withTimeout(Auto3Constants.SHOOT_TIME)
 
-        // new RepeatCommand( // No need anymore
+        // No need anymore
+        // new RepeatCommand(
         //   new IndexerNoJam(1.5, 0.5, indexer),
         //   5
         // )

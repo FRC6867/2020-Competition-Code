@@ -27,6 +27,7 @@ public class Intake extends PIDSubsystem implements Vomittable {
   private final TalonSRX m_moverMotor = new TalonSRX(IntakeConstants.INTAKE_MOVER_MOTOR_CAN);
   private final TalonSRX m_collectorMotor = new TalonSRX(IntakeConstants.INTAKE_COLLECTOR_MOTOR_CAN);
 
+  // Currently not used
   private final ArmFeedforward m_armFeedForward = new ArmFeedforward(
     0,
     0,
@@ -46,6 +47,7 @@ public class Intake extends PIDSubsystem implements Vomittable {
    * Creates a new Intake PIDSubsystem.
    */
   public Intake() {
+    // PID setup
     super(
       // The PIDController used by the subsystem
       new PIDController(
@@ -54,6 +56,8 @@ public class Intake extends PIDSubsystem implements Vomittable {
         IntakeConstants.INTAKE_ARM_D
       )
     );
+    getController().setTolerance(IntakeConstants.INTAKE_ARM_TARGET_TOLERANCE);
+    setSetpoint(IntakeConstants.INTAKE_ARM_DEGREE_UP_POS);
 
     // Motor config
     m_moverMotor.configFactoryDefault();
@@ -71,9 +75,6 @@ public class Intake extends PIDSubsystem implements Vomittable {
     m_armEncoder.reset(); // For relative
     //m_armEncoder.setDistancePerRotation(360); // For absolute
 
-    // PID setup
-    getController().setTolerance(IntakeConstants.INTAKE_ARM_TARGET_TOLERANCE);
-    setSetpoint(IntakeConstants.INTAKE_ARM_DEGREE_DOWN_POS);
     //enable(); // Disabled until we have proper PID
   }
 
@@ -97,8 +98,8 @@ public class Intake extends PIDSubsystem implements Vomittable {
 
   @Override
   public double getMeasurement() {
-    final double rawMeasurement = m_armEncoder.getDistance();
-    final double measurement = rawMeasurement / 1000 * 90;
+    double measurement = m_armEncoder.getDistance() - IntakeConstants.INTAKE_ARM_0_DEGREE_POS;
+    measurement = measurement / IntakeConstants.INTAKE_ARM_FINAL_POS * IntakeConstants.INTAKE_ARM_FINAL_POS_DEGREES;
 
     SmartDashboard.putNumber("Intake Arm Degrees", measurement);
 
@@ -122,10 +123,12 @@ public class Intake extends PIDSubsystem implements Vomittable {
 
   // Undefined
   public void armUp() {
+    setSetpoint(IntakeConstants.INTAKE_ARM_DEGREE_UP_POS);
   }
 
   // Undefined
   public void armDown() {
+    setSetpoint(IntakeConstants.INTAKE_ARM_DEGREE_DOWN_POS);
   }
 
   /**

@@ -33,15 +33,18 @@ import frc.robot.Constants.*;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  // Joysticks
   private final Joystick m_driverGamepad = new Joystick(0);
   private final Joystick m_operatorGamepad = new Joystick(1);
 
+  // Subsystems
   private final DriveTrain m_driveTrain = new DriveTrain();
   private final Intake m_intake = new Intake();
   private final Indexer m_indexer = new Indexer();
   private final Shooter m_shooter = new Shooter();
   private final Vision m_vision = new Vision();
 
+  // Other
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
   /**
@@ -60,10 +63,10 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Auto command chooser
-    m_autoChooser.setDefaultOption("Sequence Number 4", 
+    m_autoChooser.setDefaultOption("Sequence Number 3",
+      new AutoCommandSequence3(m_driveTrain, m_indexer, m_shooter));
+    m_autoChooser.addOption("Sequence Number 4", 
       new AutoCommandSequence4(m_driveTrain, m_indexer, m_shooter));
-    m_autoChooser.addOption("Sequence Number 3",
-    new AutoCommandSequence3(m_driveTrain, m_indexer, m_shooter));
     m_autoChooser.addOption("Sequence Number 1",
       new AutoCommandSequence1(m_driveTrain, m_intake, m_indexer, m_shooter));
     m_autoChooser.addOption("Sequence Number 2",
@@ -102,7 +105,8 @@ public class RobotContainer {
         () -> m_driveTrain.setFineControl(false)
       ));
 
-    // Precise turning // Not in use currently
+    // Not enabled due to no PID control
+    // Precise turning
     // m_turnDegreesPOV
     //   .whenPressed(new TurnDegrees(m_turnDegreesPOV.getPOV180(), m_driveTrain));
     
@@ -131,7 +135,7 @@ public class RobotContainer {
 
     // Shooter shoot (feeder)
     m_feederButton
-      .whenHeld(new Shoot(m_shooter, m_indexer));
+      .whenHeld(new FeedShooter(m_shooter, m_indexer));
 
     // Vomit
     m_vomitButton
@@ -144,8 +148,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new AutoCommandSequence3(m_driveTrain, m_indexer, m_shooter);
-    //return m_autoChooser.getSelected();
+    return m_autoChooser.getSelected();
   }
 }
- 
