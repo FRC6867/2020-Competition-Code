@@ -148,7 +148,7 @@ public final class Constants {
         public static double SHOOTER_D = 0.0; // Undefined
 
         // Speeds
-        public static double SHOOTER_TARGET_1_RPM = 3800; // Adjustable during run
+        public static double SHOOTER_TARGET_RPM = 3800; // Adjustable during run
         public static double SHOOTER_TARGET_RPM_TOLERANCE = 125;
 
         public static double FEEDER_SPEED = 0.35;

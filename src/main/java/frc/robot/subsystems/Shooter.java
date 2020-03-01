@@ -47,20 +47,17 @@ public class Shooter extends PIDSubsystem implements Vomittable {
    * Creates a new Shooter PIDSubsystem.
    */
   public Shooter() {
+    // PID config
     super(
       // The PIDController used by the subsystem
       new PIDController(ShooterConstants.SHOOTER_P, ShooterConstants.SHOOTER_I, ShooterConstants.SHOOTER_D)
     );
-    SmartDashboard.putNumber("Shooter Target RPM", ShooterConstants.SHOOTER_TARGET_1_RPM);
-
-    // Controller config
     getController().setTolerance(ShooterConstants.SHOOTER_TARGET_RPM_TOLERANCE);
-    setSetpoint(ShooterConstants.SHOOTER_TARGET_1_RPM);
+    setSetpoint(ShooterConstants.SHOOTER_TARGET_RPM);
 
     // Encoder config
     m_shooterEncoder.reset();
     m_shooterEncoder.setDistancePerPulse(1.0 / (double) ShooterConstants.SHOOTER_ENCODER_CYCLES_PER_ROTATION);
-    //SmartDashboard.putData("Shooter enc", m_shooterEncoder); // For debug
 
     // Motor config
     m_shooterMotor1.configFactoryDefault();
@@ -81,7 +78,6 @@ public class Shooter extends PIDSubsystem implements Vomittable {
       SmartDashboard.getNumber("Shooter I", getController().getI()),
       SmartDashboard.getNumber("Shooter D", getController().getD())
     );
-    setSetpoint(SmartDashboard.getNumber("Shooter Target RPM", ShooterConstants.SHOOTER_TARGET_1_RPM));
 
     SmartDashboard.putNumber("Shooter P", getController().getP());
     SmartDashboard.putNumber("Shooter I", getController().getI());
