@@ -110,9 +110,10 @@ public class RobotContainer {
     // m_turnDegreesPOV
     //   .whenPressed(new TurnDegrees(m_turnDegreesPOV.getPOV180(), m_driveTrain));
     
-    // Intake
-    m_intakeCollectButton
-      .toggleWhenPressed(new FloorIntake(m_intake, m_indexer));
+    // Not enabled due to mechanical intake problems
+    // // Intake
+    // m_intakeCollectButton
+    //   .toggleWhenPressed(new FloorIntake(m_intake, m_indexer));
     
     // Intake arm up manual
     m_intakeArmUpManualButton
