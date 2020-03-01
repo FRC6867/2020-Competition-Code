@@ -33,7 +33,7 @@ public class Shoot extends CommandBase {
     m_shooter = shooter;
     m_indexer = indexer;
 
-    addRequirements(shooter);
+    addRequirements(shooter);//, indexer); // Indexer not currently needed.
   }
 
   // Called every time the scheduler runs while the command is scheduled.

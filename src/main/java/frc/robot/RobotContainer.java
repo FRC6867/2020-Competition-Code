@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.utils.DoubleButton;
-import frc.robot.utils.JoystickPOV;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -23,6 +21,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.autonomous.*;
+import frc.robot.ui.*;
 import frc.robot.Constants.*;
 
 /**
@@ -60,8 +60,10 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Auto command chooser
-    m_autoChooser.setDefaultOption("Sequence Number 3",
-      new AutoCommandSequence3(m_driveTrain, m_indexer, m_shooter));
+    m_autoChooser.setDefaultOption("Sequence Number 4", 
+      new AutoCommandSequence4(m_driveTrain, m_indexer, m_shooter));
+    m_autoChooser.addOption("Sequence Number 3",
+    new AutoCommandSequence3(m_driveTrain, m_indexer, m_shooter));
     m_autoChooser.addOption("Sequence Number 1",
       new AutoCommandSequence1(m_driveTrain, m_intake, m_indexer, m_shooter));
     m_autoChooser.addOption("Sequence Number 2",
@@ -70,11 +72,8 @@ public class RobotContainer {
     m_autoChooser.addOption("Drive Forwards 100 inches", new DriveForward(100, m_driveTrain));
     m_autoChooser.addOption("Do nothing", null);
 
-    SmartDashboard.putData("Auto Mode", m_autoChooser);
-    SmartDashboard.setPersistent("Auto Mode");
-
     // Manual Vomit Commands
-    SmartDashboard.putData("Vomit Intake", new Vomit(m_intake));
+    //SmartDashboard.putData("Vomit Intake", new Vomit(m_intake));
     SmartDashboard.putData("Vomit Indexer", new Vomit(m_indexer));
     SmartDashboard.putData("Vomit Shooter", new Vomit(m_shooter));
   }
@@ -86,44 +85,56 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    final JoystickButton m_fineControlButton = new JoystickButton(m_driverGamepad, DriveTrainConstants.FINE_CONTROL_BUTTON_ID);
+    final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_driverGamepad);
+    final JoystickButton m_intakeCollectButton = new JoystickButton(m_driverGamepad, IntakeConstants.INTAKE_BUTTON_ID);
+    final TriggerButton m_intakeArmUpManualButton = new TriggerButton(m_operatorGamepad, IntakeConstants.INTAKE_MANUAL_UP_BUTTON_ID);
+    final TriggerButton m_intakeArmDownManualButton = new TriggerButton(m_operatorGamepad, IntakeConstants.INTAKE_MANUAL_DOWN_BUTTON_ID);
+    final JoystickButton m_indexerButton = new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_BUTTON_ID);
+    final JoystickButton m_shooterSpinButton = new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID);
+    final JoystickButton m_feederButton = new JoystickButton(m_operatorGamepad, ShooterConstants.FEEDER_BUTTON_ID);
+    final DoubleButton m_vomitButton = new DoubleButton(m_operatorGamepad, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID);
+
     // Fine control
-    new JoystickButton(m_driverGamepad, DriveTrainConstants.FINE_CONTROL_BUTTON_ID)
+    m_fineControlButton
       .toggleWhenPressed(new StartEndCommand(
         () -> m_driveTrain.setFineControl(true),
         () -> m_driveTrain.setFineControl(false)
       ));
 
-    // Precise turning
-    final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_driverGamepad);
-    m_turnDegreesPOV
-      .whenPressed(new TurnDegrees(m_turnDegreesPOV.getPOV180(), m_driveTrain));
+    // Precise turning // Not in use currently
+    // m_turnDegreesPOV
+    //   .whenPressed(new TurnDegrees(m_turnDegreesPOV.getPOV180(), m_driveTrain));
     
     // Intake
-    new JoystickButton(m_operatorGamepad, IntakeConstants.INTAKE_BUTTON_ID)
-      .whenHeld(new CollectFromIntake(m_intake));
+    m_intakeCollectButton
+      .toggleWhenPressed(new FloorIntake(m_intake, m_indexer));
+    
+    // Intake arm up manual
+    m_intakeArmUpManualButton
+      .whenPressed(m_intake::armUpManual, m_intake)
+      .whenReleased(m_intake::stopArmManual, m_intake);
+
+    // Intake arm down manual
+    m_intakeArmDownManualButton
+      .whenPressed(m_intake::armDownManual, m_intake)
+      .whenReleased(m_intake::stopArmManual, m_intake);
     
     // Indexer control
-    new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_BUTTON_ID)
-      .whenPressed(new InstantCommand(m_indexer::startIndexer))
-      .whenReleased(new InstantCommand(m_indexer::stopIndexer));
+    m_indexerButton
+      .whenPressed(m_indexer::startIndexer, m_indexer)
+      .whenReleased(m_indexer::stopIndexer, m_indexer);
 
     // Shooter spin-up
-    new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID)
+    m_shooterSpinButton
       .toggleWhenPressed(new StartEndCommand(m_shooter::enable, m_shooter::disable));
 
     // Shooter shoot (feeder)
-    new JoystickButton(m_driverGamepad, ShooterConstants.FEEDER_BUTTON_ID)
+    m_feederButton
       .whenHeld(new Shoot(m_shooter, m_indexer));
 
-    // Shooter speed
-    new JoystickButton(m_driverGamepad, ShooterConstants.SHOOTER_SPEED_BUTTON_ID)
-      .toggleWhenPressed(new StartEndCommand(
-        () -> m_shooter.setTargetRPM(ShooterConstants.SHOOTER_TARGET_2_RPM),
-        () -> m_shooter.setTargetRPM(ShooterConstants.SHOOTER_TARGET_1_RPM)
-      ));
-
     // Vomit
-    new DoubleButton(m_operatorGamepad, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID)
+    m_vomitButton
       .whenHeld(new Vomit(m_intake, m_indexer, m_shooter));
   }
 
@@ -133,7 +144,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_autoChooser.getSelected();
+    return new AutoCommandSequence3(m_driveTrain, m_indexer, m_shooter);
+    //return m_autoChooser.getSelected();
   }
 }
  

@@ -74,13 +74,15 @@ public final class Constants {
     public static final class IntakeConstants {
         // User input
         public static final int INTAKE_BUTTON_ID = 6; // Right bumper
+        public static final int INTAKE_MANUAL_UP_BUTTON_ID = 3; // Right trigger
+        public static final int INTAKE_MANUAL_DOWN_BUTTON_ID = 2; // Left trigger
 
         // Motors
-        public static final int INTAKE_COLLECTOR_MOTOR_CAN = 20;
+        public static final int INTAKE_COLLECTOR_MOTOR_CAN = 50;// 20; TODO: Re-CAN this motor
         public static final int INTAKE_MOVER_MOTOR_CAN = 21;
 
         public static final boolean INTAKE_COLLECTOR_MOTOR_INVERTED = true;
-        public static final boolean INTAKE_MOVER_MOTOR_INVERTED = false; // Undefined
+        public static final boolean INTAKE_MOVER_MOTOR_INVERTED = true;
 
         public static final int[] INTAKE_ENCODER_PINS = {4, 5};
         public static final boolean INTAKE_ENCODER_INVERTED  = true;
@@ -90,11 +92,13 @@ public final class Constants {
         public static final double INTAKE_ARM_I = 0.0; // Undefined
         public static final double INTAKE_ARM_D = 0.0; // Undefined
 
-        public static final int INTAKE_ARM_TARGET_POS = 500;
+        public static final int INTAKE_ARM_0_DEGREE_POS = 100;
+        public static final int INTAKE_ARM_DEGREE_DOWN_POS = 70;
         public static final int INTAKE_ARM_TARGET_TOLERANCE = 10; // Allowed innacuracy
 
         // Speeds
         public static final double INTAKE_COLLECTOR_MOTOR_SPEED = 0.95; // Or 0.75
+        public static final double INTAKE_ARM_MANUAL_SPEED = 0.7;
     }
 
     public static final class IndexerConstants {
@@ -102,15 +106,15 @@ public final class Constants {
         public static final int INDEXER_BUTTON_ID = 4; // 'Y' button
 
         // Motors
-        public static final int INDEXER_MOTOR_1_CAN = 30;
-        public static final int INDEXER_MOTOR_2_CAN = 31;
+        public static final int INDEXER_MAIN_MOTOR_CAN = 30;
+        public static final int TRANSFER_MOTOR_CAN = 31;
 
-        public static final boolean INDEXER_MOTOR_1_INVERTED = true;
-        public static final boolean INDEXER_MOTOR_2_INVERTED = true;
+        public static final boolean INDEXER_MAIN_MOTOR_INVERTED = true;
+        public static final boolean TRANSFER_MOTOR_INVERTED = true;
 
         // Speeds
-        public static final double INDEXER_MOTOR_1_SPEED = 0.5;
-        public static final double INDEXER_MOTOR_2_SPEED = 0.6;
+        public static final double INDEXER_MAIN_MOTOR_SPEED = 0.5;
+        public static final double TRANSFER_MOTOR_SPEED = 0.75;
 
         // Ball detection
         public static final int BALL_CLOSE_DISTANCE = 100; // Undefined
@@ -141,8 +145,7 @@ public final class Constants {
         public static double SHOOTER_D = 0.0; // Undefined
 
         // Speeds
-        public static double SHOOTER_TARGET_1_RPM = 3200; // Adjustable during run
-        public static double SHOOTER_TARGET_2_RPM = 2750; // Adjustable during run
+        public static double SHOOTER_TARGET_1_RPM = 3800; // Adjustable during run
         public static double SHOOTER_TARGET_RPM_TOLERANCE = 125;
 
         public static double FEEDER_SPEED = 0.35;
@@ -168,6 +171,11 @@ public final class Constants {
         // Names
         public static final String MAIN_CAMERA_NAME = "Main Camera";
         public static final String CLIMB_CAMERA_NAME = "Climb Camera";
+
+        // Main cam stats
+        public static final int MAIN_CAMERA_WIDTH = 80;
+        public static final int MAIN_CAMERA_HEIGTH = 50;
+        public static final int MAIN_CAMERA_FPS = 50;
 
         // Timing
         public static final int CAMERA_TURN_ON_TIME = 30; // Seconds before the end of the match
@@ -207,9 +215,16 @@ public final class Constants {
         }
 
         public static final class Auto3Constants {
-            public static final double SPIN_UP_TIME = 3;
-            public static final double SHOOT_TIME = 3;
-            public static final double DRIVE_TIME = 1;
+            public static final double DRIVE_TIME = 3.5;
+            public static final double SHOOT_TIME = 10;
+        }
+
+        public static final class Auto4Constants {
+            public static final double DRIVE_1_DISTANCE = 20;
+            public static final double TURN_1_DEGREES = 90;
+            public static final double DRIVE_2_DISTANCE = 50;
+            public static final double TURN_2_DEGREES = -90;
+            public static final double WALL_DRIVE_TIME = 2;
         }
     }
 }

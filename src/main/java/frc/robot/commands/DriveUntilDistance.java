@@ -21,8 +21,11 @@ import frc.robot.Constants.DriveTrainConstants;
  * Unfinished, I don't know if we plan to add this at all...
  */
 public class DriveUntilDistance extends PIDCommand {
+  private double initialHeading = 0; // Not finished, in case we want to not to reset heading.
+
   /**
-   * Creates a new DriveUntilDistance command.
+   * Creates a new DriveUntilDistance command. This command makes the robot drive a certain distance
+   * forward, based on encoder values.
    * 
    * @param distance How far away from the object should the robot stop, in inches
    * @param driveTrain The {@link DriveTrain} subsystem
@@ -35,10 +38,9 @@ public class DriveUntilDistance extends PIDCommand {
         output -> driveTrain.driveStraight(output),
         driveTrain
     );
+    getController().setTolerance(DriveTrainConstants.DRIVE_TARGET_TOLERANCE);
 
     driveTrain.reset();
-
-    getController().setTolerance(DriveTrainConstants.DRIVE_TARGET_TOLERANCE);
   }
 
   // Returns true when the command should end.

@@ -10,11 +10,10 @@ package frc.robot.autonomous;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.RepeatCommand;
+import frc.robot.commands.TimedDrive;
 import frc.robot.commands.Shoot;
-
-import frc.robot.autonomous.IndexerNoJam;
+import frc.robot.commands.IndexerNoJam;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
@@ -29,9 +28,7 @@ public class AutoCommandSequence3 extends SequentialCommandGroup {
   public AutoCommandSequence3(DriveTrain driveTrain, Indexer indexer, Shooter shooter) {
     super(
       new InstantCommand(shooter::enable, shooter),
-      new InstantCommand(() -> driveTrain.drive(0.5, 0.5), driveTrain),
-      new WaitCommand(Auto3Constants.DRIVE_TIME),
-      new InstantCommand(() -> driveTrain.drive(0, 0), driveTrain),
+      new TimedDrive(Auto3Constants.DRIVE_TIME, 0.5, driveTrain),
 
       parallel( // Run feeder and indexer
         new Shoot(shooter, indexer)

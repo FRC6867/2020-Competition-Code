@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  private PowerDistributionPanel m_pdp = new PowerDistributionPanel();
+  //private PowerDistributionPanel m_pdp = new PowerDistributionPanel();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
-    SmartDashboard.putNumber("Approx. Battery Level", getApproxBatteryFromVoltage(m_pdp.getVoltage()));
+    //SmartDashboard.putNumber("Approx. Battery Level", getApproxBatteryFromVoltage(m_pdp.getVoltage()));
   }
 
   /**

@@ -9,10 +9,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import frc.robot.subsystems.Vomittable;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import frc.robot.subsystems.Vomittable;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -100,11 +101,6 @@ public class Shooter extends PIDSubsystem implements Vomittable {
     SmartDashboard.putBoolean("Shooter Ready", atSetpoint);
 
     return atSetpoint;
-  }
-
-  public void setTargetRPM(double targetRPM) {
-    setSetpoint(targetRPM);
-    SmartDashboard.putNumber("Shooter Target RPM", targetRPM);
   }
 
   /**

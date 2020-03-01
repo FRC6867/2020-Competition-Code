@@ -9,11 +9,12 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import frc.robot.subsystems.Vomittable;
+import edu.wpi.first.wpilibj.controller.ArmFeedforward;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder; // In case we go back to absolute
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Vomittable;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -25,6 +26,12 @@ import frc.robot.Constants.IntakeConstants;
 public class Intake extends PIDSubsystem implements Vomittable {
   private final TalonSRX m_moverMotor = new TalonSRX(IntakeConstants.INTAKE_MOVER_MOTOR_CAN);
   private final TalonSRX m_collectorMotor = new TalonSRX(IntakeConstants.INTAKE_COLLECTOR_MOTOR_CAN);
+
+  private final ArmFeedforward m_armFeedForward = new ArmFeedforward(
+    0,
+    0,
+    0
+  );
 
   // private final DutyCycleEncoder m_armEncoder = new DutyCycleEncoder( // In case we go back to absolute
   //   IntakeConstants.INTAKE_ENCODER_PIN
@@ -58,7 +65,6 @@ public class Intake extends PIDSubsystem implements Vomittable {
     m_moverMotor.setNeutralMode(NeutralMode.Brake); // Doesn't let arm fall
     m_collectorMotor.setNeutralMode(NeutralMode.Coast); // So collector keeps spinning
 
-    // Config amp limits
     m_collectorMotor.configPeakCurrentLimit(55); // Collector was browning out or something
     
     // Encoder setup

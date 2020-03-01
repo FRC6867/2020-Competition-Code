@@ -14,9 +14,6 @@ import edu.wpi.first.wpilibj.SPI.Port;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -57,9 +54,6 @@ public class DriveTrain extends SubsystemBase {
   // Speed throttles
   private double m_speedThrottle = DriveTrainConstants.DEFAULT_SPEED_THROTTLE;
   private boolean m_fineControl = false;
-  private boolean m_drivingStraight = false;
-  private double m_drivingStraightHeading = 0;
-
 
   /**
    * Creates a new DriveTrain subsystem.
@@ -75,11 +69,6 @@ public class DriveTrain extends SubsystemBase {
     m_backRightDrive.follow(m_frontRightDrive);
     m_frontLeftDrive.setInverted(DriveTrainConstants.LEFT_MOTOR_INVERTED);
     m_backLeftDrive.follow(m_frontLeftDrive);
-
-    // m_frontRightDrive.setIdleMode(IdleMode.kCoast);
-    // m_backRightDrive.setIdleMode(IdleMode.kCoast);
-    // m_frontLeftDrive.setIdleMode(IdleMode.kCoast);
-    // m_backLeftDrive.setIdleMode(IdleMode.kCoast);
 
     // Set encoder distance values
     m_rightEncoder.setDistancePerPulse(DriveTrainConstants.RIGHT_ENCODER_TICK_DISTANCE);
@@ -98,33 +87,27 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Unfinished, and probably won't be used for this season.
-   */
-  private void setupShuffleboard() {
-     
-  }
+   * Attempts to go straight, correcting itself using gyro.
+   * 
+   * @param speed Value between -1 and 1, dictating the direction and speed.
+   * Generally more accurate with higher speeds.
+   * @param targetHeading The target heading for going straight
+   */  
+  public void driveStraight(double speed, double targetHeading) {
+    final double error = targetHeading - getHeading(); // Calculates error
+    final double turnMod = error * DriveTrainConstants.TURN_CORRECTION_P;
 
+    drive(speed - turnMod, speed + turnMod); // Applied speed modifiers
+  }
 
   /**
    * Attempts to go straight, correcting itself using gyro.
    * 
-   * <p><b>Experimental, hasn't been tested yet.</b>
- 
-   * @param speed - Goes straighter the faster it is.
+   * @param speed Value between -1 and 1, dictating the direction and speed.
+   * Generally more accurate with higher speeds.
    */  
   public void driveStraight(double speed) {
-    if (!m_drivingStraight) { // We weren't driving straight and we just started
-      m_drivingStraight = true;
-      m_drivingStraightHeading = getHeading();
-    } else if (speed == 0) { // We were driving straight and we just stopped
-      m_drivingStraight = false;
-    }
-
-    // Calculates error based on gyro heading
-    final double error = m_drivingStraightHeading - getHeading();
-    final double turnMod = error * DriveTrainConstants.TURN_CORRECTION_P;
-
-    drive(speed - turnMod, speed + turnMod);
+    driveStraight(speed, 0);
   }
 
   /**
