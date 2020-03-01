@@ -27,7 +27,7 @@ public class Intake extends PIDSubsystem implements Vomittable {
   private final TalonSRX m_moverMotor = new TalonSRX(IntakeConstants.INTAKE_MOVER_MOTOR_CAN);
   private final TalonSRX m_collectorMotor = new TalonSRX(IntakeConstants.INTAKE_COLLECTOR_MOTOR_CAN);
 
-  // Currently not used
+  // TODO: Learn and implement this
   private final ArmFeedforward m_armFeedForward = new ArmFeedforward(
     0,
     0,

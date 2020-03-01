@@ -9,16 +9,18 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.subsystems.Vomittable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import frc.robot.subsystems.Vomittable;
 
 import frc.robot.Constants.ShooterConstants;
 
@@ -33,6 +35,12 @@ public class Shooter extends PIDSubsystem implements Vomittable {
     ShooterConstants.SHOOTER_ENCODER_PINS[0],
     ShooterConstants.SHOOTER_ENCODER_PINS[1],
     ShooterConstants.SHOOTER_ENCODER_INVERTED
+  );
+
+  // TODO: Learn and implement this
+  private final SimpleMotorFeedforward m_shooterFeedForward = new SimpleMotorFeedforward(
+    0,
+    0
   );
 
   /**
