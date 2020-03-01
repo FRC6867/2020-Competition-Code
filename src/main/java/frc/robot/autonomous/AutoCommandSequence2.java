@@ -14,8 +14,9 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 
-import frc.robot.commands.CollectFromIntake;
+import frc.robot.commands.FloorIntake;
 import frc.robot.commands.DriveForward;
+import frc.robot.commands.FloorIntake;
 import frc.robot.commands.TurnDegrees;
 import frc.robot.commands.Shoot;
 
@@ -35,7 +36,7 @@ public class AutoCommandSequence2 extends SequentialCommandGroup {
       new ScheduleCommand(
         new WaitUntilCommand(() -> driveTrain.getDistanceDriven() >= Auto2Constants.INTAKE_START_DISTANCE)
           .andThen(
-            new CollectFromIntake(intake)
+            new FloorIntake(intake, indexer)
               .withTimeout(Auto2Constants.INTAKE_DURATION)
           )
       ),

@@ -24,7 +24,7 @@ import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends PIDSubsystem implements Vomittable {
   private final TalonSRX m_moverMotor = new TalonSRX(IntakeConstants.INTAKE_MOVER_MOTOR_CAN);
-  private final VictorSPX m_collectorMotor = new VictorSPX(IntakeConstants.INTAKE_COLLECTOR_MOTOR_CAN);
+  private final TalonSRX m_collectorMotor = new TalonSRX(IntakeConstants.INTAKE_COLLECTOR_MOTOR_CAN);
 
   // private final DutyCycleEncoder m_armEncoder = new DutyCycleEncoder( // In case we go back to absolute
   //   IntakeConstants.INTAKE_ENCODER_PIN
@@ -55,8 +55,11 @@ public class Intake extends PIDSubsystem implements Vomittable {
     m_moverMotor.setInverted(IntakeConstants.INTAKE_MOVER_MOTOR_INVERTED);
     m_collectorMotor.setInverted(IntakeConstants.INTAKE_COLLECTOR_MOTOR_INVERTED);
 
-    //m_moverMotor.setNeutralMode(NeutralMode.Brake); // Doesn't let arm fall
+    m_moverMotor.setNeutralMode(NeutralMode.Brake); // Doesn't let arm fall
     m_collectorMotor.setNeutralMode(NeutralMode.Coast); // So collector keeps spinning
+
+    // Config amp limits
+    m_collectorMotor.configPeakCurrentLimit(55); // Collector was browning out or something
     
     // Encoder setup
     m_armEncoder.reset(); // For relative
@@ -64,8 +67,8 @@ public class Intake extends PIDSubsystem implements Vomittable {
 
     // PID setup
     getController().setTolerance(IntakeConstants.INTAKE_ARM_TARGET_TOLERANCE);
-    setSetpoint(IntakeConstants.INTAKE_ARM_TARGET_POS);
-    enable();
+    setSetpoint(IntakeConstants.INTAKE_ARM_DEGREE_DOWN_POS);
+    //enable(); // Disabled until we have proper PID
   }
 
   private void setPID() {
@@ -88,18 +91,36 @@ public class Intake extends PIDSubsystem implements Vomittable {
 
   @Override
   public double getMeasurement() {
-    final double measurement = m_armEncoder.getDistance();
+    final double rawMeasurement = m_armEncoder.getDistance();
+    final double measurement = rawMeasurement / 1000 * 90;
 
     SmartDashboard.putNumber("Intake Arm Degrees", measurement);
 
     return measurement;
   }
 
-  /**
-   * Sets the setpoint that tells the subsystem to move the intake arm
-   * into the "up" position.
-   */
+  // Temporary
+  public void armUpManual() {
+    m_moverMotor.set(ControlMode.PercentOutput, IntakeConstants.INTAKE_ARM_MANUAL_SPEED);
+  }
 
+  // Temporary
+  public void armDownManual() {
+    m_moverMotor.set(ControlMode.PercentOutput, -IntakeConstants.INTAKE_ARM_MANUAL_SPEED);
+  }
+
+  // Temporary
+  public void stopArmManual() {
+    m_moverMotor.set(ControlMode.PercentOutput, 0);
+  }
+
+  // Undefined
+  public void armUp() {
+  }
+
+  // Undefined
+  public void armDown() {
+  }
 
   /**
    * Turns on the collector motor.
@@ -119,7 +140,7 @@ public class Intake extends PIDSubsystem implements Vomittable {
    * Lifts collector arm and runs collector in reverse.
    */
   public void vomit() {
-    enable();
+    armUp();
     m_collectorMotor.set(ControlMode.PercentOutput, -IntakeConstants.INTAKE_COLLECTOR_MOTOR_SPEED);
   }
 
@@ -130,10 +151,11 @@ public class Intake extends PIDSubsystem implements Vomittable {
     stopCollection();
   }
 
-  // Update PID all the time for tuning
-  @Override
-  public void periodic() {
-    setPID();
-    super.periodic();
-  }
+  // TODO: Disabled until proper PID control
+  // // Update PID all the time for tuning
+  // @Override
+  // public void periodic() {
+  //   setPID();
+  //   super.periodic();
+  // }
 }

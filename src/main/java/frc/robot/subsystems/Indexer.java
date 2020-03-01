@@ -20,8 +20,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.robot.Constants.IndexerConstants;
 
 public class Indexer extends SubsystemBase implements Vomittable {
-  private final VictorSPX m_indexerMotor1= new VictorSPX(IndexerConstants.INDEXER_MOTOR_1_CAN);
-  private final VictorSPX m_indexerMotor2= new VictorSPX(IndexerConstants.INDEXER_MOTOR_2_CAN);
+  private final VictorSPX m_mainIndexerMotor = new VictorSPX(IndexerConstants.INDEXER_MAIN_MOTOR_CAN);
+  private final VictorSPX m_transferMotor = new VictorSPX(IndexerConstants.TRANSFER_MOTOR_CAN);
 
   private final ColorSensorV3 m_ballSensor = new ColorSensorV3(I2C.Port.kOnboard);
 
@@ -30,11 +30,11 @@ public class Indexer extends SubsystemBase implements Vomittable {
    */
   public Indexer() {
     // Motor config
-    m_indexerMotor1.configFactoryDefault();
-    m_indexerMotor2.configFactoryDefault();
+    m_mainIndexerMotor.configFactoryDefault();
+    m_transferMotor.configFactoryDefault();
 
-    m_indexerMotor1.setInverted(IndexerConstants.INDEXER_MOTOR_1_INVERTED);
-    m_indexerMotor2.setInverted(IndexerConstants.INDEXER_MOTOR_2_INVERTED);
+    m_mainIndexerMotor.setInverted(IndexerConstants.INDEXER_MAIN_MOTOR_INVERTED);
+    m_transferMotor.setInverted(IndexerConstants.TRANSFER_MOTOR_INVERTED);
   }
 
   /**
@@ -67,8 +67,16 @@ public class Indexer extends SubsystemBase implements Vomittable {
 
   // Runs both motors at their respective speeds
   private void setIndexerMotors(double speedMultiplier) {
-    m_indexerMotor1.set(ControlMode.PercentOutput, speedMultiplier * IndexerConstants.INDEXER_MOTOR_1_SPEED);
-    m_indexerMotor2.set(ControlMode.PercentOutput, speedMultiplier * IndexerConstants.INDEXER_MOTOR_2_SPEED);
+    m_mainIndexerMotor.set(ControlMode.PercentOutput, speedMultiplier * IndexerConstants.INDEXER_MAIN_MOTOR_SPEED);
+    runTransfer(speedMultiplier);
+  }
+
+  public void runTransfer(double speedMultiplier) {
+    m_transferMotor.set(ControlMode.PercentOutput, speedMultiplier * IndexerConstants.TRANSFER_MOTOR_SPEED);
+  }
+
+  public void stopTransfer() {
+    runTransfer(0);
   }
 
   /**
