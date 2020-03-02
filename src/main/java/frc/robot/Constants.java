@@ -151,7 +151,7 @@ public final class Constants {
         public static double SHOOTER_TARGET_RPM = 3800; // Adjustable during run
         public static double SHOOTER_TARGET_RPM_TOLERANCE = 125;
 
-        public static double FEEDER_SPEED = 0.35;
+        public static double FEEDER_SPEED = 0.4;
     }
 
     public static final class ClimbConstants {

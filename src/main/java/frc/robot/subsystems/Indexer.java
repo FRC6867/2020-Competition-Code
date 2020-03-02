@@ -68,7 +68,7 @@ public class Indexer extends SubsystemBase implements Vomittable {
   // Runs both motors at their respective speeds
   private void setIndexerMotors(double speedMultiplier) {
     m_mainIndexerMotor.set(ControlMode.PercentOutput, speedMultiplier * IndexerConstants.INDEXER_MAIN_MOTOR_SPEED);
-    runTransfer(speedMultiplier);
+    //runTransfer(speedMultiplier); // Disabled for now
   }
 
   public void runTransfer(double speedMultiplier) {
