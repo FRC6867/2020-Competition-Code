@@ -9,10 +9,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 
 import edu.wpi.first.wpilibj.Encoder;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -35,12 +33,6 @@ public class Shooter extends PIDSubsystem implements Vomittable {
     ShooterConstants.SHOOTER_ENCODER_PINS[0],
     ShooterConstants.SHOOTER_ENCODER_PINS[1],
     ShooterConstants.SHOOTER_ENCODER_INVERTED
-  );
-
-  // TODO: Learn and implement this
-  private final SimpleMotorFeedforward m_shooterFeedForward = new SimpleMotorFeedforward(
-    0,
-    0
   );
 
   /**
@@ -86,7 +78,7 @@ public class Shooter extends PIDSubsystem implements Vomittable {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    m_shooterMotor1.set(ControlMode.PercentOutput, output); // Other motor will follow
+    m_shooterMotor1.set(ControlMode.PercentOutput, output + getFeedForward(setpoint)); // Other motor will follow
 
     SmartDashboard.putNumber("Shooter Output", output);
   }
@@ -94,6 +86,13 @@ public class Shooter extends PIDSubsystem implements Vomittable {
   @Override
   public double getMeasurement() {
     return m_shooterEncoder.getRate() * 60; // .getRate() returns units per sec, we need per min.
+  }
+
+  /**
+   * Returns the basic kF * setpoint feedforward
+   */
+  private double getFeedForward(double setpoint) {
+    return ShooterConstants.SHOOTER_F * setpoint;
   }
 
   /**

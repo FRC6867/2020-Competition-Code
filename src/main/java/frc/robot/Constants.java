@@ -71,39 +71,6 @@ public final class Constants {
         public static final double DRIVE_TARGET_TOLERANCE = 1;
     }
 
-    public static final class IntakeConstants {
-        // User input
-        public static final int INTAKE_BUTTON_ID = 6; // Right bumper
-        public static final int INTAKE_MANUAL_UP_BUTTON_ID = 3; // Right trigger
-        public static final int INTAKE_MANUAL_DOWN_BUTTON_ID = 2; // Left trigger
-
-        // Motors
-        public static final int INTAKE_COLLECTOR_MOTOR_CAN = 20;
-        public static final int INTAKE_MOVER_MOTOR_CAN = 21;
-
-        public static final boolean INTAKE_COLLECTOR_MOTOR_INVERTED = true;
-        public static final boolean INTAKE_MOVER_MOTOR_INVERTED = true;
-
-        public static final int[] INTAKE_ENCODER_PINS = {4, 5};
-        public static final boolean INTAKE_ENCODER_INVERTED  = true;
-
-        // PID
-        public static final double INTAKE_ARM_P = 0.0; // Undefined
-        public static final double INTAKE_ARM_I = 0.0; // Undefined
-        public static final double INTAKE_ARM_D = 0.0; // Undefined
-
-        public static final int INTAKE_ARM_0_DEGREE_POS = 100; // Undefined
-        public static final int INTAKE_ARM_FINAL_POS = 2000; // Undefined
-        public static final int INTAKE_ARM_FINAL_POS_DEGREES = 90;
-        public static final int INTAKE_ARM_DEGREE_UP_POS = 20; // Supposed to be 0, when tuned
-        public static final int INTAKE_ARM_DEGREE_DOWN_POS = 70; // Supposed to be 90, when tuned
-        public static final int INTAKE_ARM_TARGET_TOLERANCE = 3; // Allowed innacuracy
-
-        // Speeds
-        public static final double INTAKE_COLLECTOR_MOTOR_SPEED = 0.95; // Or 0.75
-        public static final double INTAKE_ARM_MANUAL_SPEED = 0.7;
-    }
-
     public static final class IndexerConstants {
         // User input
         public static final int INDEXER_BUTTON_ID = 4; // 'Y' button
@@ -146,6 +113,7 @@ public final class Constants {
         public static double SHOOTER_P = 0.0001; // Undefined
         public static double SHOOTER_I = 0.001; // Undefined
         public static double SHOOTER_D = 0.0; // Undefined
+        public static double SHOOTER_F = 0; // Indefined
 
         // Speeds
         public static double SHOOTER_TARGET_RPM = 3800; // Adjustable during run

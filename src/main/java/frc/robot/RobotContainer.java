@@ -39,7 +39,6 @@ public class RobotContainer {
 
   // Subsystems
   private final DriveTrain m_driveTrain = new DriveTrain();
-  private final Intake m_intake = new Intake();
   private final Indexer m_indexer = new Indexer();
   private final Shooter m_shooter = new Shooter();
   private final Vision m_vision = new Vision();
@@ -63,14 +62,10 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Auto command chooser
-    m_autoChooser.setDefaultOption("Sequence Number 3",
-      new AutoCommandSequence3(m_driveTrain, m_indexer, m_shooter));
-    m_autoChooser.addOption("Sequence Number 4", 
-      new AutoCommandSequence4(m_driveTrain, m_indexer, m_shooter));
-    m_autoChooser.addOption("Sequence Number 1",
-      new AutoCommandSequence1(m_driveTrain, m_intake, m_indexer, m_shooter));
-    m_autoChooser.addOption("Sequence Number 2",
-      new AutoCommandSequence2(m_driveTrain, m_intake, m_indexer, m_shooter));
+    m_autoChooser.setDefaultOption("Sequence Number 1",
+      new AutoCommandSequence1(m_driveTrain, m_indexer, m_shooter));
+    m_autoChooser.addOption("Sequence Number 2", 
+      new AutoCommandSequence2(m_driveTrain, m_indexer, m_shooter));
     m_autoChooser.addOption("Turn 90 degrees", new TurnDegrees(90, m_driveTrain));
     m_autoChooser.addOption("Drive Forwards 100 inches", new DriveForward(100, m_driveTrain));
     m_autoChooser.addOption("Do nothing", null);
@@ -89,10 +84,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     final JoystickButton m_fineControlButton = new JoystickButton(m_driverGamepad, DriveTrainConstants.FINE_CONTROL_BUTTON_ID);
-    final JoystickPOV m_turnDegreesPOV = new JoystickPOV(m_driverGamepad);
-    final JoystickButton m_intakeCollectButton = new JoystickButton(m_driverGamepad, IntakeConstants.INTAKE_BUTTON_ID);
-    final TriggerButton m_intakeArmUpManualButton = new TriggerButton(m_operatorGamepad, IntakeConstants.INTAKE_MANUAL_UP_BUTTON_ID);
-    final TriggerButton m_intakeArmDownManualButton = new TriggerButton(m_operatorGamepad, IntakeConstants.INTAKE_MANUAL_DOWN_BUTTON_ID);
     final JoystickButton m_indexerButton = new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_BUTTON_ID);
     final JoystickButton m_shooterSpinButton = new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID);
     final JoystickButton m_feederButton = new JoystickButton(m_operatorGamepad, ShooterConstants.FEEDER_BUTTON_ID);
@@ -104,26 +95,6 @@ public class RobotContainer {
         () -> m_driveTrain.setFineControl(true),
         () -> m_driveTrain.setFineControl(false)
       ));
-
-    // Not enabled due to no PID control
-    // Precise turning
-    // m_turnDegreesPOV
-    //   .whenPressed(new TurnDegrees(m_turnDegreesPOV.getPOV180(), m_driveTrain));
-    
-    // Not enabled due to mechanical intake problems
-    // // Intake
-    // m_intakeCollectButton
-    //   .toggleWhenPressed(new FloorIntake(m_intake, m_indexer));
-    
-    // Intake arm up manual
-    m_intakeArmUpManualButton
-      .whenPressed(m_intake::armUpManual, m_intake)
-      .whenReleased(m_intake::stopArmManual, m_intake);
-
-    // Intake arm down manual
-    m_intakeArmDownManualButton
-      .whenPressed(m_intake::armDownManual, m_intake)
-      .whenReleased(m_intake::stopArmManual, m_intake);
     
     // Indexer control
     m_indexerButton
@@ -140,7 +111,7 @@ public class RobotContainer {
 
     // Vomit
     m_vomitButton
-      .whenHeld(new Vomit(m_intake, m_indexer, m_shooter));
+      .whenHeld(new Vomit(m_indexer, m_shooter));
   }
 
   /**

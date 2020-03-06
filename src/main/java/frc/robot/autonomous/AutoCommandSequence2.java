@@ -9,55 +9,33 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
-
-import frc.robot.commands.TurnDegrees;
-import frc.robot.commands.DriveForward;
-import frc.robot.commands.FloorIntake;
-import frc.robot.commands.FloorIntake;
-import frc.robot.commands.FeedShooter;
+import frc.robot.commands.DriveForwardBasic;
+import frc.robot.commands.TurnDegreesBasic;
+import frc.robot.autonomous.AutoCommandSequence1;
 
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 
-import frc.robot.Constants.AutoConstants.Auto2Constants;
+import frc.robot.Constants.AutoConstants.Auto4Constants;
 
+/**
+ * yes
+ */
 public class AutoCommandSequence2 extends SequentialCommandGroup {
   /**
-   * Creates a new AutoCommandSequence2.
+   * Creates a new AutoCommandSequence4 which drives forward, turn to the right,
+   * drives to the front of the tower thing, turns (hopefully) towards it,
+   * the runs shooter and stuff.
    */
-  public AutoCommandSequence2(DriveTrain driveTrain, Intake intake, Indexer indexer, Shooter shooter) {
+  public AutoCommandSequence2(DriveTrain driveTrain, Indexer indexer, Shooter shooter) {
     super(
-      new ScheduleCommand(
-        new WaitUntilCommand(() -> driveTrain.getDistanceDriven() >= Auto2Constants.INTAKE_START_DISTANCE)
-          .andThen(
-            new FloorIntake(intake, indexer)
-              .withTimeout(Auto2Constants.INTAKE_DURATION)
-          )
-      ),
-      new DriveForward(Auto2Constants.INTAKE_TARGET_DISTANCE, driveTrain), // Drive to line to pick up balls
+      new DriveForwardBasic(Auto4Constants.DRIVE_1_DISTANCE, driveTrain),
+      new TurnDegreesBasic(Auto4Constants.TURN_DEGREES, driveTrain),
+      new DriveForwardBasic(Auto4Constants.DRIVE_2_DISTANCE, driveTrain),
+      new TurnDegreesBasic(-Auto4Constants.TURN_DEGREES, driveTrain),
 
-      new ScheduleCommand( // Index the picked-up balls
-        new StartEndCommand(indexer::startIndexer, indexer::stopIndexer)
-          .withInterrupt(indexer::ballReady)
-      ),
-      new TurnDegrees(Auto2Constants.TURN_1_DEGREES, driveTrain),
-      new DriveForward(Auto2Constants.DRIVE_1_DISTANCE, driveTrain),
-      new TurnDegrees(Auto2Constants.TURN_2_DEGREES, driveTrain),
-      new InstantCommand(shooter::enable),
-      new DriveForward(Auto2Constants.DRIVE_TO_WALL_DISTANCE, driveTrain)
-        .withTimeout(Auto2Constants.MAX_DRIVE_TIME), // In case we are off and never reach
-
-      new InstantCommand(indexer::startIndexer),
-      new FeedShooter(shooter, indexer)
-        .withTimeout(Auto2Constants.SHOOT_TIME), // Shoot for x seconds
-      new InstantCommand(shooter::disable),
-      new InstantCommand(indexer::stopIndexer)
+      new AutoCommandSequence1(driveTrain, indexer, shooter)
     );
   }
 }
