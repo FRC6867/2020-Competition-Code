@@ -50,15 +50,6 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // Driving default command
-    m_driveTrain.setDefaultCommand(
-      new TankDrive(
-        () -> -m_driverGamepad.getRawAxis(DriveTrainConstants.RIGHT_STICK_Y_AXIS_ID), // Sticks are inverted
-        () -> -m_driverGamepad.getRawAxis(DriveTrainConstants.LEFT_STICK_Y_AXIS_ID),
-        m_driveTrain
-      )
-    );
-
     configureButtonBindings();
 
     // Auto command chooser
@@ -70,10 +61,8 @@ public class RobotContainer {
     m_autoChooser.addOption("Drive Forwards 100 inches", new DriveForward(100, m_driveTrain));
     m_autoChooser.addOption("Do nothing", null);
 
-    // Manual Vomit Commands
-    //SmartDashboard.putData("Vomit Intake", new Vomit(m_intake));
-    SmartDashboard.putData("Vomit Indexer", new Vomit(m_indexer));
-    SmartDashboard.putData("Vomit Shooter", new Vomit(m_shooter));
+    SmartDashboard.putData("Auto Mode", m_autoChooser);
+    SmartDashboard.setPersistent("Auto Mode");
   }
 
   /**
@@ -83,11 +72,28 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    // DriveTrain buttons
     final JoystickButton m_fineControlButton = new JoystickButton(m_driverGamepad, DriveTrainConstants.FINE_CONTROL_BUTTON_ID);
-    final JoystickButton m_indexerButton = new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_BUTTON_ID);
+
+    // Indexer buttons
+    final JoystickButton m_indexerRightForwardButton = new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_RIGHT_FORWARD_BUTTON_ID);
+    final TriggerButton m_indexerRightBackwardButton = new TriggerButton(m_operatorGamepad, IndexerConstants.INDEXER_RIGHT_BACKWARD_BUTTON_ID);
+    final JoystickButton m_indexerLeftForwardButton = new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_LEFT_FORWARD_BUTTON_ID);
+    final TriggerButton m_indexerLeftBackwardButton = new TriggerButton(m_operatorGamepad, IndexerConstants.INDEXER_LEFT_BACKWARD_BUTTON_ID);
+
+    // Shooter buttons
     final JoystickButton m_shooterSpinButton = new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID);
     final JoystickButton m_feederButton = new JoystickButton(m_operatorGamepad, ShooterConstants.FEEDER_BUTTON_ID);
-    final DoubleButton m_vomitButton = new DoubleButton(m_operatorGamepad, Constants.VOMIT_BUTTON_1_ID, Constants.VOMIT_BUTTON_2_ID);
+    final DoubleButton m_vomitButton = new DoubleButton(m_operatorGamepad, ShooterConstants.VOMIT_BUTTON_1_ID, ShooterConstants.VOMIT_BUTTON_2_ID);
+
+    // Driving default command
+    m_driveTrain.setDefaultCommand(
+      new TankDrive(
+        () -> -m_driverGamepad.getRawAxis(DriveTrainConstants.RIGHT_STICK_Y_AXIS_ID), // Sticks are inverted
+        () -> -m_driverGamepad.getRawAxis(DriveTrainConstants.LEFT_STICK_Y_AXIS_ID),
+        m_driveTrain
+      )
+    );
 
     // Fine control
     m_fineControlButton
@@ -96,14 +102,20 @@ public class RobotContainer {
         () -> m_driveTrain.setFineControl(false)
       ));
     
-    // Indexer control
-    m_indexerButton
-      .whenPressed(m_indexer::startIndexer, m_indexer)
-      .whenReleased(m_indexer::stopIndexer, m_indexer);
+    // Indexer control.
+    m_indexer.setDefaultCommand(
+      new IndexerControl(
+        m_indexerRightForwardButton,
+        m_indexerRightBackwardButton,
+        m_indexerLeftForwardButton,
+        m_indexerLeftBackwardButton,
+        m_indexer
+      )
+    );
 
     // Shooter spin-up
     m_shooterSpinButton
-      .toggleWhenPressed(new StartEndCommand(m_shooter::enable, m_shooter::disable));
+      .toggleWhenPressed(new StartEndCommand(m_shooter::enable, m_shooter::disable, m_shooter), false);
 
     // Shooter shoot (feeder)
     m_feederButton
@@ -111,7 +123,7 @@ public class RobotContainer {
 
     // Vomit
     m_vomitButton
-      .whenHeld(new Vomit(m_indexer, m_shooter));
+      .whenHeld(new Vomit(m_shooter));
   }
 
   /**

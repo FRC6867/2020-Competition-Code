@@ -17,7 +17,7 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 
-import frc.robot.Constants.AutoConstants.Auto4Constants;
+import frc.robot.Constants.AutoConstants.Auto2Constants;
 
 /**
  * yes
@@ -30,10 +30,10 @@ public class AutoCommandSequence2 extends SequentialCommandGroup {
    */
   public AutoCommandSequence2(DriveTrain driveTrain, Indexer indexer, Shooter shooter) {
     super(
-      new DriveForwardBasic(Auto4Constants.DRIVE_1_DISTANCE, driveTrain),
-      new TurnDegreesBasic(Auto4Constants.TURN_DEGREES, driveTrain),
-      new DriveForwardBasic(Auto4Constants.DRIVE_2_DISTANCE, driveTrain),
-      new TurnDegreesBasic(-Auto4Constants.TURN_DEGREES, driveTrain),
+      new DriveForwardBasic(Auto2Constants.DRIVE_1_DISTANCE, driveTrain),
+      new TurnDegreesBasic(Auto2Constants.TURN_DEGREES, driveTrain),
+      new DriveForwardBasic(Auto2Constants.DRIVE_2_DISTANCE, driveTrain),
+      new TurnDegreesBasic(-Auto2Constants.TURN_DEGREES, driveTrain),
 
       new AutoCommandSequence1(driveTrain, indexer, shooter)
     );

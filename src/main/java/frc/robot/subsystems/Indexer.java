@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.Vomittable;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.I2C;
@@ -19,69 +18,84 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import frc.robot.Constants.IndexerConstants;
 
-// TODO: Re-make this class
-public class Indexer extends SubsystemBase implements Vomittable {
-  private final VictorSPX m_mainIndexerMotor = new VictorSPX(IndexerConstants.INDEXER_MAIN_MOTOR_CAN);
-  private final VictorSPX m_transferMotor = new VictorSPX(IndexerConstants.TRANSFER_MOTOR_CAN);
+/**
+ * Subsystem that handles indexing of the balls
+ * and the operation of the big bown in the front
+ * of the robot.
+ */
+public class Indexer extends SubsystemBase {
+  private final VictorSPX m_rightIndexerMotor = new VictorSPX(IndexerConstants.INDEXER_RIGHT_MOTOR_CAN);
+  private final VictorSPX m_leftIndexerMotor = new VictorSPX(IndexerConstants.INDEXER_LEFT_MOTOR_CAN);
 
   private final ColorSensorV3 m_ballSensor = new ColorSensorV3(I2C.Port.kOnboard);
 
   /**
-   * Creates a new Indexer subsystem.
+   * Creates a new Indexer subsystem using {@link IndexerConstants}.
    */
   public Indexer() {
     // Motor config
-    m_mainIndexerMotor.configFactoryDefault();
-    m_transferMotor.configFactoryDefault();
+    m_rightIndexerMotor.configFactoryDefault();
+    m_leftIndexerMotor.configFactoryDefault();
 
-    m_mainIndexerMotor.setInverted(IndexerConstants.INDEXER_MAIN_MOTOR_INVERTED);
-    m_transferMotor.setInverted(IndexerConstants.TRANSFER_MOTOR_INVERTED);
+    m_rightIndexerMotor.setInverted(IndexerConstants.INDEXER_RIGHT_MOTOR_INVERTED);
+    m_leftIndexerMotor.setInverted(IndexerConstants.INDEXER_LEFT_MOTOR_INVERTED);
   }
 
   /**
-   * Turns on the indexer motor at {@link IndexerConstants#m_indexerMotor_SPEED} speed.
-   */
-  public void startIndexer() {
-    setIndexerMotors(1);
-  }
-
-  /**
-   * Turns off the indexer motor
-   */
-  public void stopIndexer() {
-    setIndexerMotors(0);
-  }
-
-  /**
-   * Runs the motor in reverse.
-   */
-  public void vomit() {
-    setIndexerMotors(-1);
-  }
-
-  /**
-   * Stops vomitting.
-   */
-  public void stopVomit() {
-    stopIndexer();
-  }
-
-  // Runs both motors at their respective speeds
-  private void setIndexerMotors(double speedMultiplier) {
-    m_mainIndexerMotor.set(ControlMode.PercentOutput, speedMultiplier * IndexerConstants.INDEXER_MAIN_MOTOR_SPEED);
-    //runTransfer(speedMultiplier); // Disabled for now
-  }
-
-  public void runTransfer(double speedMultiplier) {
-    m_transferMotor.set(ControlMode.PercentOutput, speedMultiplier * IndexerConstants.TRANSFER_MOTOR_SPEED);
-  }
-
-  public void stopTransfer() {
-    runTransfer(0);
-  }
-
-  /**
+   * Runs both sides of the Indexer at max
+   * throttled speed.
    * 
+   * @see {@link Indexer#run()}
+   */
+  public void runAll() {
+    run(1, 1);
+  }
+
+  /**
+   * Stops both sides of the indexer.
+   */
+  public void stop() {
+    run(0, 0);
+  }
+
+  /**
+   * Runs both sides of the indexer. Speed
+   * is multiplied by throttle.
+   * 
+   * @param rightSpeed Right side speed
+   * @param leftSpeed Left side speed
+   */
+  public void run(double rightSpeed, double leftSpeed) {
+    runRight(rightSpeed);
+    runLeft(leftSpeed);
+  }
+
+  /**
+   * Runs the right side of the indexer. Speed
+   * is multiplied by throttle.
+   * 
+   * @param speed The speed to run the motor at
+   */
+  public void runRight(double speed) {
+    setMotor(m_rightIndexerMotor, speed);
+  }
+
+  /**
+   * Runs the left side of the indexer. Speed
+   * is multiplied by throttle.
+   * 
+   * @param speed The speed to run the motor at
+   */
+  public void runLeft(double speed) {
+    setMotor(m_leftIndexerMotor, speed);
+  }
+
+  // Handles throttle
+  private void setMotor(VictorSPX motor, double speed) {
+    motor.set(ControlMode.PercentOutput, IndexerConstants.INDEXER_MOTORS_SPEED * speed);
+  }
+
+  /**
    * @return Whether there is a ball ready to be fed
    */
   public boolean ballReady() {

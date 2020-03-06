@@ -263,34 +263,6 @@
               ]
             }
           },
-          "17,0": {
-            "size": [
-              3,
-              4
-            ],
-            "content": {
-              "_type": "List Layout",
-              "_title": "Manual Vomit",
-              "Layout/Label position": "TOP",
-              "_children": [
-                {
-                  "_type": "Command",
-                  "_source0": "network_table:///SmartDashboard/Vomit Intake",
-                  "_title": "Vomit Intake"
-                },
-                {
-                  "_type": "Command",
-                  "_source0": "network_table:///SmartDashboard/Vomit Indexer",
-                  "_title": "Vomit Indexer"
-                },
-                {
-                  "_type": "Command",
-                  "_source0": "network_table:///SmartDashboard/Vomit Shooter",
-                  "_title": "Vomit Shooter"
-                }
-              ]
-            }
-          },
           "9,7": {
             "size": [
               2,
