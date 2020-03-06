@@ -18,11 +18,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import frc.robot.subsystems.Vomittable;
-
 import frc.robot.Constants.ShooterConstants;
 
-public class Shooter extends PIDSubsystem implements Vomittable {
+public class Shooter extends PIDSubsystem {
   // Motors
   private final TalonSRX m_shooterMotor1 = new TalonSRX(ShooterConstants.SHOOTER_MOTOR_1_CAN);
   private final TalonSRX m_shooterMotor2 = new TalonSRX(ShooterConstants.SHOOTER_MOTOR_2_CAN);
@@ -98,7 +96,7 @@ public class Shooter extends PIDSubsystem implements Vomittable {
   /**
    * @return Whether the shooter is up-to-speed and ready
    */
-  public boolean shooterReady() {
+  public boolean isReady() {
     final boolean atSetpoint = getController().atSetpoint();
 
     SmartDashboard.putBoolean("Shooter Ready", atSetpoint);
@@ -136,15 +134,16 @@ public class Shooter extends PIDSubsystem implements Vomittable {
    * Runs the feeder motor in reverse. Flywheel cannot reverse.
    */
   public void vomit() {
-    //System.out.println("shooter vomit");
-    m_feederMotor.set(ControlMode.PercentOutput, -ShooterConstants.FEEDER_SPEED);
+    setSetpoint(ShooterConstants.SHOOTER_VOMIT_TARGET_RPM);
+    enable();
   }
 
   /**
    * Stops vomitting.
    */
   public void stopVomit() {
-    stopFeeder();
+    disable();
+    setSetpoint(ShooterConstants.SHOOTER_TARGET_RPM);
   }
 
   // Call parent periodic + log data

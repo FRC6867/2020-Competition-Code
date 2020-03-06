@@ -73,18 +73,20 @@ public final class Constants {
 
     public static final class IndexerConstants {
         // User input
-        public static final int INDEXER_BUTTON_ID = 4; // 'Y' button
+        public static final int INDEXER_RIGHT_FORWARD_BUTTON_ID = 6; // Right bumper
+        public static final int INDEXER_RIGHT_BACKWARD_BUTTON_ID = 3; // Right trigger
+        public static final int INDEXER_LEFT_FORWARD_BUTTON_ID = 5; // Left bumper
+        public static final int INDEXER_LEFT_BACKWARD_BUTTON_ID = 2; // Left trigger
 
         // Motors
-        public static final int INDEXER_MAIN_MOTOR_CAN = 30;
-        public static final int TRANSFER_MOTOR_CAN = 31;
+        public static final int INDEXER_RIGHT_MOTOR_CAN = 30;
+        public static final int INDEXER_LEFT_MOTOR_CAN = 31;
 
-        public static final boolean INDEXER_MAIN_MOTOR_INVERTED = true;
-        public static final boolean TRANSFER_MOTOR_INVERTED = true;
+        public static final boolean INDEXER_RIGHT_MOTOR_INVERTED = false;
+        public static final boolean INDEXER_LEFT_MOTOR_INVERTED = true;
 
         // Speeds
-        public static final double INDEXER_MAIN_MOTOR_SPEED = 0.5;
-        public static final double TRANSFER_MOTOR_SPEED = 0.75;
+        public static final double INDEXER_MOTORS_SPEED = 0.5;
 
         // Ball detection
         public static final int BALL_CLOSE_DISTANCE = 100; // Undefined
@@ -95,6 +97,9 @@ public final class Constants {
         public static final int SHOOTER_TOGGLE_BUTTON_ID = 1; // 'A' button
         public static final int SHOOTER_SPEED_BUTTON_ID = 3; // 'X' button
         public static final int FEEDER_BUTTON_ID = 2; // 'B' button
+            
+        public static final int VOMIT_BUTTON_1_ID = 9; // Left joystick button
+        public static final int VOMIT_BUTTON_2_ID = 10; // Right joystick button
 
         // Motor CANs
         public static final int FEEDER_MOTOR_CAN = 42;
@@ -117,6 +122,7 @@ public final class Constants {
 
         // Speeds
         public static double SHOOTER_TARGET_RPM = 3800; // Adjustable during run
+        public static double SHOOTER_VOMIT_TARGET_RPM = 1000; // Undefined
         public static double SHOOTER_TARGET_RPM_TOLERANCE = 125;
 
         public static double FEEDER_SPEED = 0.4;
@@ -128,10 +134,14 @@ public final class Constants {
         public static final int CLIMB_UP_BUTTON_ID = 8; // Start button
 
         // Motor CANs
-        public static final int CLIMB_MOTOR_CAN = 50;
+        public static final int CLIMB_MOTOR_1_CAN = 50;
+        public static final int CLIMB_MOTOR_2_CAN = 51; // TODO: Can ID this Talon
 
-        public static final boolean CLIMB_MOTOR_INVERTED = false; // Undefined
-        public static final double CLIMB_MOTOR_SPEED = 0.3; // Slow for now
+        public static final boolean CLIMB_MOTOR_1_INVERTED = false; // Undefined
+        public static final boolean CLIMB_MOTOR_2_INVERTED = false; // Undefined
+
+        public static final double CLIMB_MOTOR_1_SPEED = 0.3; // Undefined
+        public static final double CLIMB_MOTOR_2_SPEED = 0.3; // Undefined
     }
 
     public static final class VisionConstants {
@@ -152,46 +162,14 @@ public final class Constants {
         public static final int CAMERA_TURN_ON_TIME = 30; // Seconds before the end of the match
     }
 
-    // Vomit buttons
-    public static final int VOMIT_BUTTON_1_ID = 9; // Left joystick button
-    public static final int VOMIT_BUTTON_2_ID = 10; // Right joystick button
-
     public static final class AutoConstants {
         public static final class Auto1Constants {
-            public static final double INTAKE_START_DISTANCE = 100;
-            public static final double INTAKE_DURATION = 2;
-            public static final double INTAKE_TARGET_DISTANCE = 130.36;
-
-            public static final double TURN_1_DEGREES = -124.25;
-            public static final double DRIVE_1_DISTANCE = 231.6;
-            public static final double TURN_2_DEGREES = 55.75;
-            public static final double DRIVE_TO_WALL_DISTANCE = 120;
-            public static final double MAX_DRIVE_TIME = 2;
-
-            public static final double SHOOT_TIME = 2;
-        }
-
-        public static final class Auto2Constants {
-            public static final double INTAKE_START_DISTANCE = 150;
-            public static final double INTAKE_DURATION = 3;
-            public static final double INTAKE_TARGET_DISTANCE = 158.63;
-
-            public static final double TURN_1_DEGREES = -157.13;
-            public static final double DRIVE_1_DISTANCE = 173.1;
-            public static final double TURN_2_DEGREES = 22.87;
-            public static final double DRIVE_TO_WALL_DISTANCE = 120;
-            public static final double MAX_DRIVE_TIME = 2;
-
-            public static final double SHOOT_TIME = 2;
-        }
-
-        public static final class Auto3Constants {
             public static final double DRIVE_TIME = 3.5;
             public static final double DRIVE_SPEED = 0.5;
             public static final double SHOOT_TIME = 10;
         }
 
-        public static final class Auto4Constants {
+        public static final class Auto2Constants {
             public static final double DRIVE_1_DISTANCE = 20;
             public static final double TURN_DEGREES = 90;
             public static final double DRIVE_2_DISTANCE = 50;

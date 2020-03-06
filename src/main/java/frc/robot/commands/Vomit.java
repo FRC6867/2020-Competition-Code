@@ -9,38 +9,45 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.subsystems.Vomittable;
+import frc.robot.subsystems.Shooter;
 
+/**
+ * A {@link Shooter}-based command that runs the Shooter
+ * at low speed to dump balls out instead of shooting them.
+ */
 public class Vomit extends CommandBase {
-  private final Vomittable[] m_subsystems;
+  private final Shooter m_shooter;
 
   /**
-   * Creates a new Vomit commands that runs the {@link Vomittable#vomit()} method of the supplied subsystems.
-   * Calls the {@link Vomittable#stopVomit()} when it ends.
-   * Does not end on it's own.
+   * Creates a new Vomit command.
    * 
-   * @param subsystems A list of subsystems that implement the {@link Vomittable} interface
+   * @param shooter The Shooter subsystem
    */
-  public Vomit(Vomittable... subsystems) {
-    m_subsystems = subsystems;
+  public Vomit(Shooter shooter) {
+    m_shooter = shooter;
 
-    addRequirements(m_subsystems);
+    addRequirements(m_shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    for (Vomittable subsystem : m_subsystems) {
-      subsystem.vomit();
+    m_shooter.vomit();
+  }
+
+  @Override
+  public void execute() {
+    if (m_shooter.isReady()) {
+      m_shooter.runFeeder();
+    } else {
+      m_shooter.stopFeeder();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    for (Vomittable subsystem : m_subsystems) {
-      subsystem.stopVomit();
-    }
+    m_shooter.stopVomit();
   }
 
   // Don't end until interrupted.
