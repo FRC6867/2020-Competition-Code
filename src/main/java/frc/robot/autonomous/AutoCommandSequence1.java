@@ -8,55 +8,42 @@
 package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-
-import frc.robot.commands.TurnDegrees;
-import frc.robot.commands.DriveForward;
-import frc.robot.commands.FloorIntake;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.commands.RepeatCommand;
+import frc.robot.commands.TimedDrive;
 import frc.robot.commands.FeedShooter;
+import frc.robot.commands.IndexerNoJam;
 
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Shooter;
 
-import frc.robot.Constants.AutoConstants.Auto1Constants;
+import frc.robot.Constants.AutoConstants.Auto3Constants;
 
 public class AutoCommandSequence1 extends SequentialCommandGroup {
   /**
-   * Creates a new AutoCommandSequence1.
+   * Creates a new AutoCommandSequence3.
    */
-  public AutoCommandSequence1(DriveTrain driveTrain, Intake intake, Indexer indexer, Shooter shooter) {
+  public AutoCommandSequence1(DriveTrain driveTrain, Indexer indexer, Shooter shooter) {
     super(
-      new ScheduleCommand(
-        new WaitUntilCommand(() -> driveTrain.getDistanceDriven() >= Auto1Constants.INTAKE_START_DISTANCE)
-          .andThen(
-            new FloorIntake(intake, indexer)
-              .withTimeout(Auto1Constants.INTAKE_DURATION)
-          )
-      ),
-      new DriveForward(Auto1Constants.INTAKE_TARGET_DISTANCE, driveTrain), // Drive to line to pick up balls
+      new InstantCommand(shooter::enable, shooter),
+      new TimedDrive(Auto3Constants.DRIVE_TIME, Auto3Constants.DRIVE_SPEED, driveTrain),
 
-      new ScheduleCommand( // Index the picked-up balls
-        new StartEndCommand(indexer::startIndexer, indexer::stopIndexer)
-          .withInterrupt(indexer::ballReady)
-      ),
-      new TurnDegrees(Auto1Constants.TURN_1_DEGREES, driveTrain),
-      new DriveForward(Auto1Constants.DRIVE_1_DISTANCE, driveTrain),
-      new TurnDegrees(Auto1Constants.TURN_2_DEGREES, driveTrain),
-      new InstantCommand(shooter::enable),
-      new DriveForward(Auto1Constants.DRIVE_TO_WALL_DISTANCE, driveTrain)
-        .withTimeout(Auto1Constants.MAX_DRIVE_TIME), // In case we are off and never reach
+      parallel( // Run feeder and indexer
+        new FeedShooter(shooter, indexer)
+          .withTimeout(Auto3Constants.SHOOT_TIME),
+        
+        new StartEndCommand(indexer::startIndexer, indexer::stopIndexer, indexer)
+          .withTimeout(Auto3Constants.SHOOT_TIME)
 
-      new InstantCommand(indexer::startIndexer),
-      new FeedShooter(shooter, indexer)
-        .withTimeout(Auto1Constants.SHOOT_TIME), // Shoot for x seconds
-      new InstantCommand(shooter::disable),
-      new InstantCommand(indexer::stopIndexer)
+        // No need anymore
+        // new RepeatCommand(
+        //   new IndexerNoJam(1.5, 0.5, indexer),
+        //   5
+        // )
+      )
+      .andThen(shooter::disable, shooter)
     );
   }
 }

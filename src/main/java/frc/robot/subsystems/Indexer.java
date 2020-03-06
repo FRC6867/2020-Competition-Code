@@ -19,6 +19,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import frc.robot.Constants.IndexerConstants;
 
+// TODO: Re-make this class
 public class Indexer extends SubsystemBase implements Vomittable {
   private final VictorSPX m_mainIndexerMotor = new VictorSPX(IndexerConstants.INDEXER_MAIN_MOTOR_CAN);
   private final VictorSPX m_transferMotor = new VictorSPX(IndexerConstants.TRANSFER_MOTOR_CAN);
