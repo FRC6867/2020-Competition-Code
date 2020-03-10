@@ -101,45 +101,6 @@
               "_title": "Ball Proximity"
             }
           },
-          "11,6": {
-            "size": [
-              4,
-              3
-            ],
-            "content": {
-              "_type": "List Layout",
-              "_title": "Shooter",
-              "Layout/Label position": "TOP",
-              "_children": [
-                {
-                  "_type": "Simple Dial",
-                  "_source0": "network_table:///SmartDashboard/Shooter RPM",
-                  "_title": "Shooter RPM",
-                  "Range/Min": 0.0,
-                  "Range/Max": 4500.0,
-                  "Visuals/Show value": true
-                },
-                {
-                  "_type": "Graph",
-                  "_source0": "network_table:///SmartDashboard/Shooter RPM History",
-                  "_title": "Shooter RPM History",
-                  "Graph/Visible time": 30.0,
-                  "Y-axis/Automatic bounds": false,
-                  "Y-axis/Upper bound": 4500.0,
-                  "Y-axis/Lower bound": 2000.0,
-                  "Visible data/SmartDashboard/Shooter RPM History": true
-                },
-                {
-                  "_type": "Number Slider",
-                  "_source0": "network_table:///SmartDashboard/Shooter Target RPM",
-                  "_title": "Shooter Target RPM",
-                  "Slider Settings/Min": 2000.0,
-                  "Slider Settings/Max": 4000.0,
-                  "Slider Settings/Block increment": 100.0
-                }
-              ]
-            }
-          },
           "18,4": {
             "size": [
               2,
@@ -342,6 +303,47 @@
               "Range/Center": 0.0,
               "Visuals/Num tick marks": 5,
               "Visuals/Show text": true
+            }
+          },
+          "7,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Shooter F",
+              "_title": "Shooter F"
+            }
+          },
+          "4,2": {
+            "size": [
+              3,
+              3
+            ],
+            "content": {
+              "_type": "Graph",
+              "_source0": "network_table:///SmartDashboard/Shooter RPM",
+              "_title": "Shooter RPM",
+              "Graph/Visible time": 30.0,
+              "Y-axis/Automatic bounds": false,
+              "Y-axis/Upper bound": 4500.0,
+              "Y-axis/Lower bound": 2000.0,
+              "Visible data/SmartDashboard/Shooter RPM": true
+            }
+          },
+          "11,6": {
+            "size": [
+              5,
+              4
+            ],
+            "content": {
+              "_type": "Graph",
+              "_title": "Graph",
+              "Graph/Visible time": 30.0,
+              "Y-axis/Automatic bounds": true,
+              "Y-axis/Upper bound": 1.0,
+              "Y-axis/Lower bound": -1.0
             }
           }
         }
@@ -566,6 +568,19 @@
               "Layout/Label position": "BOTTOM",
               "_children": []
             }
+          },
+          "8,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/Vision",
+              "_title": "Vision",
+              "Layout/Label position": "BOTTOM",
+              "_children": []
+            }
           }
         }
       }
@@ -573,8 +588,8 @@
   ],
   "windowGeometry": {
     "x": -8.0,
-    "y": -8.0,
-    "width": 1382.0,
+    "y": 0.0,
+    "width": 1492.800048828125,
     "height": 744.0
   }
 }

@@ -24,8 +24,8 @@ import frc.robot.Constants.IndexerConstants;
  * of the robot.
  */
 public class Indexer extends SubsystemBase {
-  private final VictorSPX m_rightIndexerMotor = new VictorSPX(IndexerConstants.INDEXER_RIGHT_MOTOR_CAN);
-  private final VictorSPX m_leftIndexerMotor = new VictorSPX(IndexerConstants.INDEXER_LEFT_MOTOR_CAN);
+  private final VictorSPX m_rightIndexerMotor = new VictorSPX(IndexerConstants.RIGHT_MOTOR_CAN);
+  private final VictorSPX m_leftIndexerMotor = new VictorSPX(IndexerConstants.LEFT_MOTOR_CAN);
 
   private final ColorSensorV3 m_ballSensor = new ColorSensorV3(I2C.Port.kOnboard);
 
@@ -37,8 +37,8 @@ public class Indexer extends SubsystemBase {
     m_rightIndexerMotor.configFactoryDefault();
     m_leftIndexerMotor.configFactoryDefault();
 
-    m_rightIndexerMotor.setInverted(IndexerConstants.INDEXER_RIGHT_MOTOR_INVERTED);
-    m_leftIndexerMotor.setInverted(IndexerConstants.INDEXER_LEFT_MOTOR_INVERTED);
+    m_rightIndexerMotor.setInverted(IndexerConstants.RIGHT_MOTOR_INVERTED);
+    m_leftIndexerMotor.setInverted(IndexerConstants.LEFT_MOTOR_INVERTED);
   }
 
   /**
@@ -92,7 +92,7 @@ public class Indexer extends SubsystemBase {
 
   // Handles throttle
   private void setMotor(VictorSPX motor, double speed) {
-    motor.set(ControlMode.PercentOutput, IndexerConstants.INDEXER_MOTORS_SPEED * speed);
+    motor.set(ControlMode.PercentOutput, IndexerConstants.INDEXER_SPEED * speed);
   }
 
   /**

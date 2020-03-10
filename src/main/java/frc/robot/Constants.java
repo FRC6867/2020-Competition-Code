@@ -50,7 +50,7 @@ public final class Constants {
         public static final double DEFAULT_SPEED_THROTTLE = 0.7; // Default speed multiplier
         public static final double MIN_SPEED_THRESHOLD = 0.1; // Inputs under will be ignored
         public static final double FINE_CONTROL_SENSITIVITY = 2.5;
-        public static final double ARTIFICIAL_COAST_NUM = 2;
+        public static final double ARTIFICIAL_COAST_NUM = 1.05;
         public static final double JOYSTICK_SENSITIVITY_MOD = 1/2;
 
 
@@ -71,22 +71,57 @@ public final class Constants {
         public static final double DRIVE_TARGET_TOLERANCE = 1;
     }
 
-    public static final class IndexerConstants {
+    public static final class IntakeConstants {
         // User input
-        public static final int INDEXER_RIGHT_FORWARD_BUTTON_ID = 6; // Right bumper
-        public static final int INDEXER_RIGHT_BACKWARD_BUTTON_ID = 3; // Right trigger
-        public static final int INDEXER_LEFT_FORWARD_BUTTON_ID = 5; // Left bumper
-        public static final int INDEXER_LEFT_BACKWARD_BUTTON_ID = 2; // Left trigger
+        public static final int COLLECTOR_BUTTON_ID = 6; // Right bumper
+        public static final int ARM_MANUAL_UP_BUTTON_ID = 3; // Right trigger
+        public static final int ARM_MANUAL_DOWN_BUTTON_ID = 2; // Left trigger
 
         // Motors
-        public static final int INDEXER_RIGHT_MOTOR_CAN = 30;
-        public static final int INDEXER_LEFT_MOTOR_CAN = 31;
+        public static final int COLLECTOR_MOTOR_CAN = 20;
+        public static final int ARM_MOTOR_CAN = 21;
 
-        public static final boolean INDEXER_RIGHT_MOTOR_INVERTED = false;
-        public static final boolean INDEXER_LEFT_MOTOR_INVERTED = true;
+        public static final boolean COLLECTOR_MOTOR_INVERTED = true;
+        public static final boolean ARM_MOTOR_INVERTED = true;
+
+        public static final int[] ARM_ENCODER_PINS = {4, 5};
+        public static final boolean ARM_ENCODER_INVERTED  = true;
+
+        // PID
+        public static final double ARM_P = 0.0; // Undefined
+        public static final double ARM_I = 0.0; // Undefined
+        public static final double ARM_D = 0.0; // Undefined
+        public static final double ARM_F = 0.0; // Undefined
+
+        public static final int ARM_0_DEGREE_POS = 100; // Undefined
+        public static final int ARM_FINAL_POS = 2000; // Undefined
+        public static final int ARM_FINAL_POS_DEGREES = 90;
+        public static final int ARM_DEGREE_UP_POS = 20; // Supposed to be 0, when tuned
+        public static final int ARM_DEGREE_DOWN_POS = 70; // Supposed to be 90, when tuned
+        public static final int ARM_TARGET_TOLERANCE = 3; // Allowed innacuracy
 
         // Speeds
-        public static final double INDEXER_MOTORS_SPEED = 0.5;
+        public static final double COLLECTOR_SPEED = 0.95; // Or 0.75
+        public static final double ARM_MANUAL_SPEED = 0.7;
+    }
+
+    public static final class IndexerConstants {
+        // User input
+        public static final int RIGHT_FORWARD_BUTTON_ID = 6; // Right bumper
+        public static final int RIGHT_BACKWARD_BUTTON_ID = 3; // Right trigger
+        public static final int LEFT_FORWARD_BUTTON_ID = 5; // Left bumper
+        public static final int LEFT_BACKWARD_BUTTON_ID = 2; // Left trigger
+
+        // Motors
+        public static final int RIGHT_MOTOR_CAN = 30;
+        public static final int LEFT_MOTOR_CAN = 31;
+
+        public static final boolean RIGHT_MOTOR_INVERTED = false;
+        public static final boolean LEFT_MOTOR_INVERTED = true;
+
+        // Speeds
+
+        public static final double INDEXER_SPEED = 0.7;
 
         // Ball detection
         public static final int BALL_CLOSE_DISTANCE = 100; // Undefined
@@ -106,26 +141,26 @@ public final class Constants {
         public static final int SHOOTER_MOTOR_1_CAN = 40;
         public static final int SHOOTER_MOTOR_2_CAN = 41;
 
-        public static final boolean SHOOTER_MOTORS_INVERTED = false;
-        public static final boolean FEEDER_MOTOR_INVERTED = false;
+        public static final boolean SHOOTER_MOTORS_INVERTED = true;
+        public static final boolean FEEDER_MOTOR_INVERTED = true;
 
         // Encoder
         public static final int[] SHOOTER_ENCODER_PINS = {6, 7};
         public static final boolean SHOOTER_ENCODER_INVERTED = true;
-        public static final int SHOOTER_ENCODER_CYCLES_PER_ROTATION = 2048;
+        public static final int SHOOTER_ENCODER_CPR = 2048;
 
         // Shooter PID
         public static double SHOOTER_P = 0.0001; // Undefined
-        public static double SHOOTER_I = 0.001; // Undefined
+        public static double SHOOTER_I = 0.000; // Undefined
         public static double SHOOTER_D = 0.0; // Undefined
-        public static double SHOOTER_F = 0; // Indefined
+        public static double SHOOTER_F = 0.000222222222; // Undefined
 
         // Speeds
         public static double SHOOTER_TARGET_RPM = 3800; // Adjustable during run
         public static double SHOOTER_VOMIT_TARGET_RPM = 1000; // Undefined
         public static double SHOOTER_TARGET_RPM_TOLERANCE = 125;
 
-        public static double FEEDER_SPEED = 0.4;
+        public static double FEEDER_SPEED = 0.8;
     }
 
     public static final class ClimbConstants {
@@ -160,6 +195,12 @@ public final class Constants {
 
         // Timing
         public static final int CAMERA_TURN_ON_TIME = 30; // Seconds before the end of the match
+    }
+
+    public static final class DecorConstants {
+        public static final int LED_PIN_ID = 0; // Undefined
+
+        public static final double DEFAULT_LED_STATE = 0;
     }
 
     public static final class AutoConstants {

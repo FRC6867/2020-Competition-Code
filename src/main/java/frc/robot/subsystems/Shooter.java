@@ -44,10 +44,11 @@ public class Shooter extends PIDSubsystem {
     );
     getController().setTolerance(ShooterConstants.SHOOTER_TARGET_RPM_TOLERANCE);
     setSetpoint(ShooterConstants.SHOOTER_TARGET_RPM);
+    SmartDashboard.putNumber("Shooter F", ShooterConstants.SHOOTER_F);
 
     // Encoder config
     m_shooterEncoder.reset();
-    m_shooterEncoder.setDistancePerPulse(1.0 / (double) ShooterConstants.SHOOTER_ENCODER_CYCLES_PER_ROTATION);
+    m_shooterEncoder.setDistancePerPulse(1.0 / (double) ShooterConstants.SHOOTER_ENCODER_CPR);
 
     // Motor config
     m_shooterMotor1.configFactoryDefault();
@@ -55,6 +56,7 @@ public class Shooter extends PIDSubsystem {
     m_feederMotor.configFactoryDefault();
 
     m_shooterMotor1.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
+    m_shooterMotor2.setInverted(ShooterConstants.SHOOTER_MOTORS_INVERTED);
     m_shooterMotor2.follow(m_shooterMotor1); // Second motor should mirror first one
     m_feederMotor.setInverted(ShooterConstants.FEEDER_MOTOR_INVERTED);
 
@@ -110,7 +112,6 @@ public class Shooter extends PIDSubsystem {
    */
   private void updateData(double speed) {
     SmartDashboard.putNumber("Shooter RPM", speed);
-    SmartDashboard.putNumber("Shooter RPM History", speed);
   }
 
 

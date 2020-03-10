@@ -76,10 +76,10 @@ public class RobotContainer {
     final JoystickButton m_fineControlButton = new JoystickButton(m_driverGamepad, DriveTrainConstants.FINE_CONTROL_BUTTON_ID);
 
     // Indexer buttons
-    final JoystickButton m_indexerRightForwardButton = new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_RIGHT_FORWARD_BUTTON_ID);
-    final TriggerButton m_indexerRightBackwardButton = new TriggerButton(m_operatorGamepad, IndexerConstants.INDEXER_RIGHT_BACKWARD_BUTTON_ID);
-    final JoystickButton m_indexerLeftForwardButton = new JoystickButton(m_operatorGamepad, IndexerConstants.INDEXER_LEFT_FORWARD_BUTTON_ID);
-    final TriggerButton m_indexerLeftBackwardButton = new TriggerButton(m_operatorGamepad, IndexerConstants.INDEXER_LEFT_BACKWARD_BUTTON_ID);
+    final JoystickButton m_indexerRightForwardButton = new JoystickButton(m_operatorGamepad, IndexerConstants.RIGHT_FORWARD_BUTTON_ID);
+    final TriggerButton m_indexerRightBackwardButton = new TriggerButton(m_operatorGamepad, IndexerConstants.RIGHT_BACKWARD_BUTTON_ID);
+    final JoystickButton m_indexerLeftForwardButton = new JoystickButton(m_operatorGamepad, IndexerConstants.LEFT_FORWARD_BUTTON_ID);
+    final TriggerButton m_indexerLeftBackwardButton = new TriggerButton(m_operatorGamepad, IndexerConstants.LEFT_BACKWARD_BUTTON_ID);
 
     // Shooter buttons
     final JoystickButton m_shooterSpinButton = new JoystickButton(m_operatorGamepad, ShooterConstants.SHOOTER_TOGGLE_BUTTON_ID);
