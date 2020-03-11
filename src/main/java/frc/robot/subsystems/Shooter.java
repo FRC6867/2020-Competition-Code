@@ -112,6 +112,7 @@ public class Shooter extends PIDSubsystem {
    */
   private void updateData(double speed) {
     SmartDashboard.putNumber("Shooter RPM", speed);
+    //SmartDashboard.putNumber("Shooter RPM History", speed);
   }
 
 
@@ -143,14 +144,21 @@ public class Shooter extends PIDSubsystem {
    * Stops vomitting.
    */
   public void stopVomit() {
+
     disable();
     setSetpoint(ShooterConstants.SHOOTER_TARGET_RPM);
+  }
+
+  @Override
+  public void enable() {
+    m_shooterEncoder.reset();
+    setPID();
+    super.enable();
   }
 
   // Call parent periodic + log data
   @Override
   public void periodic() {
-    setPID();
     super.periodic();
     updateData(getMeasurement());
   }

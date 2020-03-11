@@ -149,16 +149,17 @@ public final class Constants {
         public static final boolean SHOOTER_ENCODER_INVERTED = true;
         public static final int SHOOTER_ENCODER_CPR = 2048;
 
+
         // Shooter PID
-        public static double SHOOTER_P = 0.0001; // Undefined
+        public static double SHOOTER_P = 0.0005; // Undefined
         public static double SHOOTER_I = 0.000; // Undefined
         public static double SHOOTER_D = 0.0; // Undefined
         public static double SHOOTER_F = 0.000222222222; // Undefined
 
         // Speeds
-        public static double SHOOTER_TARGET_RPM = 3800; // Adjustable during run
+        public static double SHOOTER_TARGET_RPM = 3600; // Adjustable during run
         public static double SHOOTER_VOMIT_TARGET_RPM = 1000; // Undefined
-        public static double SHOOTER_TARGET_RPM_TOLERANCE = 125;
+        public static double SHOOTER_TARGET_RPM_TOLERANCE = 75;
 
         public static double FEEDER_SPEED = 0.8;
     }
@@ -206,7 +207,8 @@ public final class Constants {
     public static final class AutoConstants {
         public static final class Auto1Constants {
             public static final double DRIVE_TIME = 3.5;
-            public static final double DRIVE_SPEED = 0.5;
+            public static final double DRIVE_SPEED = 0.4;
+            public static final double SHOOT_DELAY = 0.3;
             public static final double SHOOT_TIME = 10;
         }
 

@@ -9,6 +9,7 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.RepeatCommand;
 import frc.robot.commands.TimedDrive;
@@ -29,10 +30,13 @@ public class AutoCommandSequence1 extends SequentialCommandGroup {
       new InstantCommand(shooter::enable, shooter),
       new TimedDrive(Auto1Constants.DRIVE_TIME, Auto1Constants.DRIVE_SPEED, driveTrain),
 
+      new WaitCommand(Auto1Constants.SHOOT_DELAY),
       parallel( // Run feeder and indexer
         new FeedShooter(shooter, indexer)
           .withTimeout(Auto1Constants.SHOOT_TIME),
         
+        //new InstantCommand(() -> indexer.run(1, -1), indexer),
+        //new WaitCommand(0.25),
         new StartEndCommand(indexer::runAll, indexer::stop, indexer)
           .withTimeout(Auto1Constants.SHOOT_TIME)
 
