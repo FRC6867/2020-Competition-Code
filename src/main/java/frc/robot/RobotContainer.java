@@ -132,6 +132,14 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_autoChooser.getSelected();
+    //return m_autoChooser.getSelected();
+    return new DriveForward(200, m_driveTrain);
+  }
+
+  /**
+   * @see {@link DriveTrain#setCoast(coast)}
+   */
+  public void setDrivetrainCoast(boolean coast) {
+    m_driveTrain.setCoast(coast);
   }
 }

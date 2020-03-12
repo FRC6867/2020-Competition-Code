@@ -36,11 +36,11 @@ public final class Constants {
         public static final int[] LEFT_DRIVE_ENCODER_PINS = {0, 1};
         public static final int[] RIGHT_DRIVE_ENCODER_PINS = {2, 3};
 
-        public static final double LEFT_ENCODER_TICK_DISTANCE = 1; // Undefined
-        public static final double RIGHT_ENCODER_TICK_DISTANCE = 1; // Undefined
+        public static final double LEFT_ENCODER_TICK_DISTANCE = 0.0103545; // Undefined
+        public static final double RIGHT_ENCODER_TICK_DISTANCE = 0.0103237; // Undefined
 
-        public static final boolean LEFT_ENCODER_INVERTED = false;
-        public static final boolean RIGHT_ENCODER_INVERTED = true;
+        public static final boolean LEFT_ENCODER_INVERTED = true;
+        public static final boolean RIGHT_ENCODER_INVERTED = false;
 
         // Ultrasonic sensor pins
         public static final int ULTRASONIC_TRIGGER_PIN = 8; // Undefined
@@ -52,15 +52,16 @@ public final class Constants {
         public static final double FINE_CONTROL_SENSITIVITY = 2.5;
         public static final double ARTIFICIAL_COAST_NUM = 1.05;
         public static final double JOYSTICK_SENSITIVITY_MOD = 1/2;
+        public static final boolean COAST_DEFAULT_MODE = false;
 
 
         // PIDs
         public static final double TURN_CORRECTION_P = 0.25; // Undefined
 
         // For turning a specific amount of degrees
-        public static final double TURN_P = 0.05;  // Undefined
-        public static final double TURN_I = 0.0; // Undefined
-        public static final double TURN_D = 0.006; // Undefined
+        public static final double TURN_P = 0.03;  // Undefined
+        public static final double TURN_I = 0.001; // Undefined
+        public static final double TURN_D = 0.0035; // Undefined
 
         // For moving for a specific distance
         public static final double DRIVE_P = 0.01; // Undefined
@@ -158,7 +159,7 @@ public final class Constants {
 
         // Speeds
         public static double SHOOTER_TARGET_RPM = 3600; // Adjustable during run
-        public static double SHOOTER_VOMIT_TARGET_RPM = 1000; // Undefined
+        public static double SHOOTER_VOMIT_TARGET_RPM = 1500; // Undefined
         public static double SHOOTER_TARGET_RPM_TOLERANCE = 75;
 
         public static double FEEDER_SPEED = 0.8;
@@ -190,9 +191,9 @@ public final class Constants {
         public static final String CLIMB_CAMERA_NAME = "Climb Camera";
 
         // Main cam stats
-        public static final int MAIN_CAMERA_WIDTH = 80;
-        public static final int MAIN_CAMERA_HEIGTH = 50;
-        public static final int MAIN_CAMERA_FPS = 50;
+        public static final int MAIN_CAMERA_WIDTH = 100;
+        public static final int MAIN_CAMERA_HEIGTH = 80;
+        public static final int MAIN_CAMERA_FPS = 20;
 
         // Timing
         public static final int CAMERA_TURN_ON_TIME = 30; // Seconds before the end of the match

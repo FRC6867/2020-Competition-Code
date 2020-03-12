@@ -74,6 +74,8 @@ public class DriveTrain extends SubsystemBase {
     m_rightEncoder.setDistancePerPulse(DriveTrainConstants.RIGHT_ENCODER_TICK_DISTANCE);
     m_leftEncoder.setDistancePerPulse(DriveTrainConstants.LEFT_ENCODER_TICK_DISTANCE);
 
+    setCoast(DriveTrainConstants.COAST_DEFAULT_MODE);
+
     // Start distance sensor
     m_distanceSensor.setAutomaticMode(true);
 
@@ -121,25 +123,68 @@ public class DriveTrain extends SubsystemBase {
     driveLeft(leftSpeed);
   }
 
+  /**
+   * Sets the speed of the right motor.
+   * Throttle is handled.
+   */
   public void driveRight(double speed) {
     setMotor(m_frontRightDrive, speed);
   }
 
+  /**
+   * Sets the speed of the left motor.
+   * Throttle is handled.
+   */
   public void driveLeft(double speed) {
     setMotor(m_frontLeftDrive, speed);
-}
+  }
 
+  /**
+   * Sets the specified motor to run the specified motor,
+   * applying caps, throttles and fine control.
+   * 
+   * @param motor The motor to set.
+   * @param rawSpeed The raw speed to set the motor to.
+   * This speed is capped at 1 before throttles are applied.
+   */
   private void setMotor(CANSparkMax motor, double rawSpeed) {
     if (m_fineControl) {
-      motor.set(rawSpeed * m_speedThrottle / DriveTrainConstants.FINE_CONTROL_SENSITIVITY);
+      motor.set(capSpeed(rawSpeed) * m_speedThrottle / DriveTrainConstants.FINE_CONTROL_SENSITIVITY);
     } else {
-      motor.set(rawSpeed * m_speedThrottle);
+      motor.set(capSpeed(rawSpeed) * m_speedThrottle);
     }
   }
 
+  /**
+   * @return The inputted speed, capped at |1|.
+   */
+  private double capSpeed(double rawSpeed) {
+    return Math.signum(rawSpeed) * Math.min(Math.abs(rawSpeed), 1);
+  }
+
+  /**
+   * Turns fine control on/off. Fine control slows down drivetrain speed.
+   */
   public void setFineControl(boolean fineControl) {
     m_fineControl = fineControl;
     SmartDashboard.putBoolean("Fine Drive Control", fineControl);
+  }
+
+  /**
+   * Sets whether the main motors are in brake mode or coast mode.
+   */
+  public void setCoast(boolean coast) {
+    if (coast) {
+      m_frontRightDrive.setIdleMode(IdleMode.kCoast);
+      m_backRightDrive.setIdleMode(IdleMode.kCoast);
+      m_frontLeftDrive.setIdleMode(IdleMode.kCoast);
+      m_backLeftDrive.setIdleMode(IdleMode.kCoast);
+    } else {
+      m_frontRightDrive.setIdleMode(IdleMode.kBrake);
+      m_backRightDrive.setIdleMode(IdleMode.kBrake);
+      m_frontLeftDrive.setIdleMode(IdleMode.kBrake);
+      m_backLeftDrive.setIdleMode(IdleMode.kBrake);
+    }
   }
 
 
