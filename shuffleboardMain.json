@@ -10,9 +10,9 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "tiles": {
-          "21,3": {
+          "4,6": {
             "size": [
-              2,
+              4,
               2
             ],
             "content": {
@@ -77,7 +77,7 @@
               ]
             }
           },
-          "19,3": {
+          "14,8": {
             "size": [
               2,
               2
@@ -116,7 +116,7 @@
               ]
             }
           },
-          "6,8": {
+          "4,8": {
             "size": [
               2,
               2
@@ -172,7 +172,7 @@
               ]
             }
           },
-          "20,8": {
+          "6,8": {
             "size": [
               2,
               2
@@ -196,39 +196,33 @@
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Shooter D",
                   "_title": "Shooter D"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Shooter F",
+                  "_title": "Shooter F"
                 }
               ]
             }
           },
-          "21,5": {
+          "11,0": {
             "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Shooter F",
-              "_title": "Shooter F"
-            }
-          },
-          "19,0": {
-            "size": [
-              4,
-              3
+              5,
+              4
             ],
             "content": {
               "_type": "Simple Dial",
               "_source0": "network_table:///SmartDashboard/Shooter RPM",
               "_title": "Shooter RPM",
               "Range/Min": 0.0,
-              "Range/Max": 100.0,
+              "Range/Max": 4500.0,
               "Visuals/Show value": true
             }
           },
-          "4,8": {
+          "12,8": {
             "size": [
               2,
-              1
+              2
             ],
             "content": {
               "_type": "Text View",
@@ -239,7 +233,7 @@
           "4,0": {
             "size": [
               7,
-              8
+              6
             ],
             "content": {
               "_type": "Camera Stream",
@@ -255,10 +249,10 @@
               "imageHeight": 100
             }
           },
-          "8,8": {
+          "10,8": {
             "size": [
-              3,
-              3
+              2,
+              2
             ],
             "content": {
               "_type": "Boolean Box",
@@ -266,6 +260,17 @@
               "_title": "Ball Ready",
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "8,8": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Turn Correction P",
+              "_title": "Turn Correction P"
             }
           }
         }

@@ -23,8 +23,10 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
   private RobotContainer m_robotContainer;
+
+  private int m_loop = 1;
+  private long m_disableTime = System.currentTimeMillis();
 
   //private final PowerDistributionPanel m_pdp = new PowerDistributionPanel();
 
@@ -62,11 +64,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    m_robotContainer.setDrivetrainCoast(true);
+    m_disableTime = System.currentTimeMillis();
   }
 
   @Override
   public void disabledPeriodic() {
+    if ((System.currentTimeMillis() - m_disableTime >= 5000) && (m_loop >= 100)) {
+      m_robotContainer.setDrivetrainCoast(true);
+      m_loop = 0;
+    }
+
+    m_loop++;
   }
 
   /**
@@ -129,6 +137,6 @@ public class Robot extends TimedRobot {
    */
   private double getApproxBatteryFromVoltage(double voltage) {
     // We want to show 0% at 10V and 100% at 13V.
-    return (voltage - 10) / 3 * 100;
+    return (voltage - 12) / 1 * 100;
   }
 }

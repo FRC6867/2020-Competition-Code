@@ -86,6 +86,7 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putData("Right Drive Encoder", m_rightEncoder);
     SmartDashboard.putData("Distance to Object", m_distanceSensor);
     SmartDashboard.putNumber("Drive Train Throttle", m_speedThrottle);
+    SmartDashboard.putNumber("Turn Correction P", DriveTrainConstants.TURN_CORRECTION_P);
   }
 
   /**
@@ -97,7 +98,7 @@ public class DriveTrain extends SubsystemBase {
    */  
   public void driveStraight(double speed, double targetHeading) {
     final double error = targetHeading - getHeading(); // Calculates error
-    final double turnMod = error * DriveTrainConstants.TURN_CORRECTION_P;
+    final double turnMod = error * SmartDashboard.getNumber("Turn Correction P", DriveTrainConstants.TURN_CORRECTION_P);
 
     drive(speed - turnMod, speed + turnMod); // Applied speed modifiers
   }

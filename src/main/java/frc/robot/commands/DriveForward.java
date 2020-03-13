@@ -53,8 +53,7 @@ public class DriveForward extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return getController().atSetpoint(); // Disabled for tuning
-    return false;
+    return getController().atSetpoint(); // Disabled for tuning
   }
 
   @Override

@@ -64,7 +64,7 @@ public final class Constants {
         public static final double TURN_D = 0.0035; // Undefined
 
         // For moving for a specific distance
-        public static final double DRIVE_P = 0.01; // Undefined
+        public static final double DRIVE_P = 0.025; // Undefined
         public static final double DRIVE_I = 0.0; // Undefined
         public static final double DRIVE_D = 0.0; // Undefined
 
